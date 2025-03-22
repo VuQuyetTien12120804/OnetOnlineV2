@@ -1,0 +1,25 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Trạng thái nhấn (pressed) -->
+    <item android:state_pressed="true">
+        <layer-list android:layout_height="wrap_content">
+            <!-- Viền cam ngoài cùng -->
+            <item android:bottom="40dp" android:left="40dp" android:right="40dp" android:top="40dp">
+                <shape android:shape="oval">
+                    <solid android:color="#FFC107" /> <!-- Màu cam đậm hơn khi nhấn -->
+                </shape>
+            </item>
+            <!-- Nền xanh ở trong -->
+            <item android:bottom="45dp" android:left="45dp" android:right="45dp" android:top="45dp">
+                <shape android:shape="oval">
+                    <solid android:color="#00BCD4" /> <!-- Màu xám nhạt khi nhấn -->
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+    <!-- Trạng thái bình thường -->
+    <item>
+        <bitmap android:src="@drawable/sound"></bitmap>
+    </item>
+</selector>
