@@ -1,28 +1,56 @@
 package com.example.onetonline.presentation.view;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.util.Log;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import com.example.onetonlinev2.R;
 
-public class LoadingActivity extends AppCompatActivity { // Run multi thread
+import androidx.appcompat.app.AppCompatActivity;
+
+public class LoadingActivity extends AppCompatActivity {
+
+    private ProgressBar progressBar;
+    private TextView tvProgressPercent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_loading);
 
-        // Move to MenuGame view in 3s
+        progressBar = findViewById(R.id.progressBar);
+        tvProgressPercent = findViewById(R.id.tvProgressPercent);
+        //ImageView imgLogo = findViewById(R.id.imgLogo);
+
+        // Animate Progress
+        animateProgress();
+
+        // Move to next screen after 5 seconds
         new Handler().postDelayed(() -> {
-            Intent intent = new Intent(this, WellComeScreen.class);
+            Intent intent = new Intent(LoadingActivity.this, WellComeScreen.class);
             startActivity(intent);
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out); // Transition animation
             finish();
-        }, 1000);
+        }, 5000);
     }
+
+    private void animateProgress() {
+        ObjectAnimator progressAnimator = ObjectAnimator.ofInt(progressBar, "progress", 0, 100);
+        progressAnimator.setDuration(5000); // 5 giây
+        progressAnimator.addUpdateListener(animation -> {
+            int progress = (int) animation.getAnimatedValue();
+            tvProgressPercent.setText(progress + "%");
+        });
+        progressAnimator.start();
+    }
+
 }

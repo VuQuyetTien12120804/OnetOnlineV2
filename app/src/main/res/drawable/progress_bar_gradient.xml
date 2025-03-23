@@ -1,0 +1,26 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Nền màu trắng cho phần chưa chạy -->
+    <item android:id="@android:id/background">
+        <shape>
+            <corners android:radius="8dp" />
+            <solid android:color="#000000" />
+            <stroke
+                android:width="2dp"
+                android:color="#FFD700" /> <!-- Viền vàng -->
+        </shape>
+    </item>
+
+    <!-- Phần gradient động -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape>
+                <corners android:radius="8dp" />
+                <gradient
+                    android:startColor="#FF0000"
+                    android:centerColor="#FFE500"
+                    android:endColor="#4CAF50"
+                    android:angle="0" />
+            </shape>
+        </clip>
+    </item>
+</layer-list>
