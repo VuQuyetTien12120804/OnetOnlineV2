@@ -12,11 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OnetOnlineV2">
         <activity
-            android:name="com.example.onetonline.presentation.view.ConfirmOTP"
-            android:exported="false" />
-        <activity
             android:name="com.example.onetonline.presentation.view.LoadingActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,10 +23,12 @@
         </activity>
         <activity
             android:name="com.example.onetonline.presentation.view.WellComeScreen"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="landscape"/>
         <activity
             android:name="com.example.onetonline.presentation.view.RegisterForm"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="landscape"/>
         <!--
 <activity
             android:name="com.example.onetonline.MainActivity"
@@ -37,7 +37,8 @@
         -->
         <activity
             android:name="com.example.onetonline.presentation.view.LoginForm"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="landscape"/>
         <activity
             android:name="com.example.onetonline.presentation.view.MenuGame"
             android:exported="true"
@@ -50,7 +51,8 @@
         </activity>
         <activity
             android:name="com.example.onetonline.presentation.view.GamePlay"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

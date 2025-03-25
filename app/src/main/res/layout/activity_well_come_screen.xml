@@ -1,57 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_wellcome"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_wellcome_game"
-    android:orientation="vertical">
+    android:background="@drawable/background_wellcome_game">
 
-    <!-- Không gian trống ở trên -->
-    <LinearLayout
-        android:layout_width="match_parent"
+    <!-- Khoảng trống trên -->
+    <View
+        android:id="@+id/spaceTop"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnLogin"
+        app:layout_constraintHeight_percent="0.6" />
 
-    <!-- Khu vực chứa các nút -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
+    <!-- Login Button -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnLogin"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:text="Login"
+        android:background="@drawable/button_background"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/creepster_regular"
+        app:layout_constraintTop_toBottomOf="@id/spaceTop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintHeight_percent="0.1" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnLogin"
-            android:layout_width="250dp"
-            android:layout_height="70dp"
-            android:text="Login"
-            android:background="@drawable/button_background"
-            android:textColor="#FFFFFF"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/creepster_regular"/>
+    <!-- Register Button -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnRegister"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
+        android:text="Register"
+        android:background="@drawable/button_background"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/creepster_regular"
+        app:layout_constraintTop_toBottomOf="@id/btnLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintHeight_percent="0.1"/>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnRegister"
-            android:layout_width="250dp"
-            android:layout_height="70dp"
-            android:text="Register"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/button_background"
-            android:textColor="#FFFFFF"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/creepster_regular"/>
+    <!-- Play as Guest Button -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnGuest"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="Play as Guest"
+        android:background="@drawable/button_background"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/creepster_regular"
+        app:layout_constraintTop_toBottomOf="@id/btnRegister"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.2"
+        app:layout_constraintHeight_percent="0.1" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnGuest"
-            android:layout_width="250dp"
-            android:layout_height="70dp"
-            android:text="Play as a Guest"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/button_background"
-            android:textColor="#FFFFFF"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/creepster_regular"/>
-    </LinearLayout>
-</LinearLayout>
+    <!-- Khoảng trống dưới -->
+    <View
+        android:id="@+id/spaceBottom"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/btnGuest"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.4" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
