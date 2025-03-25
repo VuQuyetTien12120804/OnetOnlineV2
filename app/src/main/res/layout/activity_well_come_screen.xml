@@ -1,60 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main_wellcome"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_game2">
+    android:background="@drawable/background_wellcome_game"
+    android:orientation="vertical">
 
-    <!-- Logo hoặc tiêu đề game -->
-    <!-- Tiêu đề -->
+    <!-- Không gian trống ở trên -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-    <!-- Button Đăng nhập -->
-
-    <!-- Button Đăng ký -->
-
-    <!-- Button Chơi với tư cách Guest -->
-
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="350dp"
-        android:layout_marginTop="355dp"
-        android:layout_marginEnd="640dp"
-        android:layout_marginBottom="130dp"
-        android:background="@color/transparent"/>
-
-    <Button
-        android:id="@+id/btnRegister"
-        android:layout_width="58dp"
-        android:layout_height="62dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="650dp"
-        android:layout_marginTop="355dp"
-        android:layout_marginEnd="340dp"
-        android:layout_marginBottom="130dp"
-        android:background="@color/transparent"/>
-
-    <Button
-        android:id="@+id/btnGuest"
-        android:layout_width="wrap_content"
+    <!-- Khu vực chứa các nút -->
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="480dp"
-        android:layout_marginTop="450dp"
-        android:layout_marginEnd="460dp"
-        android:layout_marginBottom="90dp"
-        android:background="@color/transparent"
-        />
+        android:orientation="vertical"
+        android:gravity="center">
 
-</RelativeLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnLogin"
+            android:layout_width="250dp"
+            android:layout_height="70dp"
+            android:text="Login"
+            android:background="@drawable/button_background"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/creepster_regular"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnRegister"
+            android:layout_width="250dp"
+            android:layout_height="70dp"
+            android:text="Register"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/button_background"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/creepster_regular"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnGuest"
+            android:layout_width="250dp"
+            android:layout_height="70dp"
+            android:text="Play as a Guest"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/button_background"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/creepster_regular"/>
+    </LinearLayout>
+</LinearLayout>

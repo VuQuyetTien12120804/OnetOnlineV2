@@ -3,7 +3,7 @@
     android:id="@+id/id_form_register"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_game"
+    android:background="@drawable/background_register_game"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="20dp"
@@ -16,14 +16,14 @@
         android:layout_gravity="center"
         android:fontFamily="@font/creepster_regular"
         android:text="Register"
-        android:textColor="#FFFFFF"
-        android:textSize="30sp"
+        android:textColor="#4CAF50"
+        android:textSize="50sp"
         android:textStyle="bold" />
 
     <!-- Username Field -->
     <EditText
         android:id="@+id/etUsername"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
         android:background="@drawable/dialog_border"
@@ -37,7 +37,7 @@
     <!-- Email Field -->
     <EditText
         android:id="@+id/etEmail"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
         android:background="@drawable/dialog_border"
@@ -51,7 +51,7 @@
     <!-- Password Field -->
     <EditText
         android:id="@+id/etPassword"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="15dp"
         android:background="@drawable/dialog_border"
@@ -65,7 +65,7 @@
     <!-- Confirm Password Field -->
     <EditText
         android:id="@+id/etConfirmPassword"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
         android:background="@drawable/dialog_border"

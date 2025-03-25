@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:backgroundDimEnabled">true</item>
+    <style name="DialogBounceAnimation">
+        <item name="android:windowEnterAnimation">@anim/bounce</item>
+        <item name="android:windowExitAnimation">@anim/bounce_exit</item>
+        Log.d("DialogTest", "Window animation: " + dialog.getWindow().getAttributes().windowAnimations);
     </style>
-
 </resources>

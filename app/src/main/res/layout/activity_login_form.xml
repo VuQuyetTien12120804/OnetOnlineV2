@@ -3,7 +3,7 @@
     android:id="@+id/id_form_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_game">
+    android:background="@drawable/background_login_game">
 
 
     <!-- Tiêu đề -->
@@ -15,8 +15,8 @@
         android:layout_marginTop="60dp"
         android:fontFamily="@font/creepster_regular"
         android:text="Login"
-        android:textColor="#FFFFFF"
-        android:textSize="28sp"
+        android:textColor="#4CAF50"
+        android:textSize="50sp"
         android:textStyle="bold" />
 
     <!-- Trường nhập Tên người dùng -->

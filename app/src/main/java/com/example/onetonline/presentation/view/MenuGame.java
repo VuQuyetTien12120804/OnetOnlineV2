@@ -30,9 +30,9 @@ public class MenuGame extends AppCompatActivity {
     private Button btnExit;
     private Button btnMusic;
     private Button btnAudio;
-    private Button btnHelp1;
-    private Button btnHelp2;
-    private Button btnHelp3;
+    private Button btnHelpClassic;
+    private Button btnHelpContinue;
+    private Button btnHelpRandom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,18 +49,19 @@ public class MenuGame extends AppCompatActivity {
         btnExit = findViewById(R.id.btnExit);
         btnMusic = findViewById(R.id.btnMusic);
         btnAudio = findViewById(R.id.btnAudio);
-        btnHelp1 = findViewById(R.id.btnHelp1);
-        btnHelp2 = findViewById(R.id.btnHelp2);
-        btnHelp3 = findViewById(R.id.btnHelp3);
+        btnHelpClassic = findViewById(R.id.btnHelpClassic);
+        btnHelpContinue = findViewById(R.id.btnHelpContinue);
+        btnHelpRandom = findViewById(R.id.btnHelpRandom);
 
-        btnHelp1.setOnClickListener(v -> menuController.handleHelpButtonClick());
-        btnHelp2.setOnClickListener(v -> menuController.handleHelpButtonClick());
-        btnHelp3.setOnClickListener(v -> menuController.handleHelpButtonClick());
 
         btnClassic.setOnClickListener(v -> menuController.handleClassicButtonClick());
         btnContinue.setOnClickListener(v -> menuController.handleContinueButtonClick());
         btnOnline.setOnClickListener(v -> menuController.handleOnlineButtonClick());
         btnExit.setOnClickListener(v -> menuController.handleExitButtonClick());
+
+        btnHelpContinue.setOnClickListener(v->menuController.handleHelpContinueButtonClick());
+        btnHelpRandom.setOnClickListener(v->menuController.handleHelpContinueButtonClick());
+        btnHelpClassic.setOnClickListener(v->menuController.handleHelpContinueButtonClick());
 
         btnMusic.setOnClickListener(v -> menuController.handleMusicButtonClick());
         btnAudio.setOnClickListener(v -> menuController.handleAudioButtonClick());

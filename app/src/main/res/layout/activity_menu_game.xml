@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     tools:context="com.example.onetonline.presentation.view.MenuGame"
-    android:background="@drawable/background_game">
+    android:background="@drawable/tt">
 
 
     <!-- The Left side -->
@@ -96,6 +96,7 @@
         android:orientation="vertical"
         android:layout_marginRight="50dp">
 
+
         <!-- Buttons and table -->
         <TableLayout
             android:layout_width="match_parent"
@@ -121,7 +122,7 @@
                     android:fontFamily="@font/creepster_regular"/>
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnHelp1"
+                    android:id="@+id/btnHelpClassic"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_weight="1"
@@ -150,7 +151,7 @@
                     android:fontFamily="@font/creepster_regular"/>
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnHelp2"
+                    android:id="@+id/btnHelpContinue"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_weight="1"
@@ -178,7 +179,7 @@
                     android:fontFamily="@font/creepster_regular"/>
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnHelp3"
+                    android:id="@+id/btnHelpRandom"
                     android:layout_width="150dp"
                     android:layout_height="100dp"
                     android:layout_weight="1"
@@ -228,7 +229,7 @@
                         android:layout_width="200dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/button_sound_background"
+                        android:background="@drawable/button_music_background"
                         android:gravity="center" />
 
                     <androidx.appcompat.widget.AppCompatButton

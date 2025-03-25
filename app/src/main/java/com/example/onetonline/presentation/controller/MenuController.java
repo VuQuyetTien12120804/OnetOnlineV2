@@ -31,39 +31,33 @@ public class MenuController {
     public void handleOnlineButtonClick(){
 
     }
-    public void handleExitButtonClick(){
-        //Tao dialog
+    public void handleExitButtonClick() {
+        // Tạo dialog
         Dialog dialog = new Dialog(view);
         dialog.setContentView(R.layout.dialog_exit_confirmation);
-        dialog.setCancelable(false); // khong cho phep dong bang nut ben ngoai
+        dialog.setCancelable(false); // Không cho phép đóng bằng nút bên ngoài
 
-        //Gan cac nut cho dialog
+        // Gắn các nút cho dialog
         Button btnYes = dialog.findViewById(R.id.btnYes);
         Button btnNo = dialog.findViewById(R.id.btnNo);
 
-        // Xóa nền trắng của Dialog
+        // Áp dụng hiệu ứng cho dialog
         if (dialog.getWindow() != null) {
+            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogBounceAnimation;
+            // Xóa nền trắng của Dialog
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         }
 
-        //Xu ly click Co
-        btnYes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss(); // đóng dialog
-                view.finish(); //Két thức Activity Hiện tại
-            }
+        // Xử lý click "Có"
+        btnYes.setOnClickListener(v -> {
+            dialog.dismiss(); // Đóng dialog
+            view.finish();
         });
 
-        //Xu ly click Khong
-        btnNo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss(); // đóng dialog
-            }
-        });
+        // Xử lý click "Không"
+        btnNo.setOnClickListener(v -> dialog.dismiss()); // Đóng dialog
 
-        //Hien thi dialog
+        // Hiển thị dialog
         dialog.show();
     }
     public void handleMusicButtonClick(){
@@ -71,6 +65,13 @@ public class MenuController {
     }
     public void handleAudioButtonClick(){
         Toast.makeText(view, "Audio button clicked", Toast.LENGTH_SHORT).show();
+    }
+
+    public void handleHelpClassicButtonClick(){
+        DialogHelper.showScrollableAlertDialog(view);
+    }
+    public void handleHelpContinueButtonClick(){
+        DialogHelper.showScrollableAlertDialog(view);
     }
 
 }

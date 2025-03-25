@@ -20,6 +20,6 @@
 
     <!-- Trạng thái bình thường -->
     <item>
-        <bitmap android:src="@drawable/sound_on"></bitmap>
+        <bitmap android:src="@drawable/music"></bitmap>
     </item>
 </selector>
