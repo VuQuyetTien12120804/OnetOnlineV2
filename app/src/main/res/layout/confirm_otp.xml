@@ -1,96 +1,103 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/id_form_confirm"
-    android:layout_width="300dp"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/background_otp"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:layout_gravity="center">
+    app:cardCornerRadius="16dp"
+    app:cardElevation="80dp"
+    android:layout_margin="16dp"
+    android:background="@null">
 
-    <!-- Tiêu đề -->
-    <TextView
-        android:id="@+id/tvOtpTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:gravity="center"
-        android:text="Enter OTP Code"
-        android:textColor="@android:color/black"
-        android:textSize="24sp" />
-
-    <!-- Nhập mã OTP -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="16dp"
+        android:background="@drawable/background_dlalog_confirm_otp">
 
-        <EditText
-            android:id="@+id/otp1"
-            android:layout_width="40dp"
+        <!-- Tiêu đề -->
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:gravity="center"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textSize="18sp" />
+            android:text="Enter OTP"
+            android:textColor="#FFAA00"
+            android:textSize="30sp"
+            android:fontFamily="@font/ltim_regular"
+            android:layout_marginBottom="16dp" />
 
+        <!-- Ô nhập OTP -->
         <EditText
-            android:id="@+id/otp2"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:id="@+id/otp_input"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Enter OTP"
+            android:background="@drawable/background_input_confirm_otp"
             android:gravity="center"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textSize="18sp" />
+            android:textSize="16sp"
+            android:padding="8dp"
+            android:fontFamily="@font/ltim_regular"
+            android:layout_marginBottom="12dp" />
 
-        <EditText
-            android:id="@+id/otp3"
-            android:layout_width="40dp"
+        <!-- Các chấm OTP -->
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:orientation="horizontal"
             android:gravity="center"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textSize="18sp" />
+            android:layout_marginBottom="16dp">
 
-        <EditText
-            android:id="@+id/otp4"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:gravity="center"
-            android:inputType="number"
-            android:maxLength="1"
-            android:textSize="18sp" />
+            <!-- Các chấm -->
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_margin="4dp"
+                android:src="@drawable/dot_filled" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_margin="4dp"
+                android:src="@drawable/dot_empty" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_margin="4dp"
+                android:src="@drawable/dot_3" />
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_margin="4dp"
+                android:src="@drawable/dot_empty" />
+        </LinearLayout>
+
+        <!-- Nút VERIFY -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/verify_button"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:fontFamily="@font/ltim_regular"
+            android:text="VERIFY"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/background_button_confirm_otp"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="center"/>
+        <!-- Nút Back -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCancel_ConfirmOTP"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/ltim_regular"
+            android:text="CANCEL"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/background_button_confirm_otp"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp" />
     </LinearLayout>
 
-    <!-- Nút xác nhận -->
-    <Button
-        android:id="@+id/btnSubmit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:background="@android:color/holo_blue_dark"
-        android:text="Verify"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        />
-
-    <!-- Nút Back -->
-    <Button
-        android:id="@+id/btnCancel_ConfirmOTP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="16dp"
-        android:background="@android:color/holo_red_dark"
-        android:text="Cancel"
-        android:textColor="@android:color/white"
-        android:layout_marginTop="20dp"/>
-
-</LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -24,6 +24,7 @@
         android:textSize="16sp"
         android:textColor="#ffffff"
         android:text="Loading..."
+        android:fontFamily="@font/ltim_regular"
         android:textStyle="bold"/>
 
     <!-- ProgressBar -->
@@ -44,6 +45,7 @@
         android:layout_height="wrap_content"
         android:textSize="16sp"
         android:textColor="#ffffff"
-        android:text="0%" />
+        android:text="0%"
+        android:fontFamily="@font/ltim_regular"/>
 
 </LinearLayout>

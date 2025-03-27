@@ -2,6 +2,7 @@ package com.example.onetonline.presentation.view;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -39,14 +40,15 @@ public class RegisterForm extends AppCompatActivity {
         // Tạo Dialog
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.confirm_otp);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setCancelable(true); // Có thể tắt dialog khi nhấn bên ngoài
 
-        // Tham chiếu các View trong Dialog
-        EditText otp1 = dialog.findViewById(R.id.otp1);
-        EditText otp2 = dialog.findViewById(R.id.otp2);
-        EditText otp3 = dialog.findViewById(R.id.otp3);
-        EditText otp4 = dialog.findViewById(R.id.otp4);
-        //Button btnSubmitOtp = dialog.findViewById(R.id.btnSubmitOtp);
+//        // Tham chiếu các View trong Dialog
+//        EditText otp1 = dialog.findViewById(R.id.otp1);
+//        EditText otp2 = dialog.findViewById(R.id.otp2);
+//        EditText otp3 = dialog.findViewById(R.id.otp3);
+//        EditText otp4 = dialog.findViewById(R.id.otp4);
+//        //Button btnSubmitOtp = dialog.findViewById(R.id.btnSubmitOtp);
 
         // Xử lý nút Submit
 //        btnSubmitOtp.setOnClickListener(v -> {

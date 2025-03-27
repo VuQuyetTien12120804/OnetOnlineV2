@@ -67,9 +67,6 @@ public class MenuController {
         Toast.makeText(view, "Audio button clicked", Toast.LENGTH_SHORT).show();
     }
 
-    public void handleHelpClassicButtonClick(){
-        DialogHelper.showScrollableAlertDialog(view);
-    }
     public void handleHelpContinueButtonClick(){
         DialogHelper.showScrollableAlertDialog(view);
     }
