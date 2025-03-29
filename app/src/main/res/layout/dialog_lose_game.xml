@@ -1,0 +1,87 @@
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="80dp"
+    android:layout_margin="16dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_lose_dialog"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:gravity="center_horizontal">
+
+        <!-- Animation Effect -->
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieAnimationLose"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/animation_lose_sad_face"
+            />
+
+        <!-- Tiêu đề -->
+        <TextView
+            android:id="@+id/tvLoseTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="YOU LOSE"
+            android:textColor="#FF0000"
+            android:textSize="30sp"
+            android:shadowColor="#00E2FF"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="8"
+            android:fontFamily="@font/ltim_regular"
+            android:layout_marginTop="16dp"
+            android:gravity="center" />
+
+        <!-- Nội dung thông báo -->
+        <TextView
+            android:id="@+id/tvLoseMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Try again and beat your high score!"
+            android:textColor="#FFEB3B"
+            android:shadowColor="#00E2FF"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="8"
+            android:textSize="20sp"
+            android:fontFamily="@font/ltim_regular"
+            android:layout_marginTop="8dp"
+            android:gravity="center" />
+
+        <!-- Nút Try Again -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnTryAgainLoseGame"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/button_win_gradient"
+            android:text="TRY AGAIN"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:fontFamily="@font/ltim_regular"/>
+
+        <!-- Nút Exit -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnExitLoseGame"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/button_win_gradient"
+            android:text="    EXIT    "
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            android:padding="10dp"
+            android:fontFamily="@font/ltim_regular"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

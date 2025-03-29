@@ -4,6 +4,8 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
@@ -25,6 +27,7 @@ public class LoginForm extends AppCompatActivity {
     //Khai báo
     private Button btnBackLoginForm;
     private TextView tvForgotPassword;
+    private Dialog loadingDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,7 +127,8 @@ public class LoginForm extends AppCompatActivity {
             } else if (!Password.equals(confirmPasswordText)) { // kiem tra xem pass moi va pass xac nhan co bang nhau khong
                 Toast.makeText(LoginForm.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
             } else { //dang ki thanh cong
-                Toast.makeText(LoginForm.this, "Password has been reset successfully", Toast.LENGTH_SHORT).show();
+                //Mo man hinh loading
+                showLoadingResetPasswordDialog();
                 resetPasswordDialog.dismiss();
             }
         });
@@ -159,5 +163,22 @@ public class LoginForm extends AppCompatActivity {
 
         //hien thi dialog
         resetPasswordDialog.show();
+    }
+    private void showLoadingResetPasswordDialog() {
+        loadingDialog = new Dialog(this);
+        loadingDialog.setContentView(R.layout.loading_waiting_reset_password);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        loadingDialog.setCancelable(false); // Không cho người dùng tắt khi đang loading
+        loadingDialog.show();
+
+        // Chờ 3 giây rồi ẩn loading và thực hiện hành động
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            loadingDialog.dismiss();
+            navigateToLogin();
+        }, 3000); // 3 giây
+    }
+    private void navigateToLogin() {
+        // Xử lý logic chuyển màn hình login
+        Toast.makeText(LoginForm.this, "Password has been reset successfully", Toast.LENGTH_SHORT).show();
     }
 }

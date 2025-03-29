@@ -1,15 +1,10 @@
 package com.example.onetonline.presentation.view;
 
-import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.onetonlinev2.R;
 import com.example.onetonline.presentation.controller.*;
@@ -46,7 +41,7 @@ public class MenuGame extends AppCompatActivity {
         btnClassic = findViewById(R.id.btnClassic);
         btnContinue = findViewById(R.id.btnContinue);
         btnOnline = findViewById(R.id.btnOnline);
-        btnExit = findViewById(R.id.btnExit);
+        btnExit = findViewById(R.id.btnExitLoseGame);
         btnMusic = findViewById(R.id.btnMusic);
         btnAudio = findViewById(R.id.btnAudio);
         btnHelpClassic = findViewById(R.id.btnHelpClassic);

@@ -23,10 +23,68 @@ public class MenuController {
         Toast.makeText(view, "Help button clicked", Toast.LENGTH_SHORT).show();
     }
     public void handleClassicButtonClick(){
+        //Tao dialog
+        Dialog dialog = new Dialog(view);
+        dialog.setContentView(R.layout.dialog_win_game);
+        dialog.setCancelable(true); //cho phep dong bang nut ben ngoai
 
+        //gan cac nut cho dialog
+        Button btnNext = dialog.findViewById(R.id.btnNextWinGame);
+
+        // Áp dụng hiệu ứng cho dialog
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogBounceAnimation;
+            // Xóa nền trắng của Dialog
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        //xu lu click next
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(view, MenuGame.class);
+                view.startActivity(intent);
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
     public void handleContinueButtonClick(){
+        //Tao dialog
+        Dialog dialog = new Dialog(view);
+        dialog.setContentView(R.layout.dialog_lose_game);
+        dialog.setCancelable(true); //cho phep dong bang nut ben ngoai
 
+        //gan cac nut cho dialog
+        Button btnExitLoseGame = dialog.findViewById(R.id.btnExitLoseGame);
+
+        // Áp dụng hiệu ứng cho dialog
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogBounceAnimation;
+            // Xóa nền trắng của Dialog
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        //xu lu click Try Again
+        btnExitLoseGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(view, MenuGame.class);
+                view.startActivity(intent);
+                dialog.dismiss();
+            }
+        });
+
+        //xu lu click Exit
+        btnExitLoseGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(view, MenuGame.class);
+                view.startActivity(intent);
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
     public void handleOnlineButtonClick(){
 
