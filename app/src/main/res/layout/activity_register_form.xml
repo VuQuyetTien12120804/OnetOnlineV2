@@ -131,12 +131,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="16dp"
         android:fontFamily="@font/ltim_regular"
         android:text="Already have an account? Login"
         android:textColor="#3F51B5"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/btnBackRegisterForm"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/btnBackRegisterForm" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
