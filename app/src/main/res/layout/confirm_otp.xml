@@ -28,55 +28,24 @@
             android:layout_marginBottom="16dp" />
 
         <!-- Ô nhập OTP -->
-        <EditText
-            android:id="@+id/otp_input"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:hint="Enter OTP"
-            android:background="@drawable/background_input_confirm_otp"
-            android:gravity="center"
-            android:textSize="16sp"
-            android:padding="8dp"
-            android:fontFamily="@font/ltim_regular"
-            android:layout_marginBottom="12dp" />
-
-        <!-- Các chấm OTP -->
-        <LinearLayout
+        <com.mukeshsolanki.OtpView
+            android:id="@+id/otp_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginBottom="16dp">
-
-            <!-- Các chấm -->
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_margin="4dp"
-                android:src="@drawable/dot_filled" />
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_margin="4dp"
-                android:src="@drawable/dot_empty" />
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_margin="4dp"
-                android:src="@drawable/dot_3" />
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_margin="4dp"
-                android:src="@drawable/dot_empty" />
-        </LinearLayout>
+            android:inputType="text"
+            android:textAllCaps="true"
+            android:layout_gravity="center"
+            android:textColor="#FFFFFF"
+            app:OtpHideLineWhenFilled="true"
+            app:OtpItemCount="6"
+            app:OtpItemSpacing="0dp"
+            app:OtpLineColor="@color/black"
+            app:OtpState_filled="true"
+            app:OtpViewType="line" />
 
         <!-- Nút VERIFY -->
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/verify_button"
+            android:id="@+id/btnVerify"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:fontFamily="@font/ltim_regular"
@@ -86,9 +55,10 @@
             android:textSize="18sp"
             android:layout_marginBottom="8dp"
             android:layout_gravity="center"/>
+
         <!-- Nút Back -->
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnCancel_ConfirmOTP"
+            android:id="@+id/btnCancel"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_gravity="center"
