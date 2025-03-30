@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.InputType;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -33,11 +36,7 @@ public class LoginForm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login_form);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.id_form_login), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
         //ánh xa id
         btnBackLoginForm = findViewById(R.id.btnBackLoginForm);
         tvForgotPassword = findViewById(R.id.tvForgotPassword);
@@ -55,11 +54,25 @@ public class LoginForm extends AppCompatActivity {
         tvForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(LoginForm.this, "The OTP has been sent to your email and is valid for 5 minutes. Please enter the code to proceed.", Toast.LENGTH_SHORT).show();
+                showCustomToast("The OTP has been sent to your email and is valid for 5 minutes. Please enter the code to proceed.");
                 showOtpDialog();
             }
         });
 
+    }
+    private void showCustomToast(String message){
+        // Inflate layout cuar custom toast
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast, (ViewGroup) findViewById(R.id.custom_toast_container));
+        TextView toastMessage = layout.findViewById(R.id.toast_message);
+        toastMessage.setText(message);
+
+        //tao toast
+        Toast toast = new Toast(getApplicationContext());
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.setGravity(Gravity.BOTTOM, 0, 0);
+        toast.show();
     }
     private void showOtpDialog() {
         // Tạo Dialog
@@ -78,7 +91,7 @@ public class LoginForm extends AppCompatActivity {
         btnResend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(LoginForm.this, "The OTP has been sent to your email and is valid for 5 minutes. Please enter the code to proceed.", Toast.LENGTH_SHORT).show();
+                showCustomToast("The OTP has been sent to your email and is valid for 5 minutes. Please enter the code to proceed.");
             }
         });
 
@@ -123,9 +136,9 @@ public class LoginForm extends AppCompatActivity {
 
             //Kiem tra da dien du chua
             if(Password.isEmpty() || confirmPasswordText.isEmpty()){
-                Toast.makeText(LoginForm.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                showCustomToast("Please fill in all fields.");
             } else if (!Password.equals(confirmPasswordText)) { // kiem tra xem pass moi va pass xac nhan co bang nhau khong
-                Toast.makeText(LoginForm.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+                showCustomToast("Passwords do not match.");
             } else { //dang ki thanh cong
                 //Mo man hinh loading
                 showLoadingResetPasswordDialog();
@@ -179,6 +192,6 @@ public class LoginForm extends AppCompatActivity {
     }
     private void navigateToLogin() {
         // Xử lý logic chuyển màn hình login
-        Toast.makeText(LoginForm.this, "Password has been reset successfully", Toast.LENGTH_SHORT).show();
+        showCustomToast("Password has been reset successfully");
     }
 }
