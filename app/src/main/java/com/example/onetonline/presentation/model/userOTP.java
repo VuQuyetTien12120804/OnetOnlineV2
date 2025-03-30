@@ -1,27 +1,17 @@
 package com.example.onetonline.presentation.model;
 
 public class userOTP {
-    private String email;
-    private String otp;
+    private String emailOrName;
 
-    public userOTP(String email, String otp) {
-        this.email = email;
-        this.otp = otp;
+    public userOTP(String email) {
+        this.emailOrName = emailOrName;
     }
 
     public String email() {
-        return email;
+        return emailOrName;
     }
 
-    public void setEmail(String id) {
-        this.email = id;
-    }
-
-    public String otp() {
-        return otp;
-    }
-
-    public void setOtp(String otp) {
-        this.otp = otp;
+    public void setEmailOrName(String emailOrName) {
+        this.emailOrName = emailOrName;
     }
 }

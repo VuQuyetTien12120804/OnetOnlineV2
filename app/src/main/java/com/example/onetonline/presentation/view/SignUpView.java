@@ -6,6 +6,6 @@ public interface SignUpView {
     String getPassword();
     String getConfirmPassword();
     String getOTP();
-    void ShowMessage(String message);
+    void showMessage(String message);
     void convertContext();
 }

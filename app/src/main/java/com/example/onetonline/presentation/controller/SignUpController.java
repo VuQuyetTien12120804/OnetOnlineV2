@@ -20,7 +20,7 @@ public class SignUpController {
     }
 
     public void handleSendOTP(){
-        userOTP otp = new userOTP(sign.getEmail(), "");
+        userOTP otp = new userOTP(sign.getEmail());
         otpRepo.sendOTP(otp, new OTPRepo.SendCallBack() {
             @Override
             public void onSuccess() {
@@ -31,7 +31,7 @@ public class SignUpController {
             public void onFailure(String err) {
                 if(err.equals("409")){
                     String email = sign.getEmail();
-                    userOTP userotp = new userOTP(email,"");
+                    userOTP userotp = new userOTP(email);
                     otpRepo.resendOTP(userotp, new OTPRepo.ResendCallBack() {
                         @Override
                         public void onSuccess() {
@@ -40,19 +40,19 @@ public class SignUpController {
 
                         @Override
                         public void onFailure(String err) {
-                            sign.ShowMessage(err);
+                            sign.showMessage(err);
                         }
                     });
                 }
                 else{
-                    sign.ShowMessage(err);
+                    sign.showMessage(err);
                 }
             }
         });
     }
 
-    public void handleReSendOTPP(){
-        userOTP otp = new userOTP(sign.getEmail(), "");
+    public void handleReSendOTP(){
+        userOTP otp = new userOTP(sign.getEmail());
         otpRepo.resendOTP(otp, new OTPRepo.ResendCallBack() {
             @Override
             public void onSuccess() {
@@ -90,13 +90,13 @@ public class SignUpController {
                     @Override
                     public void onSuccess(PostResponse postResponse) {
                         sign.convertContext();
-                        sign.ShowMessage("Sign up succesfull, Login your account please!!");
+                        sign.showMessage("Sign up succesfull, Login your account please!!");
                     }
 
                     @Override
                     public void onFailure(String err) {
                         if(err.equals("400")){
-                            sign.ShowMessage("Error! email or username have already exists");
+                            sign.showMessage("Error! email or username have already exists");
                         }
                     }
                 });
@@ -105,10 +105,10 @@ public class SignUpController {
             @Override
             public void onFailure(String err) {
                 if(err.equals("401")){
-                    sign.ShowMessage("Wrong otp");
+                    sign.showMessage("Wrong otp");
                 }
                 else{
-                    sign.ShowMessage(err);
+                    sign.showMessage(err);
                 }
             }
         });

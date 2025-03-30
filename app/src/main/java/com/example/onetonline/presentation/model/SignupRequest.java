@@ -37,4 +37,5 @@ public class SignupRequest {
         this.password = password;
         return this;
     }
+
 }

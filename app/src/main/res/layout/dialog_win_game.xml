@@ -1,0 +1,82 @@
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="50dp"
+    android:layout_margin="16dp"
+    android:background="@null"
+    app:cardBackgroundColor="@android:color/transparent">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_win_dialog"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Animation Ngôi Sao -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                android:layout_weight="1"
+                app:lottie_rawRes="@raw/animation_star_win_game"/>
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                android:layout_weight="1"
+                app:lottie_rawRes="@raw/animation_star_win_game"/>
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                android:layout_weight="1"
+                app:lottie_rawRes="@raw/animation_star_win_game"/>
+        </LinearLayout>
+
+        <!-- Tiêu đề -->
+        <TextView
+            android:id="@+id/tv_you_win"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="YOU WIN!"
+            android:textColor="#FFD700"
+            android:textSize="32sp"
+            android:fontFamily="@font/ltim_regular"
+            android:shadowColor="#FF4500"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="8"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- Nút NEXT -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnNextWinGame"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:background="@drawable/button_win_gradient"
+            android:text="NEXT"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:fontFamily="@font/ltim_regular"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:elevation="10dp"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

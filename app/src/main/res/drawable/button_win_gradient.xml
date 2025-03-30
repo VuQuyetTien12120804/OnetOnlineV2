@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Hiệu ứng khi nhấn xuống -->
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="25dp"/>
+            <gradient
+                android:angle="90"
+                android:startColor="#FF512F"
+                android:endColor="#DD2476"/>
+            <stroke android:width="5dp" android:color="#E2CCB5"></stroke>
+        </shape>
+    </item>
+
+    <!-- Trạng thái bình thường -->
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="25dp"/>
+            <gradient
+                android:angle="90"
+                android:startColor="#FF512F"
+                android:endColor="#F09819"/>
+            <shadowColor android:color="#F0FF1966" android:radius="8dp"/>
+            <stroke android:width="5dp" android:color="#E2CCB5"></stroke>
+        </shape>
+    </item>
+
+</selector>

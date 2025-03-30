@@ -45,11 +45,24 @@
 
         <!-- Nút VERIFY -->
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnVerify"
+            android:id="@+id/btnVerify_ConfirmOTP"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:fontFamily="@font/ltim_regular"
             android:text="VERIFY"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/background_button_confirm_otp"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="center"/>
+
+        <!-- Nút RESEND -->
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnResend_ConfirmOTP"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:fontFamily="@font/ltim_regular"
+            android:text="RESEND"
             android:textColor="#FFFFFF"
             android:background="@drawable/background_button_confirm_otp"
             android:textSize="18sp"
