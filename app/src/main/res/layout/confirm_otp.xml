@@ -25,7 +25,11 @@
             android:textColor="#FFAA00"
             android:textSize="30sp"
             android:fontFamily="@font/ltim_regular"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:shadowColor="#FFFFFF"
+            android:shadowDx="4"
+            android:shadowDy="4"
+            android:shadowRadius="4"/>
 
         <!-- Ô nhập OTP -->
         <com.mukeshsolanki.OtpView
@@ -35,13 +39,17 @@
             android:inputType="text"
             android:textAllCaps="true"
             android:layout_gravity="center"
-            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:textColor="#FFAA00"
+            android:background="@color/white"
+            android:textSize="20dp"
+            android:fontFamily="@font/ltim_regular"
             app:OtpHideLineWhenFilled="true"
             app:OtpItemCount="6"
             app:OtpItemSpacing="0dp"
-            app:OtpLineColor="@color/black"
+            app:OtpLineColor="#85E7AA"
             app:OtpState_filled="true"
-            app:OtpViewType="line" />
+            app:OtpViewType="rectangle" />
 
         <!-- Nút VERIFY -->
         <androidx.appcompat.widget.AppCompatButton
@@ -53,6 +61,7 @@
             android:textColor="#FFFFFF"
             android:background="@drawable/background_button_confirm_otp"
             android:textSize="18sp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="8dp"
             android:layout_gravity="center"/>
 

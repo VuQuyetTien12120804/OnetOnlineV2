@@ -4,7 +4,10 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -61,16 +64,16 @@ public class RegisterForm extends AppCompatActivity implements SignUpView{
            @Override
            public void onClick(View v) {
                if (!Checker.checkUserNameLen(etUserName.getText().toString())) {
-                   Toast.makeText(RegisterForm.this, "User Name must be more than 5 characters!", Toast.LENGTH_LONG).show();
+                   showCustomToast("User Name must be more than 5 characters!");
                } else {
                    if (!Checker.checkEmail(etEmail.getText().toString())) {
-                       Toast.makeText(RegisterForm.this, "Invalid email address", Toast.LENGTH_LONG).show();
+                       showCustomToast("Invalid email address");
                    } else {
                        if (!Checker.checkPassLen(etPassword.getText().toString())) {
-                           Toast.makeText(RegisterForm.this, "Password must be more than 6 characters!", Toast.LENGTH_LONG).show();
+                           showCustomToast("Password must be more than 6 characters!");
                        } else {
                            if (!Checker.checkConfirmPassword(etPassword.getText().toString(), etConfirmPassword.getText().toString())) {
-                               Toast.makeText(RegisterForm.this, "Password and Confirm Password isn't match!", Toast.LENGTH_LONG).show();
+                               showCustomToast("Passwords do not match!");
                            } else {
                                showOtpDialog();
                                sign.handleSendOTP();
@@ -90,6 +93,21 @@ public class RegisterForm extends AppCompatActivity implements SignUpView{
                 finish();
             }
         });
+    }
+
+    private void showCustomToast(String message){
+        // Inflate layout cuar custom toast
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast, (ViewGroup) findViewById(R.id.custom_toast_container));
+        TextView toastMessage = layout.findViewById(R.id.toast_message);
+        toastMessage.setText(message);
+
+        //tao toast
+        Toast toast = new Toast(getApplicationContext());
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.setGravity(Gravity.BOTTOM, 0, 0);
+        toast.show();
     }
 
     private void showOtpDialog() {
@@ -114,7 +132,7 @@ public class RegisterForm extends AppCompatActivity implements SignUpView{
             public void onClick(View v) {
                 otp = otpView.getText().toString();
                 if(!Checker.checkOTPLen(otpView.getText().toString())){
-                    Toast.makeText(RegisterForm.this, "Enter your otp!", Toast.LENGTH_LONG).show();
+                    showCustomToast("Enter your otp!");
                 }
                 else{
                     sign.handleSignUp();
@@ -162,7 +180,7 @@ public class RegisterForm extends AppCompatActivity implements SignUpView{
 
     @Override
     public void showMessage(String message) {
-        Toast.makeText(RegisterForm.this, message, Toast.LENGTH_LONG).show();
+        showCustomToast(message);
     }
 
     @Override

@@ -3,7 +3,7 @@ package com.example.onetonline.presentation.model;
 public class userOTP {
     private String emailOrName;
 
-    public userOTP(String email) {
+    public userOTP(String emailOrName) {
         this.emailOrName = emailOrName;
     }
 

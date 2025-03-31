@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.InputType;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,18 +25,18 @@ import com.example.onetonline.presentation.model.Checker;
 import com.example.onetonlinev2.R;
 import com.mukeshsolanki.OtpView;
 
+import retrofit2.http.HEAD;
+
 public class LoginForm extends AppCompatActivity implements LoginView{
     //Khai báo
-    private Button btnBack, btnLogin;
+    private Button btnBackLoginForm, btnLogin;
     private EditText etLogin, etPassword;
     private LoginController loginController;
-    private Button btnBackLoginForm;
     private TextView tvForgotPassword;
     private Dialog loadingDialog;
-    private String otp = "";
+    private String otp = "", newPassword = "";
 
     public void initWidgets(){
-        btnBack = findViewById(R.id.btnBackLoginForm);
         btnLogin = findViewById(R.id.btnLogin);
         etLogin = findViewById(R.id.etNameOrEmail);
         etPassword = findViewById(R.id.etPasswordLogin);
@@ -51,7 +54,7 @@ public class LoginForm extends AppCompatActivity implements LoginView{
         loginController = new LoginController(this, LoginForm.this);
 
         // Xử lý click
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        btnBackLoginForm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginForm.this, WellComeScreen.class);
@@ -63,12 +66,13 @@ public class LoginForm extends AppCompatActivity implements LoginView{
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(!Checker.checkUserNameLen(etLogin.getText().toString())) {
-                    Toast.makeText(LoginForm.this, "User Name must be more than 5 characters!", Toast.LENGTH_LONG).show();
+                    showCustomToast("User Name must be more than 5 characters!");
                 }
                 else{
                     if (!Checker.checkPassLen(etPassword.getText().toString())) {
-                        Toast.makeText(LoginForm.this, "Password must be more than 6 characters!", Toast.LENGTH_LONG).show();
+                        showCustomToast("Password must be more than 6 characters!");
                     }
                     else{
                         loginController.handleLogin();
@@ -81,7 +85,6 @@ public class LoginForm extends AppCompatActivity implements LoginView{
             @Override
             public void onClick(View v) {
                 loginController.handleSendOTP();
-                showOtpDialog();
             }
         });
     }
@@ -98,7 +101,7 @@ public class LoginForm extends AppCompatActivity implements LoginView{
 
     @Override
     public void showMessage(String message) {
-        Toast.makeText(LoginForm.this, message, Toast.LENGTH_LONG).show();
+        showCustomToast(message);
     }
 
     @Override
@@ -109,7 +112,32 @@ public class LoginForm extends AppCompatActivity implements LoginView{
         finish();
     }
 
-    private void showOtpDialog() {
+    @Override
+    public String getOTP() {
+        return otp;
+    }
+
+    @Override
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void showCustomToast(String message){
+        // Inflate layout cuar custom toast
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast, (ViewGroup) findViewById(R.id.custom_toast_container));
+        TextView toastMessage = layout.findViewById(R.id.toast_message);
+        toastMessage.setText(message);
+
+        //tao toast
+        Toast toast = new Toast(getApplicationContext());
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.setGravity(Gravity.BOTTOM, 0, 0);
+        toast.show();
+    }
+
+    public void showOtpDialog() {
         // Tạo Dialog
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.confirm_otp);
@@ -127,8 +155,8 @@ public class LoginForm extends AppCompatActivity implements LoginView{
         btnResend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(LoginForm.this, "The OTP has been sent to your email and is valid for 3 minutes. Please enter the code to proceed.", Toast.LENGTH_SHORT).show();
                 loginController.handleReSendOTP();
+                showCustomToast("The OTP has been sent to your email and is valid for 3 minutes. Please enter the code to proceed.");
             }
         });
 
@@ -138,15 +166,13 @@ public class LoginForm extends AppCompatActivity implements LoginView{
             @Override
             public void onClick(View v) {
                 otp = otpView.getText().toString();
+                String userName = etLogin.getText().toString();
                 if(!Checker.checkOTPLen(otpView.getText().toString())){
-                    Toast.makeText(LoginForm.this, "Enter your otp!", Toast.LENGTH_LONG).show();
+                    showCustomToast("Enter your otp!");
                 }
                 else{
                     //Mo man hinh reset password
-                    showResetPasswordDialog();
-                    
-                    //Dong dialog xac nhan  otp
-                    dialog.dismiss();
+                    loginController.handleVerifyOTP(dialog);
                 }
             }
         });
@@ -155,7 +181,7 @@ public class LoginForm extends AppCompatActivity implements LoginView{
         dialog.show();
     }
 
-    private void showResetPasswordDialog(){
+    public void showResetPasswordDialog(){
         // Tao dialog moi cho reset password
         Dialog resetPasswordDialog = new Dialog(this);
         resetPasswordDialog.setContentView(R.layout.dialog_reset_password);
@@ -169,23 +195,22 @@ public class LoginForm extends AppCompatActivity implements LoginView{
         //Xử lý nút xác nhận
         Button btnConfirmReset = resetPasswordDialog.findViewById(R.id.btn_confirm_reset);
 
-        EditText newPassword = resetPasswordDialog.findViewById(R.id.et_new_password);
-        EditText confirmPassword = resetPasswordDialog.findViewById(R.id.et_confirm_password);
+        EditText etNewPassword = resetPasswordDialog.findViewById(R.id.et_new_password);
+        EditText etConfirmPassword = resetPasswordDialog.findViewById(R.id.et_confirm_password);
 
         btnConfirmReset.setOnClickListener(v->{
-
-            String Password = newPassword.getText().toString();
-            String confirmPasswordText = confirmPassword.getText().toString();
+            newPassword = etNewPassword.getText().toString();
+            String confirmPassword = etConfirmPassword.getText().toString();
 
             //Kiem tra da dien du chua
-            if(Password.isEmpty() || confirmPasswordText.isEmpty()){
-                Toast.makeText(LoginForm.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
-            } else if (!Password.equals(confirmPasswordText)) { // kiem tra xem pass moi va pass xac nhan co bang nhau khong
-                Toast.makeText(LoginForm.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
-            } else { //dang ki thanh cong
-                //Mo man hinh loading
-                showLoadingResetPasswordDialog();
-                resetPasswordDialog.dismiss();
+            if(!Checker.checkPassLen(newPassword)){
+                showCustomToast("Password must be more than 6 characters!");
+            }
+            else if(!Checker.checkConfirmPassword(newPassword, confirmPassword)){ // kiem tra xem pass moi va pass xac nhan co bang nhau khong
+                showCustomToast("Passwords do not match!");
+            }
+            else { //dang ki thanh cong
+                loginController.handleChangePassword(resetPasswordDialog);
             }
         });
 
@@ -194,28 +219,27 @@ public class LoginForm extends AppCompatActivity implements LoginView{
 
         // Xử lý nút toggle cho mật khẩu mới
         toggleNewPassword.setOnClickListener(v -> {
-            if (newPassword.getInputType() == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
-                newPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            if (etNewPassword.getInputType() == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
+                etNewPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                 toggleNewPassword.setImageResource(R.drawable.ic_visibility); // Icon hiển thị mật khẩu
             } else {
-                newPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                etNewPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 toggleNewPassword.setImageResource(R.drawable.ic_visibility_off); // Icon ẩn mật khẩu
             }
-            newPassword.setSelection(newPassword.getText().length()); // Đặt con trỏ ở cuối văn bản
+            etNewPassword.setSelection(etNewPassword.getText().length()); // Đặt con trỏ ở cuối văn bản
         });
 
         // Xử lý nút toggle cho xác nhận mật khẩu
         toggleConfirmPassword.setOnClickListener(v -> {
-            if (confirmPassword.getInputType() == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
-                confirmPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            if (etConfirmPassword.getInputType() == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
+                etConfirmPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                 toggleConfirmPassword.setImageResource(R.drawable.ic_visibility); // Icon hiển thị mật khẩu
             } else {
-                confirmPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                etConfirmPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 toggleConfirmPassword.setImageResource(R.drawable.ic_visibility_off); // Icon ẩn mật khẩu
             }
-            confirmPassword.setSelection(confirmPassword.getText().length()); // Đặt con trỏ ở cuối văn bản
+            etConfirmPassword.setSelection(etConfirmPassword.getText().length()); // Đặt con trỏ ở cuối văn bản
         });
-
 
         //hien thi dialog
         resetPasswordDialog.show();
@@ -237,6 +261,6 @@ public class LoginForm extends AppCompatActivity implements LoginView{
 
     private void navigateToLogin() {
         // Xử lý logic chuyển màn hình login
-        Toast.makeText(LoginForm.this, "Password has been reset successfully", Toast.LENGTH_SHORT).show();
+        showCustomToast("Password has been reset successfully");
     }
 }

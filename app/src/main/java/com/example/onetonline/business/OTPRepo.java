@@ -45,9 +45,7 @@ public class OTPRepo {
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     callBack.onSuccess();
-                } else if (response.code() == 409) {
-                    callBack.onFailure(String.valueOf(response.code()));
-                } else callBack.onFailure("Error: " + response.code());
+                } else callBack.onFailure(String.valueOf(response.code()));
             }
 
             @Override
@@ -75,14 +73,14 @@ public class OTPRepo {
         });
     }
 
-    public void verifyOTP(String email, String otp, final VerifyCallBack callBack) {
-        otpApi.verify_otp(email, otp).enqueue(new Callback<Void>() {
+    public void verifyOTP(String emailOrName, String otp, final VerifyCallBack callBack) {
+        otpApi.verify_otp(emailOrName, otp).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     callBack.onSuccess();
                 } else {
-                    callBack.onFailure("Error: " + response.code());
+                    callBack.onFailure(String.valueOf(response.code()));
                 }
             }
 

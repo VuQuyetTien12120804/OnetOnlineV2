@@ -13,7 +13,7 @@ public interface OTP_API {
     Call<Void> send_otp(@Body userOTP otp);
 
     @DELETE("otp")
-    Call<Void> verify_otp(@Query("email") String email, @Query("otp") String otp);
+    Call<Void> verify_otp(@Query("emailOrName") String emailOrName, @Query("otp") String otp);
 
     @PATCH("otp")
     Call<Void> resend_otp(@Body userOTP otp);

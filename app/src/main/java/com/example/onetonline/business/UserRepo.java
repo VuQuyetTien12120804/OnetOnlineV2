@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import com.example.onetonline.data.TokenStorage;
 import com.example.onetonline.data.myDBHelper;
+import com.example.onetonline.presentation.model.ChangePassRequest;
 import com.example.onetonline.presentation.model.LoginRequest;
 import com.example.onetonline.presentation.model.SignupRequest;
 import com.google.gson.Gson;
@@ -42,6 +43,11 @@ public class UserRepo {
 
     public interface GetUserCallBack{
         void onSuccess(User user);
+        void onFailure(String err);
+    }
+
+    public interface UpdateUserCallBack{
+        void onSuccess();
         void onFailure(String err);
     }
 
@@ -98,10 +104,9 @@ public class UserRepo {
                     User user = response.body();
                     callBack.onSuccess(user);
                     long i = myDB.Insert(user.id(), user.userName(), user.email(), user.level(), user.lastUpdate());
-                    Log.d("abc", i+"");
                 }
                 else{
-                    callBack.onFailure("Error: " + response.code());
+                    callBack.onFailure(String.valueOf(response.code()));
                 }
             }
 
@@ -112,4 +117,22 @@ public class UserRepo {
         });
     }
 
+    public void changePass(ChangePassRequest changePassRequest, final UpdateUserCallBack callBack){
+        userAPI.changePass(changePassRequest).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.isSuccessful()){
+                    callBack.onSuccess();
+                }
+                else{
+                    callBack.onFailure(String.valueOf(response.code()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                callBack.onFailure("Network error: "+ t.getMessage());
+            }
+        });
+    }
 }

@@ -1,13 +1,16 @@
 package com.example.onetonline.presentation.controller;
 
+import android.app.Dialog;
 import android.content.Context;
 import com.example.onetonline.business.OTPRepo;
 import com.example.onetonline.business.PostResponse;
 import com.example.onetonline.business.User;
 import com.example.onetonline.business.UserRepo;
 import com.example.onetonline.business.token;
+import com.example.onetonline.presentation.model.ChangePassRequest;
 import com.example.onetonline.presentation.model.LoginRequest;
 import com.example.onetonline.presentation.model.userOTP;
+import com.example.onetonline.presentation.view.LoginForm;
 import com.example.onetonline.presentation.view.LoginView;
 
 public class LoginController {
@@ -69,7 +72,8 @@ public class LoginController {
         otpRepo.sendOTP(otp, new OTPRepo.SendCallBack() {
             @Override
             public void onSuccess() {
-
+                ((LoginForm) loginView).showCustomToast("The OTP has been sent to your email and is valid for 3 minutes. Please enter the code to proceed.");
+                ((LoginForm) loginView).showOtpDialog();
             }
 
             @Override
@@ -80,14 +84,21 @@ public class LoginController {
                     otpRepo.resendOTP(userotp, new OTPRepo.ResendCallBack() {
                         @Override
                         public void onSuccess() {
-
+                            ((LoginForm) loginView).showCustomToast("The OTP has been sent to your email and is valid for 3 minutes. Please enter the code to proceed.");
+                            ((LoginForm) loginView).showOtpDialog();
                         }
 
                         @Override
                         public void onFailure(String err) {
-                            loginView.showMessage(err);
+                            if(err.equals("404")){
+                                loginView.showMessage("Account doesn't exists");
+                            }
                         }
                     });
+                }
+                else if(err.equals("404")){
+                    loginView.showMessage("Account doesn't exists");
+                    return ;
                 }
                 else{
                     loginView.showMessage(err);
@@ -101,7 +112,7 @@ public class LoginController {
         otpRepo.resendOTP(otp, new OTPRepo.ResendCallBack() {
             @Override
             public void onSuccess() {
-
+                ((LoginForm) loginView).showCustomToast("The OTP has been sent to your email and is valid for 3 minutes. Please enter the code to proceed.");
             }
 
             @Override
@@ -110,12 +121,15 @@ public class LoginController {
                     otpRepo.sendOTP(otp, new OTPRepo.SendCallBack() {
                         @Override
                         public void onSuccess() {
-
+                            ((LoginForm) loginView).showCustomToast("The OTP has been sent to your email and is valid for 3 minutes. Please enter the code to proceed.");
                         }
 
                         @Override
                         public void onFailure(String err) {
-
+                            if(err.equals("404")){
+                                loginView.showMessage("Account doesn't exists");
+                                return ;
+                            }
                         }
                     });
                 }
@@ -123,20 +137,43 @@ public class LoginController {
         });
     }
 
-    public void handleVerifyOTP(){
-        String userName = loginView.getUserName();
-        String otp = "";
+    public void handleVerifyOTP(Dialog dialog){
+        String emailOrName = loginView.getUserName();
+        String otp = loginView.getOTP();
 
-        otpRepo.verifyOTP(userName, otp, new OTPRepo.VerifyCallBack() {
+        otpRepo.verifyOTP(emailOrName, otp, new OTPRepo.VerifyCallBack() {
             @Override
             public void onSuccess() {
-//                loginView.
+                ((LoginForm) loginView).showResetPasswordDialog();
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure(String err) {
                 if (err.equals("401")) {
                     loginView.showMessage("Wrong otp");
+                } else {
+                    loginView.showMessage(err);
+                }
+            }
+        });
+    }
+
+    public void handleChangePassword(Dialog dialog){
+        String emailOrName = loginView.getUserName();
+        String newPassword = loginView.getNewPassword();
+        ChangePassRequest changePassRequest = new ChangePassRequest(emailOrName, newPassword);
+        userRepo.changePass(changePassRequest, new UserRepo.UpdateUserCallBack() {
+            @Override
+            public void onSuccess() {
+                loginView.showMessage("Change password successful");
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(String err) {
+                if(err.equals("404")){
+                    loginView.showMessage("Account doesn't exists");
                 } else {
                     loginView.showMessage(err);
                 }
