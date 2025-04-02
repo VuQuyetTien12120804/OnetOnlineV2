@@ -22,6 +22,7 @@
         android:textSize="20sp"
         android:textColor="#673AB7"
         android:textColorHint="#AAAAAA"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 _-"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.1"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +51,7 @@
 
     <!-- Password Field -->
     <EditText
-        android:id="@+id/etPassword"
+        android:id="@+id/etPasswordRegister"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="15dp"
@@ -83,7 +84,7 @@
         android:paddingLeft="10dp"
         android:textColor="#FFFFFF"
         android:textColorHint="#AAAAAA"
-        app:layout_constraintTop_toBottomOf="@id/etPassword"
+        app:layout_constraintTop_toBottomOf="@id/etPasswordRegister"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintWidth_percent="0.5"

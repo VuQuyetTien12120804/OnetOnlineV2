@@ -2,9 +2,15 @@ package com.example.onetonline.presentation.controller;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.onetonline.presentation.model.MenuModel;
 import com.example.onetonline.presentation.view.*;
@@ -124,9 +130,12 @@ public class MenuController {
     public void handleAudioButtonClick(){
         Toast.makeText(view, "Audio button clicked", Toast.LENGTH_SHORT).show();
     }
-
     public void handleHelpContinueButtonClick(){
         DialogHelper.showScrollableAlertDialog(view);
     }
+
+
+
+
 
 }

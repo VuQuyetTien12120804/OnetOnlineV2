@@ -25,54 +25,31 @@
             android:textColor="#FFAA00"
             android:textSize="30sp"
             android:fontFamily="@font/ltim_regular"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:shadowColor="#FFFFFF"
+            android:shadowDx="4"
+            android:shadowDy="4"
+            android:shadowRadius="4"/>
 
         <!-- Ô nhập OTP -->
-        <EditText
-            android:id="@+id/otp_input"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:hint="Enter OTP"
-            android:background="@drawable/background_input_confirm_otp"
-            android:gravity="center"
-            android:textSize="16sp"
-            android:padding="8dp"
-            android:fontFamily="@font/ltim_regular"
-            android:layout_marginBottom="12dp" />
-
-        <!-- Các chấm OTP -->
-        <LinearLayout
+        <com.mukeshsolanki.OtpView
+            android:id="@+id/otp_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:inputType="text"
+            android:textAllCaps="true"
+            android:layout_gravity="center"
             android:gravity="center"
-            android:layout_marginBottom="16dp">
-
-            <!-- Các chấm -->
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_margin="4dp"
-                android:src="@drawable/dot_filled" />
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_margin="4dp"
-                android:src="@drawable/dot_empty" />
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_margin="4dp"
-                android:src="@drawable/dot_3" />
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_margin="4dp"
-                android:src="@drawable/dot_empty" />
-        </LinearLayout>
+            android:textColor="#FFAA00"
+            android:background="@color/white"
+            android:textSize="20dp"
+            android:fontFamily="@font/ltim_regular"
+            app:OtpHideLineWhenFilled="true"
+            app:OtpItemCount="6"
+            app:OtpItemSpacing="0dp"
+            app:OtpLineColor="#85E7AA"
+            app:OtpState_filled="true"
+            app:OtpViewType="rectangle" />
 
         <!-- Nút VERIFY -->
         <androidx.appcompat.widget.AppCompatButton
@@ -84,8 +61,10 @@
             android:textColor="#FFFFFF"
             android:background="@drawable/background_button_confirm_otp"
             android:textSize="18sp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="8dp"
             android:layout_gravity="center"/>
+
         <!-- Nút RESEND -->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnResend_ConfirmOTP"
@@ -98,9 +77,10 @@
             android:textSize="18sp"
             android:layout_marginBottom="8dp"
             android:layout_gravity="center"/>
+
         <!-- Nút Back -->
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnCancel_ConfirmOTP"
+            android:id="@+id/btnCancel"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_gravity="center"

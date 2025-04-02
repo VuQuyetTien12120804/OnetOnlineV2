@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- First layer: The main frame with gradient background -->
+    <item>
+        <shape android:shape="rectangle">
+            <!-- Gradient background from light blue to darker blue -->
+            <gradient
+                android:startColor="#2BAEDA"
+                android:endColor="#2BAEDA"
+                android:angle="90" />
+
+            <!-- Rounded corners -->
+            <corners android:radius="10dp" />
+
+        </shape>
+    </item>
+
+    <!-- Second layer: Add a bold top border -->
+    <item
+        android:top="7dp"
+    android:left="0dp"
+    android:right="0dp">
+    <shape android:shape="rectangle">
+        <solid android:color="#64CFF1" /> <!-- Color of the top border -->
+        <size android:height="5dp" /> <!-- Thickness of the top border -->
+        <!-- Match the rounded corners of the top -->
+        <corners android:radius="10dp"></corners>
+    </shape>
+</item>
+
+    </layer-list>

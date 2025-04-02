@@ -42,5 +42,10 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
     implementation(libs.otpview)
     implementation ("com.airbnb.android:lottie:6.0.0")
-
+    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.github.mukeshsolanki.android-otpview-pinview:otpview-compose:3.1.0")
+    implementation("com.github.mukeshsolanki.android-otpview-pinview:otpview:3.1.0")
+    implementation("com.sanctionco.jmail:jmail:1.6.2")
 }
