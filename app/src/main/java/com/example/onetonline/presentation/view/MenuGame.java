@@ -44,7 +44,7 @@ public class MenuGame extends AppCompatActivity {
     private Button btnHelpContinue;
     private Button btnHelpRandom;
 
-    private ImageView ivAvatar;
+    private ImageView ibAvatar;
 
     // ActivityResultLauncher để xử lý kết quả chọn ảnh
     private ActivityResultLauncher<Intent> pickImageLauncher;
@@ -62,33 +62,34 @@ public class MenuGame extends AppCompatActivity {
         btnContinue = findViewById(R.id.btnContinue);
         btnOnline = findViewById(R.id.btnOnline);
         btnExit = findViewById(R.id.btnExitLoseGame);
-        btnMusic = findViewById(R.id.btnMusic);
-        btnAudio = findViewById(R.id.btnAudio);
+//        btnMusic = findViewById(R.id.btnMusic);
+//        btnAudio = findViewById(R.id.btnAudio);
         btnHelpClassic = findViewById(R.id.btnHelpClassic);
         btnHelpContinue = findViewById(R.id.btnHelpContinue);
         btnHelpRandom = findViewById(R.id.btnHelpRandom);
-        ivAvatar = findViewById(R.id.ivAvatar);
+        ibAvatar = findViewById(R.id.ibAvatar);
 
         // Khởi tạo ActivityResultLauncher để chọn ảnh
         pickImageLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                 Uri imageUri = result.getData().getData();
-                ivAvatar.setImageURI(imageUri); // Hiển thị ảnh đã chọn lên ImageView
+                ibAvatar.setImageURI(imageUri); // Hiển thị ảnh đã chọn lên ImageView
             }
         });
         btnClassic.setOnClickListener(v -> handleClassicButtonClick());
         btnContinue.setOnClickListener(v -> handleContinueButtonClick());
         btnOnline.setOnClickListener(v -> handleOnlineButtonClick());
         btnExit.setOnClickListener(v -> handleExitButtonClick());
+
         // Xử lý sự kiện click trên avatar
-        ivAvatar.setOnClickListener(v -> handleChangeAvatar());
+        ibAvatar.setOnClickListener(v -> handleChangeAvatar());
 
         btnHelpContinue.setOnClickListener(v->handleHelpContinueButtonClick());
         btnHelpRandom.setOnClickListener(v->handleHelpContinueButtonClick());
         btnHelpClassic.setOnClickListener(v->handleHelpContinueButtonClick());
 
-        btnMusic.setOnClickListener(v -> handleMusicButtonClick());
-        btnAudio.setOnClickListener(v -> handleAudioButtonClick());
+//        btnMusic.setOnClickListener(v -> handleMusicButtonClick());
+//        btnAudio.setOnClickListener(v -> handleAudioButtonClick());
 
     }
 

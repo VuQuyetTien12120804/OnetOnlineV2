@@ -100,12 +100,13 @@
 
             <!-- Avatar -->
             <ImageButton
-                android:id="@+id/ivAvatar"
+                android:id="@+id/ibAvatar"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="10dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/icon_game" />
+                android:src="@drawable/icon_game"
+                android:background="@null"/>
 
             <!-- Phần thông tin bên phải avatar -->
             <LinearLayout
@@ -216,7 +217,8 @@
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintWidth_percent="0.3">
 
         <!-- TableLayout -->
         <TableLayout
@@ -243,8 +245,8 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnHelpClassic"
-                    android:layout_width="66dp"
-                    android:layout_height="50dp"
+                    android:layout_width="80dp"
+                    android:layout_height="75dp"
                     android:background="@drawable/button_helper_background" />
             </TableRow>
 
@@ -297,6 +299,26 @@
             <!-- Row 4: Exit -->
             <TableRow>
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnSettingLoseGame"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_background"
+                    android:text="Setting"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="20dp"
+                    android:fontFamily="@font/ltim_regular" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="80dp"
+                    android:layout_height="70dp"
+                    android:background="@color/transparent" />
+            </TableRow>
+
+            <!-- Row 5: Audio & Music -->
+            <TableRow>
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnExitLoseGame"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
@@ -313,39 +335,6 @@
                     android:layout_height="70dp"
                     android:background="@color/transparent" />
             </TableRow>
-
-            <!-- Row 5: Audio & Music -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnAudio"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_weight="3"
-                    android:background="@drawable/button_helper_background"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/btnMusic"
-                    app:layout_constraintHorizontal_bias="0.521"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnMusic"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginEnd="80dp"
-                    android:layout_weight="3"
-                    android:background="@drawable/button_helper_background"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
         </TableLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
