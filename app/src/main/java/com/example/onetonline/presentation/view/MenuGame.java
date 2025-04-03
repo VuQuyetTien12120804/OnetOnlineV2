@@ -38,6 +38,7 @@ public class MenuGame extends AppCompatActivity {
     private Button btnContinue;
     private Button btnOnline;
     private Button btnExit;
+    private Button btnSetting;
     private Button btnMusic;
     private Button btnAudio;
     private Button btnHelpClassic;
@@ -62,8 +63,9 @@ public class MenuGame extends AppCompatActivity {
         btnContinue = findViewById(R.id.btnContinue);
         btnOnline = findViewById(R.id.btnOnline);
         btnExit = findViewById(R.id.btnExitLoseGame);
-        btnMusic = findViewById(R.id.btnMusic);
-        btnAudio = findViewById(R.id.btnAudio);
+        btnSetting = findViewById(R.id.btnSettingLoseGame);
+        /*btnMusic = findViewById(R.id.btnMusic);
+        btnAudio = findViewById(R.id.btnAudio);*/
         btnHelpClassic = findViewById(R.id.btnHelpClassic);
         btnHelpContinue = findViewById(R.id.btnHelpContinue);
         btnHelpRandom = findViewById(R.id.btnHelpRandom);
