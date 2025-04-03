@@ -99,14 +99,13 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <!-- Avatar -->
-            <ImageButton
-                android:id="@+id/ibAvatar"
-                android:layout_width="50dp"
+            <ImageView
+                android:id="@+id/ivAvatar"
+                android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="10dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/icon_game"
-                android:background="@null"/>
+                android:src="@drawable/icon_game" />
 
             <!-- Phần thông tin bên phải avatar -->
             <LinearLayout

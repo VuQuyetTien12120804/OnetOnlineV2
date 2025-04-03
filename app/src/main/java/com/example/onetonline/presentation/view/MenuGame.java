@@ -44,7 +44,7 @@ public class MenuGame extends AppCompatActivity {
     private Button btnHelpContinue;
     private Button btnHelpRandom;
 
-    private ImageView ibAvatar;
+    private ImageView ivAvatar;
 
     // ActivityResultLauncher để xử lý kết quả chọn ảnh
     private ActivityResultLauncher<Intent> pickImageLauncher;
@@ -67,13 +67,13 @@ public class MenuGame extends AppCompatActivity {
         btnHelpClassic = findViewById(R.id.btnHelpClassic);
         btnHelpContinue = findViewById(R.id.btnHelpContinue);
         btnHelpRandom = findViewById(R.id.btnHelpRandom);
-        ibAvatar = findViewById(R.id.ibAvatar);
+        ivAvatar = findViewById(R.id.ivAvatar);
 
         // Khởi tạo ActivityResultLauncher để chọn ảnh
         pickImageLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                 Uri imageUri = result.getData().getData();
-                ibAvatar.setImageURI(imageUri); // Hiển thị ảnh đã chọn lên ImageView
+                ivAvatar.setImageURI(imageUri); // Hiển thị ảnh đã chọn lên ImageView
             }
         });
         btnClassic.setOnClickListener(v -> handleClassicButtonClick());
@@ -82,7 +82,7 @@ public class MenuGame extends AppCompatActivity {
         btnExit.setOnClickListener(v -> handleExitButtonClick());
 
         // Xử lý sự kiện click trên avatar
-        ibAvatar.setOnClickListener(v -> handleChangeAvatar());
+        ivAvatar.setOnClickListener(v -> handleChangeAvatar());
 
         btnHelpContinue.setOnClickListener(v->handleHelpContinueButtonClick());
         btnHelpRandom.setOnClickListener(v->handleHelpContinueButtonClick());
@@ -92,7 +92,7 @@ public class MenuGame extends AppCompatActivity {
 //        btnAudio.setOnClickListener(v -> handleAudioButtonClick());
 
     }
-
+    // Thay doi avartar trong thu muc
     public void handleChangeAvatar(){
         // Kiểm tra quyền trước khi mở thư viện ảnh
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -133,6 +133,8 @@ public class MenuGame extends AppCompatActivity {
     public void handleHelpButtonClick(){
         Toast.makeText(MenuGame.this, "Help button clicked", Toast.LENGTH_SHORT).show();
     }
+
+    // Xử lý classic button
     public void handleClassicButtonClick(){
         //Tao dialog
         Dialog dialog = new Dialog(MenuGame.this);
