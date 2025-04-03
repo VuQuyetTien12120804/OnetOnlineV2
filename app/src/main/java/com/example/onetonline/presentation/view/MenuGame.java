@@ -3,6 +3,7 @@ package com.example.onetonline.presentation.view;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,16 +25,9 @@ import com.example.onetonline.presentation.controller.*;
 import com.example.onetonline.presentation.model.*;
 
 public class MenuGame extends AppCompatActivity {
-    /**
-     *
-     */
     private MenuController menuController;
     private MenuModel menuModel;
-    /**
-     *
-     */
     private static final int STORAGE_PERMISSION_CODE = 100;
-
     private Button btnClassic;
     private Button btnContinue;
     private Button btnOnline;
@@ -43,21 +37,11 @@ public class MenuGame extends AppCompatActivity {
     private Button btnHelpClassic;
     private Button btnHelpContinue;
     private Button btnHelpRandom;
-
     private ImageView ibAvatar;
-
     // ActivityResultLauncher để xử lý kết quả chọn ảnh
     private ActivityResultLauncher<Intent> pickImageLauncher;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_menu_game);
-
-        menuModel = new MenuModel();
-        menuController = new MenuController(menuModel, this);
-
+    public void init(){
         btnClassic = findViewById(R.id.btnClassic);
         btnContinue = findViewById(R.id.btnContinue);
         btnOnline = findViewById(R.id.btnOnline);
@@ -68,6 +52,17 @@ public class MenuGame extends AppCompatActivity {
         btnHelpContinue = findViewById(R.id.btnHelpContinue);
         btnHelpRandom = findViewById(R.id.btnHelpRandom);
         ibAvatar = findViewById(R.id.ibAvatar);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_menu_game);
+
+        menuModel = new MenuModel();
+        menuController = new MenuController(menuModel, this);
+        init();
 
         // Khởi tạo ActivityResultLauncher để chọn ảnh
         pickImageLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {

@@ -135,4 +135,23 @@ public class UserRepo {
             }
         });
     }
+
+    public void updateUser(User user, final UpdateUserCallBack callBack){
+        userAPI.updateUser(user).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if(response.isSuccessful()){
+                    callBack.onSuccess();
+                }
+                else{
+                    callBack.onFailure(String.valueOf(response.code()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                callBack.onFailure("Network error: "+ t.getMessage());
+            }
+        });
+    }
 }

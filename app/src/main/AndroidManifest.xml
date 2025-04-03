@@ -4,6 +4,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <!-- Quyền đọc bộ nhớ (cho Android 9 trở xuống) -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -17,7 +18,7 @@
         <activity
             android:name="com.example.onetonline.presentation.view.LoadingActivity"
             android:exported="true"
-            android:screenOrientation="landscape">
+            android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,11 +28,11 @@
         <activity
             android:name="com.example.onetonline.presentation.view.WellComeScreen"
             android:exported="false"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="sensorLandscape"/>
         <activity
             android:name="com.example.onetonline.presentation.view.RegisterForm"
             android:exported="false"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="sensorLandscape"/>
         <!--
 <activity
             android:name="com.example.onetonline.MainActivity"
@@ -41,11 +42,11 @@
         <activity
             android:name="com.example.onetonline.presentation.view.LoginForm"
             android:exported="false"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="sensorLandscape"/>
         <activity
             android:name="com.example.onetonline.presentation.view.MenuGame"
             android:exported="true"
-            android:screenOrientation="landscape">
+            android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -55,7 +56,7 @@
         <activity
             android:name="com.example.onetonline.presentation.view.GamePlay"
             android:exported="true"
-            android:screenOrientation="landscape">
+            android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class ImageSaver {
+public class AvatarManager {
     public static void saveImage(Context context, Bitmap bitmap, String fileName) {
         // Tạo file trong thư mục internal storage
         File file = new File(context.getFilesDir(), fileName + ".png");
@@ -41,7 +41,6 @@ public class ImageSaver {
             // Đọc file thành Bitmap
             return BitmapFactory.decodeFile(file.getAbsolutePath());
         } else {
-            System.out.println("File không tồn tại: " + file.getAbsolutePath());
             return null;
         }
     }

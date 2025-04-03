@@ -90,13 +90,13 @@ public class SignUpController {
                     @Override
                     public void onSuccess(PostResponse postResponse) {
                         sign.convertContext();
-                        sign.showMessage("Sign up succesfull, Login your account please!!");
+                        sign.showMessage("Sign up successfully, Login your account please!!");
                     }
 
                     @Override
                     public void onFailure(String err) {
                         if(err.equals("400")){
-                            sign.showMessage("Error! email or username have already exists");
+                            sign.showMessage("Error! The email or username already exists");
                         }
                     }
                 });

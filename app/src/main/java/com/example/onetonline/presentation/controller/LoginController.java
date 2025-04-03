@@ -55,7 +55,7 @@ public class LoginController {
             @Override
             public void onFailure(String err) {
                 if(err.equals("401")){
-                    loginView.showMessage("Wrong password");
+                    loginView.showMessage("Incorrect password");
                 }
                 else if(err.equals("404")){
                     loginView.showMessage("Account doesn't exists");
@@ -128,7 +128,6 @@ public class LoginController {
                         public void onFailure(String err) {
                             if(err.equals("404")){
                                 loginView.showMessage("Account doesn't exists");
-                                return ;
                             }
                         }
                     });
@@ -166,7 +165,7 @@ public class LoginController {
         userRepo.changePass(changePassRequest, new UserRepo.UpdateUserCallBack() {
             @Override
             public void onSuccess() {
-                loginView.showMessage("Change password successful");
+                loginView.showMessage("Password change successfully");
                 dialog.dismiss();
             }
 
