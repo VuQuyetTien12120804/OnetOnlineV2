@@ -221,7 +221,8 @@
         <!-- TableLayout -->
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp">
 
             <!-- Row 1: Classic -->
             <TableRow>
@@ -229,20 +230,21 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnClassic"
                     android:layout_width="0dp"
-                    android:layout_height="70dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_background"
                     android:fontFamily="@font/ltim_regular"
                     android:text="Classic"
                     android:textColor="#FFFFFF"
-                    android:textSize="30sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
+                    android:layout_marginLeft="20dp"
                     />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnHelpClassic"
-                    android:layout_width="80dp"
-                    android:layout_height="75dp"
+                    android:layout_width="66dp"
+                    android:layout_height="50dp"
                     android:background="@drawable/button_helper_background" />
             </TableRow>
 
@@ -251,14 +253,17 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnContinue"
                     android:layout_width="0dp"
-                    android:layout_height="70dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_background"
                     android:text="Continue"
                     android:textColor="#FFFFFF"
-                    android:textSize="30sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
-                    android:fontFamily="@font/ltim_regular" />
+                    android:fontFamily="@font/ltim_regular"
+                    android:layout_marginLeft="20dp"
+
+                    />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnHelpContinue"
@@ -272,13 +277,14 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnOnline"
                     android:layout_width="0dp"
-                    android:layout_height="70dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_background"
                     android:text="Online"
                     android:textColor="#FFFFFF"
-                    android:textSize="30sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
+                    android:layout_marginLeft="20dp"
                     android:fontFamily="@font/ltim_regular" />
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -293,13 +299,14 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnExitLoseGame"
                     android:layout_width="0dp"
-                    android:layout_height="70dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:background="@drawable/button_background"
                     android:text="Exit"
                     android:textColor="#FFFFFF"
-                    android:textSize="30sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
+                    android:layout_marginLeft="20dp"
                     android:fontFamily="@font/ltim_regular" />
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="80dp"

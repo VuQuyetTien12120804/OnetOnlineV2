@@ -1,11 +1,13 @@
 package com.example.onetonline.presentation.view;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -74,21 +76,19 @@ public class MenuGame extends AppCompatActivity {
                 ivAvatar.setImageURI(imageUri); // Hiển thị ảnh đã chọn lên ImageView
             }
         });
-
-
-        btnClassic.setOnClickListener(v -> menuController.handleClassicButtonClick());
-        btnContinue.setOnClickListener(v -> menuController.handleContinueButtonClick());
-        btnOnline.setOnClickListener(v -> menuController.handleOnlineButtonClick());
-        btnExit.setOnClickListener(v -> menuController.handleExitButtonClick());
+        btnClassic.setOnClickListener(v -> handleClassicButtonClick());
+        btnContinue.setOnClickListener(v -> handleContinueButtonClick());
+        btnOnline.setOnClickListener(v -> handleOnlineButtonClick());
+        btnExit.setOnClickListener(v -> handleExitButtonClick());
         // Xử lý sự kiện click trên avatar
         ivAvatar.setOnClickListener(v -> handleChangeAvatar());
 
-        btnHelpContinue.setOnClickListener(v->menuController.handleHelpContinueButtonClick());
-        btnHelpRandom.setOnClickListener(v->menuController.handleHelpContinueButtonClick());
-        btnHelpClassic.setOnClickListener(v->menuController.handleHelpContinueButtonClick());
+        btnHelpContinue.setOnClickListener(v->handleHelpContinueButtonClick());
+        btnHelpRandom.setOnClickListener(v->handleHelpContinueButtonClick());
+        btnHelpClassic.setOnClickListener(v->handleHelpContinueButtonClick());
 
-        btnMusic.setOnClickListener(v -> menuController.handleMusicButtonClick());
-        btnAudio.setOnClickListener(v -> menuController.handleAudioButtonClick());
+        btnMusic.setOnClickListener(v -> handleMusicButtonClick());
+        btnAudio.setOnClickListener(v -> handleAudioButtonClick());
 
     }
 
@@ -128,5 +128,113 @@ public class MenuGame extends AppCompatActivity {
                 Toast.makeText(this, "Quyền truy cập bộ nhớ bị từ chối!", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+    public void handleHelpButtonClick(){
+        Toast.makeText(MenuGame.this, "Help button clicked", Toast.LENGTH_SHORT).show();
+    }
+    public void handleClassicButtonClick(){
+        //Tao dialog
+        Dialog dialog = new Dialog(MenuGame.this);
+        dialog.setContentView(R.layout.dialog_win_game);
+        dialog.setCancelable(true); //cho phep dong bang nut ben ngoai
+
+        //gan cac nut cho dialog
+        Button btnNext = dialog.findViewById(R.id.btnNextWinGame);
+
+        // Áp dụng hiệu ứng cho dialog
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogBounceAnimation;
+            // Xóa nền trắng của Dialog
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        //xu lu click next
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuGame.this, MenuGame.class);
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+    public void handleContinueButtonClick(){
+        //Tao dialog
+        Dialog dialog = new Dialog(MenuGame.this);
+        dialog.setContentView(R.layout.dialog_lose_game);
+        dialog.setCancelable(true); //cho phep dong bang nut ben ngoai
+
+        //gan cac nut cho dialog
+        Button btnExitLoseGame = dialog.findViewById(R.id.btnExitLoseGame);
+
+        // Áp dụng hiệu ứng cho dialog
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogBounceAnimation;
+            // Xóa nền trắng của Dialog
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        //xu lu click Try Again
+        btnExitLoseGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuGame.this, MenuGame.class);
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
+
+        //xu lu click Exit
+        btnExitLoseGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuGame.this, MenuGame.class);
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+    public void handleOnlineButtonClick(){
+
+    }
+    public void handleExitButtonClick() {
+        // Tạo dialog
+        Dialog dialog = new Dialog(MenuGame.this);
+        dialog.setContentView(R.layout.dialog_exit_confirmation);
+        dialog.setCancelable(false); // Không cho phép đóng bằng nút bên ngoài
+
+        // Gắn các nút cho dialog
+        Button btnYes = dialog.findViewById(R.id.btnYes);
+        Button btnNo = dialog.findViewById(R.id.btnNo);
+
+        // Áp dụng hiệu ứng cho dialog
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogBounceAnimation;
+            // Xóa nền trắng của Dialog
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        // Xử lý click "Có"
+        btnYes.setOnClickListener(v -> {
+            dialog.dismiss(); // Đóng dialog
+            finish();
+        });
+
+        // Xử lý click "Không"
+        btnNo.setOnClickListener(v -> dialog.dismiss()); // Đóng dialog
+
+        // Hiển thị dialog
+        dialog.show();
+    }
+    public void handleMusicButtonClick(){
+        Toast.makeText(MenuGame.this, "Music button clicked", Toast.LENGTH_SHORT).show();
+    }
+    public void handleAudioButtonClick(){
+        Toast.makeText(MenuGame.this, "Audio button clicked", Toast.LENGTH_SHORT).show();
+    }
+    public void handleHelpContinueButtonClick(){
+        DialogHelper.showScrollableAlertDialog(MenuGame.this);
     }
 }
