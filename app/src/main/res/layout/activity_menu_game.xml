@@ -99,17 +99,15 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <!-- Avatar -->
-
-            <!-- Phần thông tin bên phải avatar -->
-            <ImageButton
+            <ImageView
                 android:id="@+id/ivAvatar"
                 android:layout_width="60dp"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="10dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/icon_game"
-                android:background="@null"/>
+                android:src="@drawable/icon_game"/>
 
+            <!-- Phần thông tin bên phải avatar -->
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -219,16 +217,25 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.3">
+        app:layout_constraintWidth_percent="0.3"
+        android:layout_marginRight="50dp">
 
-        <!-- TableLayout -->
-        <TableLayout
+        <!-- LinearLayout replacing TableLayout -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="50dp">
+            android:layout_marginRight="20dp"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.3">
 
             <!-- Row 1: Classic -->
-            <TableRow>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnClassic"
@@ -241,18 +248,21 @@
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:layout_marginLeft="10dp"
-                    />
+                    android:layout_marginLeft="20dp" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnHelpClassic"
-                    android:layout_width="66dp"
-                    android:layout_height="50dp"
+                    android:layout_width="80dp"
+                    android:layout_height="75dp"
                     android:background="@drawable/button_helper_background" />
-            </TableRow>
+            </LinearLayout>
 
             <!-- Row 2: Continue -->
-            <TableRow>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnContinue"
                     android:layout_width="0dp"
@@ -264,19 +274,21 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:fontFamily="@font/ltim_regular"
-                    android:layout_marginLeft="10dp"
-
-                    />
+                    android:layout_marginLeft="20dp" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnHelpContinue"
                     android:layout_width="80dp"
                     android:layout_height="75dp"
                     android:background="@drawable/button_helper_background" />
-            </TableRow>
+            </LinearLayout>
 
             <!-- Row 3: Online -->
-            <TableRow>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnOnline"
                     android:layout_width="0dp"
@@ -287,7 +299,7 @@
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="20dp"
                     android:fontFamily="@font/ltim_regular" />
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -295,10 +307,13 @@
                     android:layout_width="80dp"
                     android:layout_height="75dp"
                     android:background="@drawable/button_helper_background" />
-            </TableRow>
-
+            </LinearLayout>
             <!-- Row 4: Setting -->
-            <TableRow>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnSettingLoseGame"
                     android:layout_width="0dp"
@@ -309,16 +324,21 @@
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="20dp"
                     android:fontFamily="@font/ltim_regular" />
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="80dp"
                     android:layout_height="70dp"
                     android:background="@color/transparent" />
-            </TableRow>
+            </LinearLayout>
 
             <!-- Row 5: Exit -->
-            <TableRow>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnExitLoseGame"
                     android:layout_width="0dp"
@@ -329,14 +349,15 @@
                     android:textColor="#FFFFFF"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="20dp"
                     android:fontFamily="@font/ltim_regular" />
+
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="80dp"
                     android:layout_height="70dp"
                     android:background="@color/transparent" />
-            </TableRow>
-        </TableLayout>
+            </LinearLayout>
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

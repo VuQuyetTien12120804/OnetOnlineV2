@@ -38,9 +38,8 @@ public class MenuGame extends AppCompatActivity {
     private Button btnContinue;
     private Button btnOnline;
     private Button btnExit;
-    private Button btnSetting;
-    private Button btnMusic;
-    private Button btnAudio;
+//    private Button btnMusic;
+//    private Button btnAudio;
     private Button btnHelpClassic;
     private Button btnHelpContinue;
     private Button btnHelpRandom;
@@ -63,9 +62,8 @@ public class MenuGame extends AppCompatActivity {
         btnContinue = findViewById(R.id.btnContinue);
         btnOnline = findViewById(R.id.btnOnline);
         btnExit = findViewById(R.id.btnExitLoseGame);
-        btnSetting = findViewById(R.id.btnSettingLoseGame);
-        /*btnMusic = findViewById(R.id.btnMusic);
-        btnAudio = findViewById(R.id.btnAudio);*/
+//        btnMusic = findViewById(R.id.btnMusic);
+//        btnAudio = findViewById(R.id.btnAudio);
         btnHelpClassic = findViewById(R.id.btnHelpClassic);
         btnHelpContinue = findViewById(R.id.btnHelpContinue);
         btnHelpRandom = findViewById(R.id.btnHelpRandom);
@@ -89,11 +87,11 @@ public class MenuGame extends AppCompatActivity {
         btnHelpRandom.setOnClickListener(v->handleHelpContinueButtonClick());
         btnHelpClassic.setOnClickListener(v->handleHelpContinueButtonClick());
 
-        btnMusic.setOnClickListener(v -> handleMusicButtonClick());
-        btnAudio.setOnClickListener(v -> handleAudioButtonClick());
+//        btnMusic.setOnClickListener(v -> handleMusicButtonClick());
+//        btnAudio.setOnClickListener(v -> handleAudioButtonClick());
 
     }
-
+    // Thay doi avartar trong thu muc
     public void handleChangeAvatar(){
         // Kiểm tra quyền trước khi mở thư viện ảnh
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -134,6 +132,7 @@ public class MenuGame extends AppCompatActivity {
     public void handleHelpButtonClick(){
         Toast.makeText(MenuGame.this, "Help button clicked", Toast.LENGTH_SHORT).show();
     }
+    // Xử lý classic button
     public void handleClassicButtonClick(){
         //Tao dialog
         Dialog dialog = new Dialog(MenuGame.this);
