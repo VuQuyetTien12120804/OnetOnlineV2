@@ -16,16 +16,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.onetonline.business.User;
+import com.example.onetonline.data.User;
 import com.example.onetonline.presentation.controller.LoginController;
-import com.example.onetonline.presentation.model.Checker;
 import com.example.onetonlinev2.R;
 import com.mukeshsolanki.OtpView;
-
-import retrofit2.http.HEAD;
 
 public class LoginForm extends AppCompatActivity implements LoginView{
     //Khai báo
@@ -34,7 +30,7 @@ public class LoginForm extends AppCompatActivity implements LoginView{
     private LoginController loginController;
     private TextView tvForgotPassword;
     private Dialog loadingDialog;
-    private String otp = "", newPassword = "";
+    private String otp = "", newPassword = "", confirmPassword = "";
 
     public void initWidgets(){
         btnLogin = findViewById(R.id.btnLogin);
@@ -57,27 +53,14 @@ public class LoginForm extends AppCompatActivity implements LoginView{
         btnBackLoginForm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginForm.this, WellComeScreen.class);
-                startActivity(intent);
-                finish();
+                loginController.handleBackToHome(LoginForm.this);
             }
         });
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(!Checker.checkUserNameLen(etLogin.getText().toString())) {
-                    showCustomToast("User Name must be more than 5 characters!");
-                }
-                else{
-                    if (!Checker.checkPassLen(etPassword.getText().toString())) {
-                        showCustomToast("Password must be more than 6 characters!");
-                    }
-                    else{
-                        loginController.handleLogin();
-                    }
-                }
+                loginController.handleLogin();
             }
         });
 
@@ -122,6 +105,11 @@ public class LoginForm extends AppCompatActivity implements LoginView{
         return newPassword;
     }
 
+    @Override
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
     public void showCustomToast(String message){
         // Inflate layout cuar custom toast
         LayoutInflater inflater = getLayoutInflater();
@@ -156,7 +144,6 @@ public class LoginForm extends AppCompatActivity implements LoginView{
             @Override
             public void onClick(View v) {
                 loginController.handleReSendOTP();
-                showCustomToast("The OTP has been sent to your email and is valid for 3 minutes. Please enter the code to proceed.");
             }
         });
 
@@ -165,15 +152,7 @@ public class LoginForm extends AppCompatActivity implements LoginView{
         btnVerify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                otp = otpView.getText().toString();
-                String userName = etLogin.getText().toString();
-                if(!Checker.checkOTPLen(otpView.getText().toString())){
-                    showCustomToast("Enter your otp!");
-                }
-                else{
-                    //Mo man hinh reset password
-                    loginController.handleVerifyOTP(dialog);
-                }
+                loginController.handleVerifyOTP(dialog);
             }
         });
 
@@ -200,18 +179,8 @@ public class LoginForm extends AppCompatActivity implements LoginView{
 
         btnConfirmReset.setOnClickListener(v->{
             newPassword = etNewPassword.getText().toString();
-            String confirmPassword = etConfirmPassword.getText().toString();
-
-            //Kiem tra da dien du chua
-            if(!Checker.checkPassLen(newPassword)){
-                showCustomToast("Password must be more than 6 characters!");
-            }
-            else if(!Checker.checkConfirmPassword(newPassword, confirmPassword)){ // kiem tra xem pass moi va pass xac nhan co bang nhau khong
-                showCustomToast("Passwords do not match!");
-            }
-            else { //dang ki thanh cong
-                loginController.handleChangePassword(resetPasswordDialog);
-            }
+            confirmPassword = etConfirmPassword.getText().toString();
+            loginController.handleChangePassword(resetPasswordDialog);
         });
 
         ImageView toggleNewPassword = resetPasswordDialog.findViewById(R.id.iv_toggle_new_password);

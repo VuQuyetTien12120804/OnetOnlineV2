@@ -1,4 +1,4 @@
-package com.example.onetonline.business;
+package com.example.onetonline.data;
 
 import com.example.onetonline.presentation.model.userOTP;
 import com.google.gson.Gson;

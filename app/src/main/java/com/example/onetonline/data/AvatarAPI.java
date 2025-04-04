@@ -1,4 +1,4 @@
-package com.example.onetonline.business;
+package com.example.onetonline.data;
 
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;

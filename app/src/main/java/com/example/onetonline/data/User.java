@@ -1,4 +1,4 @@
-package com.example.onetonline.business;
+package com.example.onetonline.data;
 
 import java.io.Serializable;
 
@@ -8,9 +8,13 @@ public class User implements Serializable {
     private String userName;
     private String lastUpdate;
     private int level;
+    private int score;
+    private int exp;
 
-    public User(String id, String email, String userName, int level, String lastUpdate) {
+    public User(String id, String userName, String email, int level, int score, int exp, String lastUpdate) {
         this.id = id;
+        this.exp = exp;
+        this.score = score;
         this.level = level;
         this.lastUpdate = lastUpdate;
         this.userName = userName;
@@ -23,6 +27,24 @@ public class User implements Serializable {
 
     public User setUserName(String userName) {
         this.userName = userName;
+        return this;
+    }
+
+    public int score() {
+        return score;
+    }
+
+    public User setScore(int score) {
+        this.score = score;
+        return this;
+    }
+
+    public int exp() {
+        return exp;
+    }
+
+    public User setExp(int exp) {
+        this.exp = exp;
         return this;
     }
 

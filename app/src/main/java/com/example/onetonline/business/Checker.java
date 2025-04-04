@@ -1,4 +1,4 @@
-package com.example.onetonline.presentation.model;
+package com.example.onetonline.business;
 
 import com.sanctionco.jmail.JMail;
 

@@ -1,4 +1,4 @@
-package com.example.onetonline.business;
+package com.example.onetonline.data;
 
 public class PostResponse {
     private String message;

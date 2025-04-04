@@ -15,11 +15,21 @@ public class myDBHelper extends SQLiteOpenHelper {
     private static final String NAME = "user_name";
     private static final String EMAIL = "email";
     private static final String LEVEL = "level";
+    private static final String SCORE = "score";
+    private static final String EXP = "exp";
     private static final String LAST_UPDATE = "last_update";
     private SQLiteDatabase myDB;
 
     public myDBHelper(@Nullable Context contexts) {
         super(contexts, DBName,null, _VERSION);
+    }
+
+    public static String SCORE() {
+        return SCORE;
+    }
+
+    public static String EXP() {
+        return EXP;
     }
 
     public static String DBName() {
@@ -57,6 +67,8 @@ public class myDBHelper extends SQLiteOpenHelper {
                 NAME + " TEXT NOT NULL, " +
                 EMAIL + " TEXT NOT NULL, " +
                 LEVEL + " INTEGER DEFAULT 1, " +
+                SCORE + "INTEGER DEFAULT 0," +
+                EXP + "INTEGER DEFAULT 0," +
                 LAST_UPDATE + " TEXT NOT NULL" + ")";
         db.execSQL(sql);
     }
@@ -88,27 +100,52 @@ public class myDBHelper extends SQLiteOpenHelper {
         return myDB.rawQuery(queryDisplay, null);
     }
 
-    public long Insert(String id, String name, String email, int level, String last_update){
+    public Cursor filteredData(){
+        String queryDisplay = "Select " +
+                NAME + ", " +
+                LEVEL + ", " +
+                SCORE + ", " +
+                EXP + ", " +
+                LAST_UPDATE +
+                " From "+ TABLE_NAME;
+        return myDB.rawQuery(queryDisplay, null);
+    }
+
+    public long Insert(String id, String name, String email, int level, int score, int exp, String last_update){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(ID, id);
         values.put(NAME, name);
         values.put(EMAIL, email);
         values.put(LEVEL, level);
+        values.put(SCORE, score);
+        values.put(EXP, exp);
         values.put(LAST_UPDATE, last_update);
 
         return db.insert(TABLE_NAME, null, values);
     }
 
-    public long Update(String id, String name, String email, int level, String last_update){
+    public long Update(String id, String name, String email, int level, int score, int exp, String last_update){
         ContentValues values = new ContentValues();
         values.put(NAME, name);
         values.put(EMAIL, email);
         values.put(LEVEL, level);
+        values.put(SCORE, score);
+        values.put(EXP, exp);
         values.put(LAST_UPDATE, last_update);
         String where = ID + " = " + id;
 
         return myDB.update(TABLE_NAME, values, where, null);
+    }
+
+    public long Update(int level, int score, int exp, String last_update){
+        ContentValues values = new ContentValues();
+        values.put(LEVEL, level);
+        values.put(SCORE, score);
+        values.put(EXP, exp);
+        values.put(LAST_UPDATE, last_update);
+
+        return myDB.update(TABLE_NAME, values, null , null);
     }
 
     public long Delete(String id){

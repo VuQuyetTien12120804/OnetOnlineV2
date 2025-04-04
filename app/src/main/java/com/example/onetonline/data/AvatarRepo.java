@@ -1,11 +1,9 @@
-package com.example.onetonline.business;
+package com.example.onetonline.data;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.example.onetonline.MainActivity;
-import com.example.onetonline.data.AvatarManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -82,7 +80,7 @@ public class AvatarRepo {
                         // Chuyển thành Bitmap (nếu cần)
                         Bitmap bitmap = BitmapFactory.decodeByteArray(fileBytes, 0, fileBytes.length);
                         // Lưu vào Internal Storage
-                        AvatarManager.saveImage(context, bitmap, "avatar_image");
+//                        AvatarManager.saveImage(bitmap, "avatar_image");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

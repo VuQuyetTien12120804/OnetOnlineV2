@@ -7,5 +7,5 @@ public interface SignUpView {
     String getConfirmPassword();
     String getOTP();
     void showMessage(String message);
-    void convertContext();
+    void navigateTo(Class<?> activityClass);
 }

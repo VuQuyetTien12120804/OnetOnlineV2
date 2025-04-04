@@ -1,9 +1,7 @@
-package com.example.onetonline.business;
+package com.example.onetonline.data;
 
 import android.content.Context;
-import android.util.Log;
-import com.example.onetonline.data.TokenStorage;
-import com.example.onetonline.data.myDBHelper;
+
 import com.example.onetonline.presentation.model.ChangePassRequest;
 import com.example.onetonline.presentation.model.LoginRequest;
 import com.example.onetonline.presentation.model.SignupRequest;
@@ -47,6 +45,11 @@ public class UserRepo {
     }
 
     public interface UpdateUserCallBack{
+        void onSuccess();
+        void onFailure(String err);
+    }
+
+    public interface ChangePasswordCallBack{
         void onSuccess();
         void onFailure(String err);
     }
@@ -103,7 +106,7 @@ public class UserRepo {
                 if(response.isSuccessful()){
                     User user = response.body();
                     callBack.onSuccess(user);
-                    long i = myDB.Insert(user.id(), user.userName(), user.email(), user.level(), user.lastUpdate());
+                    long i = myDB.Insert(user.id(), user.userName(), user.email(), user.level(), user.score(), user.exp(), user.lastUpdate());
                 }
                 else{
                     callBack.onFailure(String.valueOf(response.code()));
@@ -117,7 +120,7 @@ public class UserRepo {
         });
     }
 
-    public void changePass(ChangePassRequest changePassRequest, final UpdateUserCallBack callBack){
+    public void changePass(ChangePassRequest changePassRequest, final ChangePasswordCallBack callBack){
         userAPI.changePass(changePassRequest).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {

@@ -1,115 +1,83 @@
 package com.example.onetonline.presentation.controller;
 
 import android.content.Context;
-import com.example.onetonline.business.OTPRepo;
-import com.example.onetonline.business.PostResponse;
+
+import com.example.onetonline.business.SignUpUseCase;
+import com.example.onetonline.data.OTPRepo;
+import com.example.onetonline.data.PostResponse;
 import com.example.onetonline.presentation.model.SignupRequest;
-import com.example.onetonline.business.UserRepo;
+import com.example.onetonline.data.UserRepo;
 import com.example.onetonline.presentation.model.userOTP;
+import com.example.onetonline.presentation.view.LoginForm;
+import com.example.onetonline.presentation.view.RegisterForm;
 import com.example.onetonline.presentation.view.SignUpView;
 
 public class SignUpController {
-    private SignUpView sign;
-    private OTPRepo otpRepo;
-    private UserRepo userRepo;
+    private SignUpView signUpView;
+    private SignUpUseCase signUpUseCase;
 
-    public SignUpController(SignUpView sign, Context context) {
-        this.sign = sign;
-        otpRepo = new OTPRepo();
-        userRepo = new UserRepo(context);
+    public SignUpController(SignUpView signUpView, Context context) {
+        this.signUpView = signUpView;
+        UserRepo userRepo = new UserRepo(context);
+        OTPRepo otpRepo = new OTPRepo();
+        signUpUseCase = new SignUpUseCase(userRepo, otpRepo);
+    }
+
+    public void handleBackToHome(Class<?> activityClass){
+        signUpView.navigateTo(activityClass);
+    }
+
+    public void handleBackToLogin(Class<?> activityClass){
+        signUpView.navigateTo(activityClass);
     }
 
     public void handleSendOTP(){
-        userOTP otp = new userOTP(sign.getEmail());
-        otpRepo.sendOTP(otp, new OTPRepo.SendCallBack() {
+        String userName = signUpView.getUserName();
+        String email = signUpView.getEmail();
+        String password = signUpView.getPassword();
+        String confirmPassword = signUpView.getConfirmPassword();
+        signUpUseCase.sendOTP(userName, email, password, confirmPassword, new OTPRepo.SendCallBack() {
             @Override
             public void onSuccess() {
-
+                signUpView.showMessage("The OTP has been sent to your email and is valid for 3 minutes. Please enter the code to proceed.");
+                ((RegisterForm) signUpView).showOtpDialog();
             }
 
             @Override
             public void onFailure(String err) {
-                if(err.equals("409")){
-                    String email = sign.getEmail();
-                    userOTP userotp = new userOTP(email);
-                    otpRepo.resendOTP(userotp, new OTPRepo.ResendCallBack() {
-                        @Override
-                        public void onSuccess() {
-
-                        }
-
-                        @Override
-                        public void onFailure(String err) {
-                            sign.showMessage(err);
-                        }
-                    });
-                }
-                else{
-                    sign.showMessage(err);
-                }
+                signUpView.showMessage(err);
             }
         });
     }
 
     public void handleReSendOTP(){
-        userOTP otp = new userOTP(sign.getEmail());
-        otpRepo.resendOTP(otp, new OTPRepo.ResendCallBack() {
+        String email = signUpView.getEmail();
+        userOTP otp = new userOTP(email);
+        signUpUseCase.resendOTP(otp, new OTPRepo.ResendCallBack() {
             @Override
             public void onSuccess() {
-
             }
 
             @Override
             public void onFailure(String err) {
-                if(err.equals("404")){
-                    otpRepo.sendOTP(otp, new OTPRepo.SendCallBack() {
-                        @Override
-                        public void onSuccess() {
-
-                        }
-
-                        @Override
-                        public void onFailure(String err) {
-
-                        }
-                    });
-                }
             }
         });
     }
 
     public void handleSignUp(){
-        String email = sign.getEmail();
-        String otp = sign.getOTP();
-        SignupRequest signupRequest = new SignupRequest(sign.getEmail(), sign.getUserName(), sign.getPassword());
-
-        otpRepo.verifyOTP(email, otp, new OTPRepo.VerifyCallBack() {
+        String email = signUpView.getEmail();
+        String otp = signUpView.getOTP();
+        SignupRequest signupRequest = new SignupRequest(signUpView.getEmail(), signUpView.getUserName(), signUpView.getPassword());
+        signUpUseCase.signUp(signupRequest, otp, new UserRepo.SignUpCallBack() {
             @Override
-            public void onSuccess() {
-                userRepo.addUser(signupRequest, new UserRepo.SignUpCallBack() {
-                    @Override
-                    public void onSuccess(PostResponse postResponse) {
-                        sign.convertContext();
-                        sign.showMessage("Sign up successfully, Login your account please!!");
-                    }
-
-                    @Override
-                    public void onFailure(String err) {
-                        if(err.equals("400")){
-                            sign.showMessage("Error! The email or username already exists");
-                        }
-                    }
-                });
+            public void onSuccess(PostResponse postResponse) {
+                signUpView.showMessage("Sign up successfully, please log in to your account!");
+                signUpView.navigateTo(LoginForm.class);
             }
 
             @Override
             public void onFailure(String err) {
-                if(err.equals("401")){
-                    sign.showMessage("Wrong otp");
-                }
-                else{
-                    sign.showMessage(err);
-                }
+                signUpView.showMessage(err);
             }
         });
     }

@@ -15,12 +15,10 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.onetonline.presentation.controller.SignUpController;
-import com.example.onetonline.presentation.model.Checker;
 import com.example.onetonlinev2.R;
 import com.mukeshsolanki.OtpView;
 
 public class RegisterForm extends AppCompatActivity implements SignUpView{
-    //Khai bao
     private Button btnBackRegisterForm, btnRegister;
     private EditText etUserName, etEmail, etPassword, etConfirmPassword;
     private TextView tvBackToLogin;
@@ -30,6 +28,7 @@ public class RegisterForm extends AppCompatActivity implements SignUpView{
     public void initWidgets(){
         btnBackRegisterForm = findViewById(R.id.btnBackRegisterForm);
         btnRegister = findViewById(R.id.btnRegister);
+        tvBackToLogin = findViewById(R.id.tvBackToLogin);
         etUserName = findViewById(R.id.etUsername);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPasswordRegister);
@@ -45,58 +44,13 @@ public class RegisterForm extends AppCompatActivity implements SignUpView{
         initWidgets();
         sign = new SignUpController(this, RegisterForm.this);
 
-        //anh xa id
-        btnBackRegisterForm = findViewById(R.id.btnBackRegisterForm);
-        btnRegister = findViewById(R.id.btnRegister);
-        tvBackToLogin = findViewById(R.id.tvBackToLogin);
-
-        //xử lý click
-        btnBackRegisterForm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RegisterForm.this, WellComeScreen.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               if (!Checker.checkUserNameLen(etUserName.getText().toString())) {
-                   showCustomToast("User Name must be more than 5 characters!");
-               } else {
-                   if (!Checker.checkEmail(etEmail.getText().toString())) {
-                       showCustomToast("Invalid email address");
-                   } else {
-                       if (!Checker.checkPassLen(etPassword.getText().toString())) {
-                           showCustomToast("Password must be more than 6 characters!");
-                       } else {
-                           if (!Checker.checkConfirmPassword(etPassword.getText().toString(), etConfirmPassword.getText().toString())) {
-                               showCustomToast("Passwords do not match!");
-                           } else {
-                               showOtpDialog();
-                               sign.handleSendOTP();
-                           }
-                       }
-                   }
-               }
-           }
-       });
-
-        btnRegister.setOnClickListener(v -> showOtpDialog());
-        tvBackToLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(RegisterForm.this, LoginForm.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+        btnBackRegisterForm.setOnClickListener(v -> sign.handleBackToHome(WellComeScreen.class));
+        btnRegister.setOnClickListener(v -> sign.handleSendOTP());
+        tvBackToLogin.setOnClickListener(v -> sign.handleBackToLogin(LoginForm.class));
     }
 
-    private void showCustomToast(String message){
-        // Inflate layout cuar custom toast
+    public void showCustomToast(String message){
+        // Inflate layout cua custom toast
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.custom_toast, (ViewGroup) findViewById(R.id.custom_toast_container));
         TextView toastMessage = layout.findViewById(R.id.toast_message);
@@ -110,7 +64,7 @@ public class RegisterForm extends AppCompatActivity implements SignUpView{
         toast.show();
     }
 
-    private void showOtpDialog() {
+    public void showOtpDialog() {
         // Tạo Dialog
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.confirm_otp);
@@ -127,27 +81,12 @@ public class RegisterForm extends AppCompatActivity implements SignUpView{
         btnCancel = dialog.findViewById(R.id.btnCancel);
         otpView = dialog.findViewById(R.id.otp_view);
 
-        btnVerify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                otp = otpView.getText().toString();
-                if(!Checker.checkOTPLen(otpView.getText().toString())){
-                    showCustomToast("Enter your otp!");
-                }
-                else{
-                    sign.handleSignUp();
-                }
-            }
+        btnVerify.setOnClickListener(v -> {
+            otp = otpView.getText().toString();
+            sign.handleSignUp();
         });
-
         btnCancel.setOnClickListener(v -> dialog.dismiss());
-
-        btnResend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sign.handleReSendOTP();
-            }
-        });
+        btnResend.setOnClickListener(v -> sign.handleReSendOTP());
 
         // Hiển thị Dialog
         dialog.show();
@@ -184,8 +123,8 @@ public class RegisterForm extends AppCompatActivity implements SignUpView{
     }
 
     @Override
-    public void convertContext() {
-        Intent intent = new Intent(RegisterForm.this, LoginForm.class);
+    public void navigateTo(Class<?> avtivityClass) {
+        Intent intent = new Intent(RegisterForm.this, avtivityClass);
         startActivity(intent);
         finish();
     }
