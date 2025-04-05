@@ -67,8 +67,8 @@ public class myDBHelper extends SQLiteOpenHelper {
                 NAME + " TEXT NOT NULL, " +
                 EMAIL + " TEXT NOT NULL, " +
                 LEVEL + " INTEGER DEFAULT 1, " +
-                SCORE + "INTEGER DEFAULT 0," +
-                EXP + "INTEGER DEFAULT 0," +
+                SCORE + " INTEGER DEFAULT 0, " +
+                EXP + " INTEGER DEFAULT 0, " +
                 LAST_UPDATE + " TEXT NOT NULL" + ")";
         db.execSQL(sql);
     }

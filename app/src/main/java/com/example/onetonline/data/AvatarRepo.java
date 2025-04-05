@@ -26,7 +26,7 @@ public class AvatarRepo {
     public AvatarRepo() {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         avatarAPI = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8002/")
+                .baseUrl("http://192.168.0.101:8002/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
                 .create(AvatarAPI.class);
@@ -34,31 +34,36 @@ public class AvatarRepo {
 
     public interface UploadCallBack {
         void onSuccess();
-
         void onFailure(String err);
     }
 
     public interface GetCallBack {
-        void onSuccess();
-
+        void onSuccess(Bitmap bitmap);
         void onFailure(String err);
     }
 
     public interface DeleteCallBack {
         void onSuccess();
-
         void onFailure(String err);
     }
 
     public void uploadAvatar(String id, File avatar, final UploadCallBack callBack){
-        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), avatar);
-        MultipartBody.Part avatarPart = MultipartBody.Part.createFormData("avatar", avatar.getName(), requestFile);
+        String mimeType = avatar.getName().endsWith(".png") ? "image/png" : "image/jpeg";
+        RequestBody requestFile = RequestBody.create(MediaType.parse(mimeType), avatar);
+        MultipartBody.Part avatarPart = MultipartBody.Part.createFormData("file", avatar.getName(), requestFile);
         avatarAPI.uploadAvatar(id, avatarPart).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     callBack.onSuccess();
-                } else callBack.onFailure(String.valueOf(response.code()));
+                } else {
+                    try {
+                        String errorBody = response.errorBody() != null ? response.errorBody().string() : "Unknown error";
+                        callBack.onFailure("Error " + response.code() + ": " + errorBody);
+                    } catch (IOException e) {
+                        callBack.onFailure("Error " + response.code() + ": Failed to read error body");
+                    }
+                }
             }
 
             @Override
@@ -68,24 +73,26 @@ public class AvatarRepo {
         });
     }
 
-    public void getAvatar(String id, final GetCallBack callBack, Context context){
+    public void getAvatar(String id, final GetCallBack callBack){
         avatarAPI.getAvatar(id).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    ResponseBody responseBody = response.body();
+                if (response.isSuccessful() && response.body() != null) {
                     try {
-                        // Lấy dữ liệu bytes
-                        byte[] fileBytes = responseBody.bytes();
-                        // Chuyển thành Bitmap (nếu cần)
+                        byte[] fileBytes = response.body().bytes();
                         Bitmap bitmap = BitmapFactory.decodeByteArray(fileBytes, 0, fileBytes.length);
-                        // Lưu vào Internal Storage
-//                        AvatarManager.saveImage(bitmap, "avatar_image");
+                        if (bitmap != null) {
+                            callBack.onSuccess(bitmap);
+                        } else {
+                            callBack.onFailure("Failed to decode avatar");
+                        }
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        callBack.onFailure("IO error: " + e.getMessage());
                     }
-                    callBack.onSuccess();
-                } else callBack.onFailure(String.valueOf(response.code()));
+                }
+                else {
+                    callBack.onFailure(String.valueOf(response.code()));
+                }
             }
 
             @Override

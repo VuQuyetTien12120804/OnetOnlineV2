@@ -29,6 +29,7 @@ public class UserData {
             UserInf userInf = new UserInf(name, Integer.parseInt(level), Integer.parseInt(score), Integer.parseInt(exp), last_update);
             return userInf;
         }
+        myDB.close();
         return null;
     }
     public UserInf update(String name, int level, int scoreView, int exp, String last_update){
@@ -47,6 +48,7 @@ public class UserData {
         SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy 'at' h:mm:ss a", Locale.ENGLISH);
         UserInf userInf = new UserInf(name, level, newScore, exp,last_update);
         myDB.Update(level,newScore,exp, sdf.format(new Date()));
+        myDB.close();
         return userInf;
     }
 

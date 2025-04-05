@@ -15,32 +15,36 @@ public class AvatarManager {
         this.context = context;
     }
 
-    public void saveImage(Bitmap bitmap, String fileName) {
-        // Tạo file trong thư mục internal storage
-        File file = new File(context.getFilesDir(), fileName + ".png");
+    public interface AvatarCallback {
+        void onSuccess(Bitmap bitmap);
+        void onFailure(String err);
+    }
 
+    public void saveImage(Bitmap bitmap, String fileName, AvatarCallback callback) {
+        File file = new File(context.getFilesDir(), fileName + ".png");
         try {
-            // Mở luồng ghi file
             FileOutputStream outputStream = new FileOutputStream(file);
-            // Nén và ghi bitmap vào file
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
-            // Đóng luồng
             outputStream.flush();
             outputStream.close();
+            callback.onSuccess(bitmap);
         } catch (IOException e) {
             e.printStackTrace();
+            callback.onFailure("Failed to save image: " + e.getMessage());
         }
     }
 
-    public Bitmap loadImage(String fileName) {
-        // Lấy đường dẫn file từ Internal Storage
+    public void loadImage(String fileName, AvatarCallback callback) {
         File file = new File(context.getFilesDir(), fileName + ".png");
-        // Kiểm tra file có tồn tại không
         if (file.exists()) {
-            // Đọc file thành Bitmap
-            return BitmapFactory.decodeFile(file.getAbsolutePath());
+            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+            if (bitmap != null) {
+                callback.onSuccess(bitmap);
+            } else {
+                callback.onFailure("Failed to decode image");
+            }
         } else {
-            return null;
+            callback.onFailure("Image not found");
         }
     }
 }

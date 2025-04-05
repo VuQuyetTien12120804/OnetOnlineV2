@@ -21,6 +21,7 @@ public class WellComeScreen extends AppCompatActivity {
      *
      */
     private Button btnLogin, btnRegister, btnGuest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,10 +29,11 @@ public class WellComeScreen extends AppCompatActivity {
         wellComeScreenController = new WellComeScreenController(this);
         userData = new UserData(this);
         UserInf userInf = userData.getData();
-
-        Intent i = new Intent(WellComeScreen.this, MenuGame.class);
-        i.putExtra("user", userInf);
-        startActivity(i);
+        if(userInf != null){
+            Intent i = new Intent(WellComeScreen.this, MenuGame.class);
+            i.putExtra("user", userInf);
+            startActivity(i);
+        }
 
         initWidgets();
 

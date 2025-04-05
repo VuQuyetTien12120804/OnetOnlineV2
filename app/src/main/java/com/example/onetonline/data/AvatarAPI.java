@@ -9,16 +9,22 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public interface AvatarAPI {
     @Multipart
-    @POST("avatar")
-    Call<Void> uploadAvatar(@Query("id") String id, @Part MultipartBody.Part avatar);
+    @POST("avatar/{userName}")
+    Call<Void> uploadAvatar(
+            @Path("userName") String userName,
+            @Part MultipartBody.Part file
+    );
 
-    @GET("avatar/{id}")
-    Call<ResponseBody> getAvatar(@Path("id") String id);
+    @GET("avatar/{userName}")
+    Call<ResponseBody> getAvatar(
+            @Path("userName") String userName
+    );
 
-    @DELETE("avatar")
-    Call<Void> deleteAvatar(@Query("id") String id);
+    @DELETE("avatar/{userName}")
+    Call<Void> deleteAvatar(
+            @Path("userName") String userName
+    );
 }
