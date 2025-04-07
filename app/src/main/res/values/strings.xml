@@ -1,14 +1,4 @@
 <resources>
     <string name="app_name">Onet Online</string>
-    <string name="btn_classic">Classic</string>
-    <string name="btn_continue">Continue</string>
-    <string name="btn_online">Online</string>
-    <string name="et_policy">Privacy Policy</string>
-    <string name="btn_music">Music</string>
-    <string name="btn_audio">Audio</string>
-    <string name="paused">Paused!</string>
-    <integer name="map_row">9</integer>
-    <integer name="map_col">16</integer>"
-    <integer name="pikachu_number">36</integer>
-
+    <dimen name="text_size_game_play">15sp</dimen>
 </resources>

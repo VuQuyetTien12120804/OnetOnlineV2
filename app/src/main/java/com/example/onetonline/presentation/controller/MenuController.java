@@ -8,8 +8,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.onetonline.business.AvatarUseCase;
+import com.example.onetonline.business.MenuGameUseCase;
 import com.example.onetonline.business.UserData;
 import com.example.onetonline.data.User;
+import com.example.onetonline.presentation.model.UserInf;
 import com.example.onetonline.presentation.view.*;
 import android.Manifest;
 
@@ -17,6 +19,7 @@ public class MenuController {
     private MenuGameView menuGameView;
     private AvatarUseCase avatarUseCase;
     private UserData userData;
+    private MenuGameUseCase menuGameUseCase;
     private static final int STORAGE_PERMISSION_CODE = 100;
     public static final String DEFAULT_AVATAR_FILENAME = "avatar_image";
 
@@ -27,6 +30,41 @@ public class MenuController {
     }
 
     public void loadUserData(){
+        UserInf userInf = userData.getData();
+        menuGameView.showUserName(userInf.userName());
+        menuGameView.showLevel(userInf.level());
+        menuGameView.showExp(userInf.exp(), menuGameUseCase.getExpCap(userInf.level()));
+    }
+
+    public void handleClassicClick(){
+        menuGameView.onClassicClicked();
+    }
+
+    public void handleContinueClick(){
+        menuGameView.onContinueClicked();
+    }
+
+    public void handleOnlineClick(){
+        menuGameView.onContinueClicked();
+    }
+
+    public void handleSettingClick(){
+        menuGameView.onSettingClicked();
+    }
+
+    public void handleExitClick(){
+
+    }
+
+    public void handleHelpClassicClick(){
+
+    }
+
+    public void handleHelpContinueClick(){
+
+    }
+
+    public void handleHelpOnlineClick(){
 
     }
 
@@ -79,4 +117,5 @@ public class MenuController {
             ((MenuGameForm)menuGameView).openImagePicker();
         }
     }
+
 }

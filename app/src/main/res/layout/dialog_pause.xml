@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:text="@string/paused"
+        android:text="Paused"
         android:textColor="#FF5722"
         android:textSize="28sp"
         android:textStyle="bold" />
