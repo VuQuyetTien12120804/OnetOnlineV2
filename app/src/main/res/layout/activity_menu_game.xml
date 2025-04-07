@@ -254,10 +254,10 @@
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/text_size_button"
                     android:textStyle="bold"
-                    android:shadowColor="#82270C"
-                    android:shadowDx="2"
-                    android:shadowDy="2"
-                    android:shadowRadius="2"/>
+                    android:shadowColor="@color/black"
+                    android:shadowDx="3"
+                    android:shadowDy="3"
+                    android:shadowRadius="3"/>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnHelpClassic"
@@ -269,7 +269,11 @@
                     android:text="?"
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/text_size_button"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="3"
+                    android:shadowDy="3"
+                    android:shadowRadius="3"/>
             </LinearLayout>
 
             <!-- Row 2: Continue -->
@@ -291,7 +295,11 @@
                     android:text="Continue"
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/text_size_button"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="3"
+                    android:shadowDy="3"
+                    android:shadowRadius="3" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnHelpContinue"
@@ -303,7 +311,11 @@
                     android:text="?"
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/text_size_button"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="3"
+                    android:shadowDy="3"
+                    android:shadowRadius="3"/>
             </LinearLayout>
 
             <!-- Row 3: Online -->
@@ -325,10 +337,14 @@
                     android:text="Online"
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/text_size_button"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="3"
+                    android:shadowDy="3"
+                    android:shadowRadius="3"/>
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnHelpRandom"
+                    android:id="@+id/btnHelpOnline"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
@@ -337,7 +353,11 @@
                     android:text="?"
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/text_size_button"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="3"
+                    android:shadowDy="3"
+                    android:shadowRadius="3"/>
             </LinearLayout>
             <!-- Row 4: Setting -->
             <LinearLayout
@@ -358,7 +378,11 @@
                     android:text="Setting"
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/text_size_button"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="3"
+                    android:shadowDy="3"
+                    android:shadowRadius="3"/>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="30dp"
@@ -386,7 +410,11 @@
                     android:text="Exit"
                     android:textColor="#FFFFFF"
                     android:textSize="@dimen/text_size_button"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:shadowColor="@color/black"
+                    android:shadowDx="3"
+                    android:shadowDy="3"
+                    android:shadowRadius="3"/>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="30dp"

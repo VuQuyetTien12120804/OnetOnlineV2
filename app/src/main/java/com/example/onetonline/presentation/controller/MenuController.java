@@ -20,12 +20,14 @@ public class MenuController {
     private AvatarUseCase avatarUseCase;
     private UserData userData;
     private MenuGameUseCase menuGameUseCase;
+    private Context context;
     private static final int STORAGE_PERMISSION_CODE = 100;
     public static final String DEFAULT_AVATAR_FILENAME = "avatar_image";
 
     public MenuController(Context context, MenuGameForm menuView) {
         this.menuGameView = menuView;
         avatarUseCase = new AvatarUseCase(context);
+        this.context = context;
         userData = new UserData(context);
     }
 
@@ -56,16 +58,8 @@ public class MenuController {
 
     }
 
-    public void handleHelpClassicClick(){
-
-    }
-
     public void handleHelpContinueClick(){
-
-    }
-
-    public void handleHelpOnlineClick(){
-
+        DialogHelper.showScrollableAlertDialog(context);
     }
 
     public void loadAvatar() {

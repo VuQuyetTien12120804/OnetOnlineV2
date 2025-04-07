@@ -18,7 +18,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import com.example.onetonline.presentation.model.UserInf;
+
 import com.example.onetonline.presentation.BaseActivity;
 import com.example.onetonlinev2.R;
 import com.example.onetonline.presentation.controller.*;
@@ -28,7 +28,7 @@ import java.io.IOException;
 
 public class MenuGameForm extends BaseActivity implements MenuGameView{
     private MenuController menuController;
-    private Button btnClassic, btnContinue, btnOnline, btnExit, btnHelpClassic, btnHelpContinue, btnHelpRandom;
+    private Button btnClassic, btnContinue, btnOnline, btnExit, btnHelpClassic, btnHelpContinue, btnHelpOnline;
     private ImageView ivAvatar;
     private TextView tvUserName, tvLevel, tvExp;
     private ActivityResultLauncher<Intent> pickImageLauncher;
@@ -40,7 +40,7 @@ public class MenuGameForm extends BaseActivity implements MenuGameView{
         btnExit = findViewById(R.id.btnExitLoseGame);
         btnHelpClassic = findViewById(R.id.btnHelpClassic);
         btnHelpContinue = findViewById(R.id.btnHelpContinue);
-        btnHelpRandom = findViewById(R.id.btnHelpRandom);
+        btnHelpOnline = findViewById(R.id.btnHelpOnline);
         ivAvatar = findViewById(R.id.ivAvatar);
         tvUserName = findViewById(R.id.tvPlayerName);
         tvLevel = findViewById(R.id.tvStarCount);
@@ -80,7 +80,7 @@ public class MenuGameForm extends BaseActivity implements MenuGameView{
         btnExit.setOnClickListener(v -> menuController.handleExitClick());
         ivAvatar.setOnClickListener(v -> menuController.handleChangeAvatar());
         btnHelpContinue.setOnClickListener(v-> menuController.handleHelpContinueClick());
-        btnHelpRandom.setOnClickListener(v-> menuController.handleHelpContinueClick());
+        btnHelpOnline.setOnClickListener(v-> menuController.handleHelpContinueClick());
         btnHelpClassic.setOnClickListener(v-> menuController.handleHelpContinueClick());
     }
 
@@ -182,7 +182,7 @@ public class MenuGameForm extends BaseActivity implements MenuGameView{
 
     @Override
     public void onHelpClassicClicked() {
-
+        DialogHelper.showScrollableAlertDialog(MenuGameForm.this);
     }
 
     public void handleAudioButtonClick(){
