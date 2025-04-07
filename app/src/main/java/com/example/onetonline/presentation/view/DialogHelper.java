@@ -12,7 +12,7 @@ import com.example.onetonlinev2.R;
 public class DialogHelper {
     public static void showScrollableAlertDialog(Context context) {
         // Tạo View từ layout
-        View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_scrollable, null);
+        View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_helper_scrollable, null);
 
         // Khởi tạo AlertDialog Builder
         AlertDialog.Builder builder = new AlertDialog.Builder(context);

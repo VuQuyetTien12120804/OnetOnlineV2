@@ -344,7 +344,7 @@
                     android:shadowRadius="3"/>
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnHelpOnline"
+                    android:id="@+id/btnHelpRandom"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
@@ -375,17 +375,17 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_button_menu_game"
                     android:fontFamily="@font/ltim_regular"
-                    android:text="Setting"
-                    android:textColor="#FFFFFF"
-                    android:textSize="@dimen/text_size_button"
-                    android:textStyle="bold"
                     android:shadowColor="@color/black"
                     android:shadowDx="3"
                     android:shadowDy="3"
-                    android:shadowRadius="3"/>
+                    android:shadowRadius="3"
+                    android:text="Setting"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/text_size_button"
+                    android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="30dp"
+                    android:layout_width="20dp"
                     android:layout_height="30dp"
                     android:layout_marginLeft="10dp"
                     android:background="@color/transparent" />
@@ -398,7 +398,7 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnExitLoseGame"
+                    android:id="@+id/btnExit"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="50dp"
@@ -418,7 +418,7 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:background="@color/transparent" />
             </LinearLayout>

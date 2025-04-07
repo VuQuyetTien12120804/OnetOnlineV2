@@ -1,6 +1,7 @@
 package com.example.onetonline.presentation.controller;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 
@@ -23,12 +24,15 @@ public class MenuController {
     private Context context;
     private static final int STORAGE_PERMISSION_CODE = 100;
     public static final String DEFAULT_AVATAR_FILENAME = "avatar_image";
+    private SharedPreferences sharedPreferences;
 
     public MenuController(Context context, MenuGameForm menuView) {
         this.menuGameView = menuView;
         avatarUseCase = new AvatarUseCase(context);
         this.context = context;
         userData = new UserData(context);
+        // Initialize SharedPreferences for saving settings
+        sharedPreferences = context.getSharedPreferences("GameSettings", Context.MODE_PRIVATE);
     }
 
     public void loadUserData(){
@@ -51,7 +55,11 @@ public class MenuController {
     }
 
     public void handleSettingClick(){
-        menuGameView.onSettingClicked();
+        // Load current settings from SharedPreferences
+        boolean isMusicOn = sharedPreferences.getBoolean("music", true); // Default: true
+        boolean isSoundClickOn = sharedPreferences.getBoolean("sound_click", true); // Default: true
+        // Show the settings dialog
+        menuGameView.showSettingsDialog(isMusicOn, isSoundClickOn);
     }
 
     public void handleExitClick(){
@@ -60,6 +68,15 @@ public class MenuController {
 
     public void handleHelpContinueClick(){
         DialogHelper.showScrollableAlertDialog(context);
+    }
+    public void saveSettings(boolean isMusicOn, boolean isSoundClickOn) {
+        // Save settings to SharedPreferences
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("music", isMusicOn);
+        editor.putBoolean("sound_click", isSoundClickOn);
+        editor.apply();
+        // Notify the view that settings were saved
+        menuGameView.onSettingsSaved(isMusicOn, isSoundClickOn);
     }
 
     public void loadAvatar() {

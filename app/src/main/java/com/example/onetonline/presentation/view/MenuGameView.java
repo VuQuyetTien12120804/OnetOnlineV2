@@ -16,5 +16,8 @@ public interface MenuGameView {
     void showLevel(int level);
     void showExp(int exp, int expCap);
     String getUserName();
+    //method for settings
+    void showSettingsDialog(boolean isMusicOn, boolean isSoundClickOn);
+    void onSettingsSaved(boolean isMusicOn, boolean isSoundClickOn);
     void navigateTo(Class<?> activityClass);
 }
