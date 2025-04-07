@@ -25,7 +25,7 @@ import com.example.onetonline.presentation.controller.*;
 
 import java.io.IOException;
 
-public class MenuGame extends AppCompatActivity implements MenuGameView{
+public class  MenuGame extends AppCompatActivity implements MenuGameView{
     private MenuController menuController;
     private Button btnClassic, btnContinue, btnOnline, btnExit, btnHelpClassic, btnHelpContinue, btnHelpRandom;
 //    private Button btnMusic, btnAudio;
