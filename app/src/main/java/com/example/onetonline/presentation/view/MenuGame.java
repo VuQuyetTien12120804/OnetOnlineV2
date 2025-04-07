@@ -29,7 +29,6 @@ import java.io.IOException;
 public class MenuGame extends BaseActivity implements MenuGameView{
     private MenuController menuController;
     private Button btnClassic, btnContinue, btnOnline, btnExit, btnHelpClassic, btnHelpContinue, btnHelpRandom;
-//    private Button btnMusic, btnAudio;
     private ImageView ivAvatar;
     private ActivityResultLauncher<Intent> pickImageLauncher;
 
@@ -38,8 +37,6 @@ public class MenuGame extends BaseActivity implements MenuGameView{
         btnContinue = findViewById(R.id.btnContinue);
         btnOnline = findViewById(R.id.btnOnline);
         btnExit = findViewById(R.id.btnExitLoseGame);
-//        btnMusic = findViewById(R.id.btnMusic);
-//        btnAudio = findViewById(R.id.btnAudio);
         btnHelpClassic = findViewById(R.id.btnHelpClassic);
         btnHelpContinue = findViewById(R.id.btnHelpContinue);
         btnHelpRandom = findViewById(R.id.btnHelpRandom);
@@ -73,79 +70,33 @@ public class MenuGame extends BaseActivity implements MenuGameView{
             }
         });
 
-        btnClassic.setOnClickListener(v -> handleClassicButtonClick());
-        btnContinue.setOnClickListener(v -> handleContinueButtonClick());
-        btnOnline.setOnClickListener(v -> handleOnlineButtonClick());
-        btnExit.setOnClickListener(v -> handleExitButtonClick());
+        btnClassic.setOnClickListener(v -> menuController.handleExitClick());
+        btnContinue.setOnClickListener(v -> menuController.handleContinueClick());
+        btnOnline.setOnClickListener(v -> menuController.handleOnlineClick());
+        btnExit.setOnClickListener(v -> menuController.handleExitClick());
         ivAvatar.setOnClickListener(v -> menuController.handleChangeAvatar());
-        btnHelpContinue.setOnClickListener(v->handleHelpContinueButtonClick());
-        btnHelpRandom.setOnClickListener(v->handleHelpContinueButtonClick());
-        btnHelpClassic.setOnClickListener(v->handleHelpContinueButtonClick());
-//        btnMusic.setOnClickListener(v -> handleMusicButtonClick());
-//        btnAudio.setOnClickListener(v -> handleAudioButtonClick());
+        btnHelpContinue.setOnClickListener(v-> menuController.handleHelpContinueClick());
+        btnHelpRandom.setOnClickListener(v-> menuController.handleHelpContinueClick());
+        btnHelpClassic.setOnClickListener(v-> menuController.handleHelpContinueClick());
     }
 
+    @Override
+    public void onClassicClicked() {
 
-    public void updateSelectedAction(String action){
+    }
+
+    @Override
+    public void onContinueClicked() {
 
     }
 
-    public void handleClassicButtonClick(){
-//        Dialog dialog = new Dialog(MenuGame.this);
-//        dialog.setContentView(R.layout.dialog_win_game);
-//        dialog.setCancelable(true); //cho phep dong bang nut ben ngoai
-//
-//        Button btnNext = dialog.findViewById(R.id.btnNextWinGame);
-//
-//        if (dialog.getWindow() != null) {
-//            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogBounceAnimation;
-//            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-//        }
-//
-//        btnNext.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(MenuGame.this, MenuGame.class);
-//                startActivity(intent);
-//                dialog.dismiss();
-//            }
-//        });
-//        dialog.show();
-        Intent intent = new Intent(MenuGame.this, GamePlay.class);
-        startActivity(intent);
-        finish();
-    }
-
-    public void handleContinueButtonClick(){
-        //Tao dialog
-        Dialog dialog = new Dialog(MenuGame.this);
-        dialog.setContentView(R.layout.dialog_lose_game);
-        dialog.setCancelable(true); //cho phep dong bang nut ben ngoai
-
-        //gan cac nut cho dialog
-        Button btnExitLoseGame = dialog.findViewById(R.id.btnExitLoseGame);
-
-        // Áp dụng hiệu ứng cho dialog
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogBounceAnimation;
-            // Xóa nền trắng của Dialog
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        }
-
-        btnExitLoseGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MenuGame.this, GamePlay.class);
-                startActivity(intent);
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
-    public void handleOnlineButtonClick(){
+    @Override
+    public void onOnlineClicked() {
 
     }
-    public void handleExitButtonClick() {
+
+    @Override
+    public void onExitClicked() {
         Dialog dialog = new Dialog(MenuGame.this);
         dialog.setContentView(R.layout.dialog_exit_confirmation);
         dialog.setCancelable(false); // Không cho phép đóng bằng nút bên ngoài
@@ -167,14 +118,30 @@ public class MenuGame extends BaseActivity implements MenuGameView{
 
         dialog.show();
     }
-    public void handleMusicButtonClick(){
-        showCustomToast("Music button clicked");
+
+    @Override
+    public void onHelpClassicClicked() {
+
     }
-    public void handleAudioButtonClick(){
-        showCustomToast("Audio button clicked");
-    }
-    public void handleHelpContinueButtonClick(){
+
+    @Override
+    public void onHelpContinueClicked() {
         DialogHelper.showScrollableAlertDialog(MenuGame.this);
+    }
+
+    @Override
+    public void onSettingClicked() {
+
+    }
+
+    @Override
+    public void showAvatar(Bitmap bitmap) {
+        ivAvatar.setImageBitmap(bitmap);
+    }
+
+    @Override
+    public void showMessage(String message) {
+        showCustomToast(message);
     }
 
     public void openImagePicker() {
@@ -197,20 +164,4 @@ public class MenuGame extends BaseActivity implements MenuGameView{
         toast.show();
     }
 
-    @Override
-    public void showAvatar(Bitmap bitmap) {
-        ivAvatar.setImageBitmap(bitmap);
-    }
-
-    @Override
-    public void showMessage(String message) {
-        showCustomToast(message);
-    }
-
-    @Override
-    public void navigateTo(Class<?> activityClass) {
-        Intent i = new Intent(MenuGame.this, activityClass);
-        startActivity(i);
-        finish();
-    }
 }

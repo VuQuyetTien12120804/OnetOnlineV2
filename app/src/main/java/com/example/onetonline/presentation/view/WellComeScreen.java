@@ -10,7 +10,7 @@ import com.example.onetonline.presentation.controller.WellComeScreenController;
 import com.example.onetonline.presentation.model.UserInf;
 import com.example.onetonlinev2.R;
 
-public class WellComeScreen extends BaseActivity {
+public class WellComeScreen extends BaseActivity implements WellComeScreenView {
     /**
      *
      */
@@ -47,6 +47,7 @@ public class WellComeScreen extends BaseActivity {
         btnGuest = findViewById(R.id.btnGuest);
     }
 
+    @Override
     public void navigateTo(Class<?> avtivityClass) {
         Intent intent = new Intent(this, avtivityClass);
         startActivity(intent);

@@ -22,6 +22,38 @@ public class MenuController {
         avatarUseCase = new AvatarUseCase(context);
     }
 
+    public void handleClassicClick(){
+        menuView.onClassicClicked();
+    }
+
+    public void handleContinueClick(){
+        menuView.onContinueClicked();
+    }
+
+    public void handleOnlineClick(){
+        menuView.onContinueClicked();
+    }
+
+    public void handleSettingClick(){
+        menuView.onSettingClicked();
+    }
+
+    public void handleExitClick(){
+
+    }
+
+    public void handleHelpClassicClick(){
+
+    }
+
+    public void handleHelpContinueClick(){
+
+    }
+
+    public void handleHelpOnlineClick(){
+
+    }
+
     public void loadAvatar() {
         // Ưu tiên tải từ local
         avatarUseCase.loadAvatarFromLocal(DEFAULT_AVATAR_FILENAME, new AvatarUseCase.AvatarCallBack() {
@@ -70,4 +102,5 @@ public class MenuController {
             menuView.openImagePicker();
         }
     }
+
 }
