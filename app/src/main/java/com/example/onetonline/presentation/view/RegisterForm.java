@@ -14,11 +14,13 @@ import android.widget.Toast;
 import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.onetonline.presentation.BaseActivity;
 import com.example.onetonline.presentation.controller.SignUpController;
 import com.example.onetonlinev2.R;
 import com.mukeshsolanki.OtpView;
 
-public class RegisterForm extends AppCompatActivity implements SignUpView{
+public class RegisterForm extends BaseActivity implements SignUpView{
     private Button btnBackRegisterForm, btnRegister;
     private EditText etUserName, etEmail, etPassword, etConfirmPassword;
     private TextView tvBackToLogin;

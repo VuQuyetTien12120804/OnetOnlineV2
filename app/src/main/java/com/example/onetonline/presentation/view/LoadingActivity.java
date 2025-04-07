@@ -14,11 +14,13 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.example.onetonline.presentation.BaseActivity;
 import com.example.onetonlinev2.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class LoadingActivity extends AppCompatActivity {
+public class LoadingActivity extends BaseActivity {
 
     private ProgressBar progressBar;
     private TextView tvProgressPercent;

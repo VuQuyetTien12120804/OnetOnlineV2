@@ -5,14 +5,15 @@ import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.onetonline.presentation.BaseActivity;
 import com.example.onetonline.presentation.model.GameBoardState;
 import com.example.onetonlinev2.R;
 import com.example.onetonline.presentation.controller.*;
 import com.example.onetonline.presentation.model.*;
 
-public class GamePlay extends AppCompatActivity {
+
+public class GamePlay extends BaseActivity {
     private GamePlayController gamePlayController;
     private GameBoardState gameBoardState;
 

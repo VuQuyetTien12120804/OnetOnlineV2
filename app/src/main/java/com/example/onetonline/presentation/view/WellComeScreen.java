@@ -3,15 +3,14 @@ package com.example.onetonline.presentation.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.onetonline.business.UserData;
+import com.example.onetonline.presentation.BaseActivity;
 import com.example.onetonline.presentation.controller.WellComeScreenController;
 import com.example.onetonline.presentation.model.UserInf;
 import com.example.onetonlinev2.R;
 
-public class WellComeScreen extends AppCompatActivity {
+public class WellComeScreen extends BaseActivity {
     /**
      *
      */

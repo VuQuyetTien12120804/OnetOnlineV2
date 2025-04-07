@@ -19,11 +19,12 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.onetonline.data.User;
+import com.example.onetonline.presentation.BaseActivity;
 import com.example.onetonline.presentation.controller.LoginController;
 import com.example.onetonlinev2.R;
 import com.mukeshsolanki.OtpView;
 
-public class LoginForm extends AppCompatActivity implements LoginView{
+public class LoginForm extends BaseActivity implements LoginView{
     //Khai báo
     private Button btnBackLoginForm, btnLogin;
     private EditText etLogin, etPassword;

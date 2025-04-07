@@ -5,4 +5,5 @@
         <item name="android:windowExitAnimation">@anim/bounce_exit</item>
         Log.d("DialogTest", "Window animation: " + dialog.getWindow().getAttributes().windowAnimations);
     </style>
+
 </resources>

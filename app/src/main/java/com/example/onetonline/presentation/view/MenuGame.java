@@ -20,12 +20,13 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.onetonline.presentation.BaseActivity;
 import com.example.onetonlinev2.R;
 import com.example.onetonline.presentation.controller.*;
 
 import java.io.IOException;
 
-public class MenuGame extends AppCompatActivity implements MenuGameView{
+public class MenuGame extends BaseActivity implements MenuGameView{
     private MenuController menuController;
     private Button btnClassic, btnContinue, btnOnline, btnExit, btnHelpClassic, btnHelpContinue, btnHelpRandom;
 //    private Button btnMusic, btnAudio;
@@ -90,26 +91,29 @@ public class MenuGame extends AppCompatActivity implements MenuGameView{
     }
 
     public void handleClassicButtonClick(){
-        Dialog dialog = new Dialog(MenuGame.this);
-        dialog.setContentView(R.layout.dialog_win_game);
-        dialog.setCancelable(true); //cho phep dong bang nut ben ngoai
-
-        Button btnNext = dialog.findViewById(R.id.btnNextWinGame);
-
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogBounceAnimation;
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        }
-
-        btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MenuGame.this, MenuGame.class);
-                startActivity(intent);
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
+//        Dialog dialog = new Dialog(MenuGame.this);
+//        dialog.setContentView(R.layout.dialog_win_game);
+//        dialog.setCancelable(true); //cho phep dong bang nut ben ngoai
+//
+//        Button btnNext = dialog.findViewById(R.id.btnNextWinGame);
+//
+//        if (dialog.getWindow() != null) {
+//            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogBounceAnimation;
+//            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+//        }
+//
+//        btnNext.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(MenuGame.this, MenuGame.class);
+//                startActivity(intent);
+//                dialog.dismiss();
+//            }
+//        });
+//        dialog.show();
+        Intent intent = new Intent(MenuGame.this, GamePlay.class);
+        startActivity(intent);
+        finish();
     }
 
     public void handleContinueButtonClick(){
@@ -131,7 +135,7 @@ public class MenuGame extends AppCompatActivity implements MenuGameView{
         btnExitLoseGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuGame.this, MenuGame.class);
+                Intent intent = new Intent(MenuGame.this, GamePlay.class);
                 startActivity(intent);
                 dialog.dismiss();
             }
