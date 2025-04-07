@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_login_game">
 
-
-    <!-- Trường nhập Mật khẩu -->
     <EditText
         android:id="@+id/etNameOrEmail"
         android:layout_width="0dp"
@@ -19,7 +17,12 @@
         android:textColor="#673AB7"
         android:textColorHint="#BDBDBD"
         android:textSize="20sp"
+        android:inputType="text"
         android:fontFamily="@font/ltim_regular"
+        android:focusableInTouchMode="true"
+        android:cursorVisible="true"
+        android:singleLine="true"
+        android:imeOptions="actionDone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.1"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,6 +42,8 @@
         android:textColorHint="#BDBDBD"
         android:textSize="20sp"
         android:layout_marginTop="10dp"
+        android:singleLine="true"
+        android:imeOptions="actionDone"
         app:layout_constraintTop_toBottomOf="@id/etNameOrEmail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

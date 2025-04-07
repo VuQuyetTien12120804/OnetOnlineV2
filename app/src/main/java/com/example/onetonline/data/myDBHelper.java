@@ -111,29 +111,29 @@ public class myDBHelper extends SQLiteOpenHelper {
         return myDB.rawQuery(queryDisplay, null);
     }
 
-    public long Insert(String id, String name, String email, int level, int score, int exp, String last_update){
-        SQLiteDatabase db = getWritableDatabase();
+    public long Insert(User user){
+        openDB();
         ContentValues values = new ContentValues();
-        values.put(ID, id);
-        values.put(NAME, name);
-        values.put(EMAIL, email);
-        values.put(LEVEL, level);
-        values.put(SCORE, score);
-        values.put(EXP, exp);
-        values.put(LAST_UPDATE, last_update);
+        values.put(ID, user.id());
+        values.put(NAME, user.userName());
+        values.put(EMAIL, user.email());
+        values.put(LEVEL, user.level());
+        values.put(SCORE, user.score());
+        values.put(EXP, user.exp());
+        values.put(LAST_UPDATE, user.lastUpdate());
 
-        return db.insert(TABLE_NAME, null, values);
+        return myDB.insert(TABLE_NAME, null, values);
     }
 
-    public long Update(String id, String name, String email, int level, int score, int exp, String last_update){
+    public long Update(User user){
         ContentValues values = new ContentValues();
-        values.put(NAME, name);
-        values.put(EMAIL, email);
-        values.put(LEVEL, level);
-        values.put(SCORE, score);
-        values.put(EXP, exp);
-        values.put(LAST_UPDATE, last_update);
-        String where = ID + " = " + id;
+        values.put(NAME, user.userName());
+        values.put(EMAIL, user.email());
+        values.put(LEVEL, user.level());
+        values.put(SCORE, user.score());
+        values.put(EXP, user.exp());
+        values.put(LAST_UPDATE, user.lastUpdate());
+        String where = ID + " = " + user.id();
 
         return myDB.update(TABLE_NAME, values, where, null);
     }
@@ -152,5 +152,15 @@ public class myDBHelper extends SQLiteOpenHelper {
         String where = ID + " = " + id;
 
         return myDB.delete(TABLE_NAME, where, null);
+    }
+
+    public boolean hasRecords() {
+        openDB();
+        Cursor cursor = Display();
+        if(cursor != null && cursor.getCount() != 0){
+            cursor.close();
+            return false;
+        }
+        return true;
     }
 }

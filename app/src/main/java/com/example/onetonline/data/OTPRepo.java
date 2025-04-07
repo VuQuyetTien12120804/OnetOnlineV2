@@ -11,11 +11,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class OTPRepo {
     private OTP_API otpApi;
-
+    //10.0.2.2:8001
     public OTPRepo() {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         otpApi = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8001/")
+                .baseUrl("http://192.168.170.193:8001/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
                 .create(OTP_API.class);

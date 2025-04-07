@@ -20,16 +20,19 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.onetonline.data.User;
+import com.example.onetonline.presentation.model.UserInf;
 import com.example.onetonlinev2.R;
 import com.example.onetonline.presentation.controller.*;
 
 import java.io.IOException;
 
-public class MenuGame extends AppCompatActivity implements MenuGameView{
+public class MenuGameForm extends AppCompatActivity implements MenuGameView{
     private MenuController menuController;
     private Button btnClassic, btnContinue, btnOnline, btnExit, btnHelpClassic, btnHelpContinue, btnHelpRandom;
 //    private Button btnMusic, btnAudio;
     private ImageView ivAvatar;
+    private TextView tvUserName, tvLevel, tvExp;
     private ActivityResultLauncher<Intent> pickImageLauncher;
 
     public void initWidgets(){
@@ -43,6 +46,9 @@ public class MenuGame extends AppCompatActivity implements MenuGameView{
         btnHelpContinue = findViewById(R.id.btnHelpContinue);
         btnHelpRandom = findViewById(R.id.btnHelpRandom);
         ivAvatar = findViewById(R.id.ivAvatar);
+        tvUserName = findViewById(R.id.tvPlayerName);
+        tvLevel = findViewById(R.id.tvStarCount);
+        tvExp = findViewById(R.id.tvExp);
     }
 
     @Override
@@ -59,6 +65,18 @@ public class MenuGame extends AppCompatActivity implements MenuGameView{
 
         menuController = new MenuController(this, this);
         initWidgets();
+
+        Intent intent = getIntent();
+        UserInf user = (UserInf)) intent.getSerializableExtra("user");
+        if (user != null) {
+            showUserName(user.userName());
+            showLevel(user.level());
+            showExp(user.exp());
+        } else {
+            showUserName("Guest player");
+            showLevel(0);
+            showExp(0, );
+        }
 
         pickImageLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK && result.getData() != null) {
@@ -90,7 +108,7 @@ public class MenuGame extends AppCompatActivity implements MenuGameView{
     }
 
     public void handleClassicButtonClick(){
-        Dialog dialog = new Dialog(MenuGame.this);
+        Dialog dialog = new Dialog(MenuGameForm.this);
         dialog.setContentView(R.layout.dialog_win_game);
         dialog.setCancelable(true); //cho phep dong bang nut ben ngoai
 
@@ -104,7 +122,7 @@ public class MenuGame extends AppCompatActivity implements MenuGameView{
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuGame.this, MenuGame.class);
+                Intent intent = new Intent(MenuGameForm.this, MenuGameForm.class);
                 startActivity(intent);
                 dialog.dismiss();
             }
@@ -114,7 +132,7 @@ public class MenuGame extends AppCompatActivity implements MenuGameView{
 
     public void handleContinueButtonClick(){
         //Tao dialog
-        Dialog dialog = new Dialog(MenuGame.this);
+        Dialog dialog = new Dialog(MenuGameForm.this);
         dialog.setContentView(R.layout.dialog_lose_game);
         dialog.setCancelable(true); //cho phep dong bang nut ben ngoai
 
@@ -131,7 +149,7 @@ public class MenuGame extends AppCompatActivity implements MenuGameView{
         btnExitLoseGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuGame.this, MenuGame.class);
+                Intent intent = new Intent(MenuGameForm.this, MenuGameForm.class);
                 startActivity(intent);
                 dialog.dismiss();
             }
@@ -142,7 +160,7 @@ public class MenuGame extends AppCompatActivity implements MenuGameView{
 
     }
     public void handleExitButtonClick() {
-        Dialog dialog = new Dialog(MenuGame.this);
+        Dialog dialog = new Dialog(MenuGameForm.this);
         dialog.setContentView(R.layout.dialog_exit_confirmation);
         dialog.setCancelable(false); // Không cho phép đóng bằng nút bên ngoài
 
@@ -170,7 +188,7 @@ public class MenuGame extends AppCompatActivity implements MenuGameView{
         showCustomToast("Audio button clicked");
     }
     public void handleHelpContinueButtonClick(){
-        DialogHelper.showScrollableAlertDialog(MenuGame.this);
+        DialogHelper.showScrollableAlertDialog(MenuGameForm.this);
     }
 
     public void openImagePicker() {
@@ -204,8 +222,29 @@ public class MenuGame extends AppCompatActivity implements MenuGameView{
     }
 
     @Override
+    public void showUserName(String userName) {
+        tvUserName.setText(userName);
+    }
+
+    @Override
+    public void showLevel(int level) {
+        tvLevel.setText(level);
+    }
+
+    @Override
+    public void showExp(int exp, int expCap) {
+        String experience = exp + "/" + expCap;
+        tvExp.setText(experience);
+    }
+
+    @Override
+    public String getUserName() {
+        return tvUserName.getText().toString();
+    }
+
+    @Override
     public void navigateTo(Class<?> activityClass) {
-        Intent i = new Intent(MenuGame.this, activityClass);
+        Intent i = new Intent(MenuGameForm.this, activityClass);
         startActivity(i);
         finish();
     }

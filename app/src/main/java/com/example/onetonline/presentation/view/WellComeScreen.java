@@ -3,7 +3,7 @@ package com.example.onetonline.presentation.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import androidx.activity.EdgeToEdge;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.onetonline.business.UserData;
@@ -27,19 +27,14 @@ public class WellComeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_well_come_screen);
         wellComeScreenController = new WellComeScreenController(this);
-        userData = new UserData(this);
-        UserInf userInf = userData.getData();
-        if(userInf != null){
-            Intent i = new Intent(WellComeScreen.this, MenuGame.class);
-            i.putExtra("user", userInf);
-            startActivity(i);
-        }
+
+        wellComeScreenController.handleHasRecord(MenuGameForm.class);
 
         initWidgets();
 
         btnLogin.setOnClickListener(v -> wellComeScreenController.handleLogin(LoginForm.class));
-        btnRegister.setOnClickListener(v -> wellComeScreenController.handleRegister(RegisterForm.class));
-        btnGuest.setOnClickListener(v -> wellComeScreenController.handleGuest(MenuGame.class));
+        btnRegister.setOnClickListener(v -> wellComeScreenController.handleRegister(SignUpForm.class));
+        btnGuest.setOnClickListener(v -> wellComeScreenController.handleGuest(MenuGameForm.class));
     }
 
     public void initWidgets(){

@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.INTERNET"/>
-    <!-- Quyền đọc bộ nhớ (cho Android 9 trở xuống) -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -30,7 +30,7 @@
             android:exported="false"
             android:screenOrientation="sensorLandscape"/>
         <activity
-            android:name="com.example.onetonline.presentation.view.RegisterForm"
+            android:name="com.example.onetonline.presentation.view.SignUpForm"
             android:exported="false"
             android:screenOrientation="sensorLandscape"/>
         <activity
@@ -38,7 +38,7 @@
             android:exported="false"
             android:screenOrientation="sensorLandscape"/>
         <activity
-            android:name="com.example.onetonline.presentation.view.MenuGame"
+            android:name="com.example.onetonline.presentation.view.MenuGameForm"
             android:exported="true"
             android:screenOrientation="sensorLandscape">
             <intent-filter>

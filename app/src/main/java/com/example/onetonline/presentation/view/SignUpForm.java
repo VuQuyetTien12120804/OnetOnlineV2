@@ -18,7 +18,7 @@ import com.example.onetonline.presentation.controller.SignUpController;
 import com.example.onetonlinev2.R;
 import com.mukeshsolanki.OtpView;
 
-public class RegisterForm extends AppCompatActivity implements SignUpView{
+public class SignUpForm extends AppCompatActivity implements SignUpView{
     private Button btnBackRegisterForm, btnRegister;
     private EditText etUserName, etEmail, etPassword, etConfirmPassword;
     private TextView tvBackToLogin;
@@ -42,7 +42,7 @@ public class RegisterForm extends AppCompatActivity implements SignUpView{
         setContentView(R.layout.activity_register_form);
 
         initWidgets();
-        sign = new SignUpController(this, RegisterForm.this);
+        sign = new SignUpController(this, SignUpForm.this);
 
         btnBackRegisterForm.setOnClickListener(v -> sign.handleBackToHome(WellComeScreen.class));
         btnRegister.setOnClickListener(v -> sign.handleSendOTP());
@@ -124,7 +124,7 @@ public class RegisterForm extends AppCompatActivity implements SignUpView{
 
     @Override
     public void navigateTo(Class<?> avtivityClass) {
-        Intent intent = new Intent(RegisterForm.this, avtivityClass);
+        Intent intent = new Intent(SignUpForm.this, avtivityClass);
         startActivity(intent);
         finish();
     }

@@ -13,12 +13,12 @@ public class User implements Serializable {
 
     public User(String id, String userName, String email, int level, int score, int exp, String lastUpdate) {
         this.id = id;
-        this.exp = exp;
-        this.score = score;
-        this.level = level;
-        this.lastUpdate = lastUpdate;
         this.userName = userName;
         this.email = email;
+        this.level = level;
+        this.score = score;
+        this.exp = exp;
+        this.lastUpdate = lastUpdate;
     }
 
     public String userName() {

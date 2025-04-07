@@ -1,13 +1,12 @@
 package com.example.onetonline.business;
 
-import com.sanctionco.jmail.JMail;
-
 public class Checker {
-    public static boolean checkEmail(String email){
-        if(JMail.isValid(email)){
-            return true;
+    public static boolean checkEmail(String email) {
+        if (email == null || email.trim().isEmpty()) {
+            return false;
         }
-        return false;
+        String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        return email.matches(emailPattern);
     }
 
     public static boolean checkPassLen(String password){

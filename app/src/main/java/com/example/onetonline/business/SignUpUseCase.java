@@ -15,23 +15,31 @@ public class SignUpUseCase {
         this.otpRepo = otpRepo;
     }
 
-    public void sendOTP(String userName, String email, String password, String confirmPassword, OTPRepo.SendCallBack callBack){
+    public interface SignUpResultCallback {
+        void onInputInvalid(String error);
+        void onInputValid();
+    }
+
+    public void sendOTP(String userName, String email, String password, String confirmPassword,SignUpResultCallback signUpResultCallback, OTPRepo.SendCallBack callBack){
         if (!Checker.checkUserNameLen(userName)) {
-            callBack.onFailure("User Name must be more than 5 characters!");
+            signUpResultCallback.onInputInvalid("User Name must be more than 5 characters!");
             return;
         }
         if (!Checker.checkEmail(email)) {
-            callBack.onFailure("Invalid email address");
+            signUpResultCallback.onInputInvalid("Invalid email address");
             return;
         }
         if (!Checker.checkPassLen(password)) {
-            callBack.onFailure("Password must be more than 6 characters!");
+            signUpResultCallback.onInputInvalid("Password must be more than 6 characters!");
             return;
         }
         if (!Checker.checkConfirmPassword(password,confirmPassword)) {
-            callBack.onFailure("Passwords do not match!");
+            signUpResultCallback.onInputInvalid("Passwords do not match!");
             return;
         }
+
+        signUpResultCallback.onInputValid();
+
         userOTP otp = new userOTP(email);
         otpRepo.sendOTP(otp, new OTPRepo.SendCallBack() {
             @Override

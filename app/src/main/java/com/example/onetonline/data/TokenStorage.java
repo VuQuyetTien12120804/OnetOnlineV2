@@ -39,27 +39,28 @@ public class TokenStorage {
     }
 
     // Decode and get access token
-    public String getToken() throws Exception {
-        //Get data from SharedPreferences
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        String encryptedToken = prefs.getString("access_token", null);
-        String iv = prefs.getString("iv", null);
-
-        if (encryptedToken == null || iv == null) {
+    public String getToken(){
+        try {
+            //Get data from SharedPreferences
+            SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+            String encryptedToken = prefs.getString("access_token", null);
+            String iv = prefs.getString("iv", null);
+            if (encryptedToken == null || iv == null) {
+                return null;
+            }
+            // create a SecretKey from key
+            SecretKeySpec secretKey = new SecretKeySpec(HARD_CODED_KEY.getBytes(StandardCharsets.UTF_8), "AES");
+            //Init cipher to Decrypt access token
+            Cipher cipher = Cipher.getInstance(TRANSFORMATION);
+            IvParameterSpec ivSpec = new IvParameterSpec(Base64.decode(iv, Base64.DEFAULT));
+            cipher.init(Cipher.DECRYPT_MODE, secretKey, ivSpec);
+            //Decrypt access token
+            byte[] decryptedBytes = cipher.doFinal(Base64.decode(encryptedToken, Base64.DEFAULT));
+            return new String(decryptedBytes, StandardCharsets.UTF_8);
+        }
+        catch (Exception e){
             return null;
         }
-
-        // create a SecretKey from key
-        SecretKeySpec secretKey = new SecretKeySpec(HARD_CODED_KEY.getBytes(StandardCharsets.UTF_8), "AES");
-
-        //Init cipher to Decrypt access token
-        Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-        IvParameterSpec ivSpec = new IvParameterSpec(Base64.decode(iv, Base64.DEFAULT));
-        cipher.init(Cipher.DECRYPT_MODE, secretKey, ivSpec);
-
-        //Decrypt access token
-        byte[] decryptedBytes = cipher.doFinal(Base64.decode(encryptedToken, Base64.DEFAULT));
-        return new String(decryptedBytes, StandardCharsets.UTF_8);
     }
 
     //Remove access token from SharedPreferences
