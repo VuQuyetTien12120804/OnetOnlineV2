@@ -4,10 +4,14 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.security.keystore.UserPresenceUnavailableException;
 
 import com.example.onetonline.business.LoginUseCase;
+import com.example.onetonline.data.AvatarRepo;
 import com.example.onetonline.data.OTPRepo;
+import com.example.onetonline.data.User;
 import com.example.onetonline.data.UserRepo;
+import com.example.onetonline.data.myDBHelper;
 import com.example.onetonline.data.token;
 import com.example.onetonline.presentation.model.ChangePassRequest;
 import com.example.onetonline.presentation.model.LoginRequest;
@@ -24,28 +28,22 @@ public class LoginController {
         this.loginView = loginView;
         UserRepo userRepo = new UserRepo(context);
         OTPRepo otpRepo = new OTPRepo();
-        loginUseCase = new LoginUseCase(userRepo, otpRepo);
+        AvatarRepo avatarRepo = new AvatarRepo();
+        loginUseCase = new LoginUseCase(userRepo, otpRepo, avatarRepo);
     }
 
-    public void handleBackToHome(Context context){
-        Intent intent = new Intent(context, WellComeScreen.class);
-        context.startActivity(intent);
-        ((Activity) context).finish();
+    public void handleBackToHome(Class<?> activityClass){
+        loginView.navigateTo(activityClass);
     }
 
-    public void handleLogin(){
+    public void handleLogin(Class<?> activityClass){
         String userName = loginView.getUserName();
         String password = loginView.getPassword();
         LoginRequest loginRequest = new LoginRequest(userName, password);
-        loginUseCase.login(loginRequest, new UserRepo.LoginCallBack() {
+        loginUseCase.login(loginRequest, new UserRepo.GetUserCallBack() {
             @Override
-            public void onSuccess(token t) {
-//                loginView.showMessage(user.id());
-//                loginView.showMessage(user.userName());
-//                loginView.showMessage(user.email());
-//                loginView.showMessage(String.valueOf(user.level()));
-//                loginView.showMessage(user.lastUpdate());
-//                loginView.convertContext(user);
+            public void onSuccess(User user) {
+                loginView.onLoginSuccess(user);
             }
 
             @Override
@@ -56,12 +54,12 @@ public class LoginController {
     }
 
     public void handleSendOTP(){
+        ((LoginForm) loginView).showOtpDialog();
         userOTP otp = new userOTP(loginView.getUserName());
         loginUseCase.sendOTP(otp, new OTPRepo.SendCallBack() {
             @Override
             public void onSuccess() {
                 loginView.showMessage("The OTP has been sent to your email and is valid for 3 minutes. Please enter the code to proceed.");
-                ((LoginForm) loginView).showOtpDialog();
             }
 
             @Override
@@ -120,5 +118,9 @@ public class LoginController {
                 loginView.showMessage(err);
             }
         });
+    }
+
+    public void onDestroy(){
+        loginUseCase.close();
     }
 }

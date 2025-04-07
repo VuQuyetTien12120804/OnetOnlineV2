@@ -12,6 +12,7 @@ import com.example.onetonline.utils.*;
 
 public class UserData {
     private myDBHelper myDB;
+
     public UserData(Context context) {
         this.myDB = new myDBHelper(context);
     }
@@ -22,16 +23,17 @@ public class UserData {
         if(cursor != null && cursor.getCount() != 0){
             cursor.moveToFirst();
             String name = cursor.getString(cursor.getColumnIndexOrThrow(myDBHelper.NAME()));
-            String level = cursor.getString(cursor.getColumnIndexOrThrow(myDBHelper.LEVEL()));
-            String exp = cursor.getString(cursor.getColumnIndexOrThrow(myDBHelper.EXP()));
-            String score = cursor.getString(cursor.getColumnIndexOrThrow(myDBHelper.SCORE()));
+            int level = cursor.getInt(cursor.getColumnIndexOrThrow(myDBHelper.LEVEL()));
+            int exp = cursor.getInt(cursor.getColumnIndexOrThrow(myDBHelper.EXP()));
+            int score = cursor.getInt(cursor.getColumnIndexOrThrow(myDBHelper.SCORE()));
             String last_update = cursor.getString(cursor.getColumnIndexOrThrow(myDBHelper.LAST_UPDATE()));
-            UserInf userInf = new UserInf(name, Integer.parseInt(level), Integer.parseInt(score), Integer.parseInt(exp), last_update);
-            return userInf;
+            myDB.close();
+            return new UserInf(name, level, score, exp, last_update);
         }
         myDB.close();
         return null;
     }
+
     public UserInf update(String name, int level, int scoreView, int exp, String last_update){
         myDB.openDB();
         int oldLv = level;
@@ -52,4 +54,7 @@ public class UserData {
         return userInf;
     }
 
+    public boolean hasRecords(){
+        return myDB.hasRecords();
+    }
 }

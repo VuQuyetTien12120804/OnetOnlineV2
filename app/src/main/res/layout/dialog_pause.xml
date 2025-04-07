@@ -9,14 +9,6 @@
     android:padding="20dp">
 
     <!-- Tiêu đề Paused -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:textColor="#FF5722"
-        android:textSize="28sp"
-        android:textStyle="bold" />
-
     <!-- Thông báo -->
     <TextView
         android:layout_width="wrap_content"

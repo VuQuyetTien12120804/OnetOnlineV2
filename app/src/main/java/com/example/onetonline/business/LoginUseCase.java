@@ -1,5 +1,12 @@
 package com.example.onetonline.business;
 
+import static com.example.onetonline.presentation.controller.MenuController.DEFAULT_AVATAR_FILENAME;
+
+import android.graphics.Bitmap;
+
+import com.example.onetonline.broadcast.NetworkReceiver;
+import com.example.onetonline.data.AvatarManager;
+import com.example.onetonline.data.AvatarRepo;
 import com.example.onetonline.data.OTPRepo;
 import com.example.onetonline.data.User;
 import com.example.onetonline.data.UserRepo;
@@ -8,16 +15,21 @@ import com.example.onetonline.presentation.model.ChangePassRequest;
 import com.example.onetonline.presentation.model.LoginRequest;
 import com.example.onetonline.presentation.model.userOTP;
 
-public class LoginUseCase {
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+public class LoginUseCase implements NetworkReceiver.SyncTrigger {
     private UserRepo userRepo;
     private OTPRepo otpRepo;
+    private AvatarRepo avatarRepo;
 
-    public LoginUseCase(UserRepo userRepo, OTPRepo otpRepo) {
+    public LoginUseCase(UserRepo userRepo, OTPRepo otpRepo, AvatarRepo avatarRepo) {
         this.userRepo = userRepo;
         this.otpRepo = otpRepo;
+        this.avatarRepo = avatarRepo;
     }
 
-    public void login(LoginRequest loginRequest, UserRepo.LoginCallBack callBack){
+    public void login(LoginRequest loginRequest, UserRepo.GetUserCallBack callBack){
         if (loginRequest.email().isEmpty() || loginRequest.password().isEmpty()) {
             callBack.onFailure("Please enter username and password");
             return;
@@ -34,17 +46,44 @@ public class LoginUseCase {
             @Override
             public void onSuccess(token t) {
                 String access_token = "Bearer " + t.access_token();
-                userRepo.getUser(access_token, new UserRepo.GetUserCallBack() {
-                    @Override
-                    public void onSuccess(User user) {
+                ExecutorService executor = Executors.newFixedThreadPool(1);
+                executor.submit(() -> {
+                    User newUser = null;
+                    userRepo.getUser(access_token, new UserRepo.GetUserCallBack() {
+                        @Override
+                        public void onSuccess(User user) {
+                            userRepo.insertToLocal(user);
+                            callBack.onSuccess(user);
+                            avatarRepo.getAvatar(user.id(), new AvatarRepo.GetCallBack() {
+                                @Override
+                                public void onSuccess(Bitmap bitmap) {
+                                    userRepo.saveAvatar(bitmap, DEFAULT_AVATAR_FILENAME, new AvatarManager.AvatarCallback() {
+                                        @Override
+                                        public void onSuccess(Bitmap bitmap) {
 
-                    }
+                                        }
 
-                    @Override
-                    public void onFailure(String err) {
-                        callBack.onFailure(err);
-                    }
+                                        @Override
+                                        public void onFailure(String err) {
+
+                                        }
+                                    });
+                                }
+
+                                @Override
+                                public void onFailure(String err) {
+
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onFailure(String err) {
+                            callBack.onFailure(err);
+                        }
+                    });
                 });
+
             }
 
             @Override
@@ -158,5 +197,38 @@ public class LoginUseCase {
             case "404": return "Account doesn't exist!";
             default: return "Error: " + errorCode;
         }
+    }
+
+    @Override
+    public void sync() {
+        User user = userRepo.getUserLocal();
+        userRepo.sync(user, new UserRepo.UpdateUserCallBack() {
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onFailure(String err) {
+                if(err.equals("409")){
+                    String token = "Bearer" + userRepo.getToken();
+                    userRepo.getUser(token, new UserRepo.GetUserCallBack() {
+                        @Override
+                        public void onSuccess(User user) {
+                            userRepo.updateToLocal(user);
+                        }
+
+                        @Override
+                        public void onFailure(String err) {
+
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    public void close(){
+        userRepo.close();
     }
 }

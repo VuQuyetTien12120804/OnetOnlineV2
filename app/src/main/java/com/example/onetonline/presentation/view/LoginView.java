@@ -9,5 +9,6 @@ public interface LoginView {
     String getNewPassword();
     String getConfirmPassword();
     void showMessage(String message);
-    void convertContext(User user);
+    void navigateTo(Class<?> activityClass);
+    void onLoginSuccess(User user);
 }

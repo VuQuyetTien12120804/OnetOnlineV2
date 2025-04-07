@@ -8,38 +8,85 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.onetonline.business.AvatarUseCase;
+import com.example.onetonline.business.MenuGameUseCase;
+import com.example.onetonline.business.UserData;
+import com.example.onetonline.data.User;
+import com.example.onetonline.presentation.model.UserInf;
 import com.example.onetonline.presentation.view.*;
 import android.Manifest;
 
 public class MenuController {
-    private MenuGame menuView;
+    private MenuGameView menuGameView;
     private AvatarUseCase avatarUseCase;
+    private UserData userData;
+    private MenuGameUseCase menuGameUseCase;
     private static final int STORAGE_PERMISSION_CODE = 100;
-    private static final String DEFAULT_AVATAR_FILENAME = "avatar_image";
+    public static final String DEFAULT_AVATAR_FILENAME = "avatar_image";
 
-    public MenuController(Context context, MenuGame menuView) {
-        this.menuView = menuView;
+    public MenuController(Context context, MenuGameForm menuView) {
+        this.menuGameView = menuView;
         avatarUseCase = new AvatarUseCase(context);
+        userData = new UserData(context);
+    }
+
+    public void loadUserData(){
+        UserInf userInf = userData.getData();
+        menuGameView.showUserName(userInf.userName());
+        menuGameView.showLevel(userInf.level());
+        menuGameView.showExp(userInf.exp(), menuGameUseCase.getExpCap(userInf.level()));
+    }
+
+    public void handleClassicClick(){
+        menuGameView.onClassicClicked();
+    }
+
+    public void handleContinueClick(){
+        menuGameView.onContinueClicked();
+    }
+
+    public void handleOnlineClick(){
+        menuGameView.onContinueClicked();
+    }
+
+    public void handleSettingClick(){
+        menuGameView.onSettingClicked();
+    }
+
+    public void handleExitClick(){
+
+    }
+
+    public void handleHelpClassicClick(){
+
+    }
+
+    public void handleHelpContinueClick(){
+
+    }
+
+    public void handleHelpOnlineClick(){
+
     }
 
     public void loadAvatar() {
         // Ưu tiên tải từ local
+        String userName = menuGameView.getUserName();
         avatarUseCase.loadAvatarFromLocal(DEFAULT_AVATAR_FILENAME, new AvatarUseCase.AvatarCallBack() {
             @Override
             public void onSuccess(Bitmap bitmap) {
-                menuView.showAvatar(bitmap); // Nếu local có, hiển thị ngay
+                menuGameView.showAvatar(bitmap); // Nếu local có, hiển thị ngay
             }
             @Override
             public void onFailure(String err) {
                 // Nếu local không có, tải từ server
-                avatarUseCase.loadAvatarFromServer("Dzunk26", DEFAULT_AVATAR_FILENAME, new AvatarUseCase.AvatarCallBack() {
+                avatarUseCase.loadAvatarFromServer(userName, DEFAULT_AVATAR_FILENAME, new AvatarUseCase.AvatarCallBack() {
                     @Override
                     public void onSuccess(Bitmap bitmap) {
-                        menuView.showAvatar(bitmap); // Hiển thị ảnh từ server
+                        menuGameView.showAvatar(bitmap); // Hiển thị ảnh từ server
                     }
                     @Override
                     public void onFailure(String serverErr) {
-                        menuView.showMessage("No avatar found");
+                        menuGameView.showMessage("No avatar found");
                     }
                 });
             }
@@ -47,27 +94,28 @@ public class MenuController {
     }
 
     public void handleSaveAvatar(Bitmap bitmap) {
-        avatarUseCase.saveAvatar(bitmap, DEFAULT_AVATAR_FILENAME, "Dzunk26", new AvatarUseCase.AvatarCallBack() {
+        String userName = menuGameView.getUserName();
+        avatarUseCase.saveAvatar(bitmap, DEFAULT_AVATAR_FILENAME, userName, new AvatarUseCase.AvatarCallBack() {
             @Override
             public void onSuccess(Bitmap bitmap) {
-                menuView.showAvatar(bitmap);
-                menuView.showMessage("Avatar updated successfully");
+                menuGameView.showAvatar(bitmap);
+                menuGameView.showMessage("Avatar updated successfully");
             }
             @Override
             public void onFailure(String err) {
-                menuView.showMessage(err);
+                menuGameView.showMessage(err);
             }
         });
     }
 
     public void handleChangeAvatar() {
-        if (ContextCompat.checkSelfPermission(menuView, Manifest.permission.READ_EXTERNAL_STORAGE)
+        if (ContextCompat.checkSelfPermission(((MenuGameForm)menuGameView), Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(menuView,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+            ActivityCompat.requestPermissions(((MenuGameForm)menuGameView), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                     STORAGE_PERMISSION_CODE);
         } else {
-            menuView.openImagePicker();
+            ((MenuGameForm)menuGameView).openImagePicker();
         }
     }
+
 }

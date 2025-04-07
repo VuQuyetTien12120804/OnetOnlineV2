@@ -9,7 +9,7 @@ import com.example.onetonline.presentation.model.SignupRequest;
 import com.example.onetonline.data.UserRepo;
 import com.example.onetonline.presentation.model.userOTP;
 import com.example.onetonline.presentation.view.LoginForm;
-import com.example.onetonline.presentation.view.RegisterForm;
+import com.example.onetonline.presentation.view.SignUpForm;
 import com.example.onetonline.presentation.view.SignUpView;
 
 public class SignUpController {
@@ -36,11 +36,20 @@ public class SignUpController {
         String email = signUpView.getEmail();
         String password = signUpView.getPassword();
         String confirmPassword = signUpView.getConfirmPassword();
-        signUpUseCase.sendOTP(userName, email, password, confirmPassword, new OTPRepo.SendCallBack() {
+        signUpUseCase.sendOTP(userName, email, password, confirmPassword, new SignUpUseCase.SignUpResultCallback() {
+            @Override
+            public void onInputInvalid(String error) {
+                signUpView.showMessage(error);
+            }
+
+            @Override
+            public void onInputValid() {
+                ((SignUpForm) signUpView).showOtpDialog();
+            }
+        }, new OTPRepo.SendCallBack() {
             @Override
             public void onSuccess() {
                 signUpView.showMessage("The OTP has been sent to your email and is valid for 3 minutes. Please enter the code to proceed.");
-                ((RegisterForm) signUpView).showOtpDialog();
             }
 
             @Override

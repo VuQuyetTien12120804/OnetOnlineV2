@@ -18,13 +18,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.onetonline.broadcast.SyncService;
 import com.example.onetonline.data.User;
+import com.example.onetonline.presentation.BaseActivity;
 import com.example.onetonline.presentation.controller.LoginController;
 import com.example.onetonlinev2.R;
 import com.mukeshsolanki.OtpView;
 
-public class LoginForm extends AppCompatActivity implements LoginView{
-    //Khai báo
+
+public class LoginForm extends BaseActivity implements LoginView{
     private Button btnBackLoginForm, btnLogin;
     private EditText etLogin, etPassword;
     private LoginController loginController;
@@ -49,27 +52,19 @@ public class LoginForm extends AppCompatActivity implements LoginView{
         initWidgets();
         loginController = new LoginController(this, LoginForm.this);
 
-        // Xử lý click
-        btnBackLoginForm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loginController.handleBackToHome(LoginForm.this);
-            }
-        });
+//        start service to sync user data with server
+        Intent serviceIntent = new Intent(this, SyncService.class);
+        startService(serviceIntent);
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loginController.handleLogin();
-            }
-        });
+        btnBackLoginForm.setOnClickListener(v -> loginController.handleBackToHome(WellComeScreen.class));
+        btnLogin.setOnClickListener(v -> loginController.handleLogin(MenuGameForm.class));
+        tvForgotPassword.setOnClickListener(v -> loginController.handleSendOTP());
+    }
 
-        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loginController.handleSendOTP();
-            }
-        });
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        loginController.onDestroy();
     }
 
     @Override
@@ -88,9 +83,16 @@ public class LoginForm extends AppCompatActivity implements LoginView{
     }
 
     @Override
-    public void convertContext(User user) {
-        Intent intent = new Intent(LoginForm.this, MenuGame.class);
-        intent.putExtra("user", user);
+    public void navigateTo(Class<?> activityClass) {
+        Intent i = new Intent(LoginForm.this, activityClass);
+        startActivity(i);
+        finish();
+    }
+
+    @Override
+    public void onLoginSuccess(User user) {
+        Intent intent = new Intent(this, MenuGameForm.class);
+        intent.putExtra("user_data", user);
         startActivity(intent);
         finish();
     }
@@ -140,21 +142,11 @@ public class LoginForm extends AppCompatActivity implements LoginView{
 
         // Xử lý nút Resend
         Button btnResend = dialog.findViewById(R.id.btnResend_ConfirmOTP);
-        btnResend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loginController.handleReSendOTP();
-            }
-        });
+        btnResend.setOnClickListener(v -> loginController.handleReSendOTP());
 
         // Xử lý nút verify đây là nếu đúng thì chuyển sang reset password
         Button btnVerify = dialog.findViewById(R.id.btnVerify_ConfirmOTP);
-        btnVerify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loginController.handleVerifyOTP(dialog);
-            }
-        });
+        btnVerify.setOnClickListener(v -> loginController.handleVerifyOTP(dialog));
 
         // Hiển thị Dialog
         dialog.show();

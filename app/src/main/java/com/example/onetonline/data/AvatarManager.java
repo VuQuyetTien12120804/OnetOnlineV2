@@ -47,4 +47,17 @@ public class AvatarManager {
             callback.onFailure("Image not found");
         }
     }
+
+    public File convertBitmapToFile(Bitmap bitmap, String fileName) {
+        File file = new File(context.getFilesDir(), fileName + ".jpg");
+        try {
+            FileOutputStream outputStream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            outputStream.flush();
+            outputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
 }
