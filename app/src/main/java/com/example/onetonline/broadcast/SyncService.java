@@ -10,6 +10,8 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.example.onetonline.business.LoginUseCase;
+import com.example.onetonline.business.SyncUseCase;
+import com.example.onetonline.data.AvatarManager;
 import com.example.onetonline.data.AvatarRepo;
 import com.example.onetonline.data.OTPRepo;
 import com.example.onetonline.data.UserRepo;
@@ -22,8 +24,9 @@ public class SyncService extends Service {
     public void onCreate() {
         super.onCreate();
         UserRepo userRepo = new UserRepo(this);
-        loginUseCase = new LoginUseCase(userRepo, new OTPRepo(), new AvatarRepo());
-        networkReceiver = new NetworkReceiver(loginUseCase);
+        AvatarManager avatarManager = new AvatarManager(this);
+        SyncUseCase syncUseCase = new SyncUseCase(userRepo, new AvatarRepo(), avatarManager);
+        networkReceiver = new NetworkReceiver(syncUseCase);
         IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(networkReceiver, intentFilter);
         Log.i("SyncService", "Service started and NetworkReceiver registered");

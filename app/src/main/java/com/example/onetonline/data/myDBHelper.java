@@ -159,8 +159,8 @@ public class myDBHelper extends SQLiteOpenHelper {
         Cursor cursor = Display();
         if(cursor != null && cursor.getCount() != 0){
             cursor.close();
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 }

@@ -1,5 +1,7 @@
 package com.example.onetonline.business;
 
+import static com.example.onetonline.utils.Constants.expStartLevelCap;
+
 import android.content.Context;
 import android.database.Cursor;
 import java.text.SimpleDateFormat;
@@ -20,6 +22,7 @@ public class UserData {
     public UserInf getData(){
         myDB.openDB();
         Cursor cursor = myDB.filteredData();
+        UserInf userInf = null;
         if(cursor != null && cursor.getCount() != 0){
             cursor.moveToFirst();
             String name = cursor.getString(cursor.getColumnIndexOrThrow(myDBHelper.NAME()));
@@ -27,11 +30,11 @@ public class UserData {
             int exp = cursor.getInt(cursor.getColumnIndexOrThrow(myDBHelper.EXP()));
             int score = cursor.getInt(cursor.getColumnIndexOrThrow(myDBHelper.SCORE()));
             String last_update = cursor.getString(cursor.getColumnIndexOrThrow(myDBHelper.LAST_UPDATE()));
-            myDB.close();
-            return new UserInf(name, level, score, exp, last_update);
+            userInf = new UserInf(name, level, score, exp, last_update);
         }
+        cursor.close();
         myDB.close();
-        return null;
+        return userInf;
     }
 
     public UserInf update(String name, int level, int scoreView, int exp, String last_update){
@@ -39,8 +42,8 @@ public class UserData {
         int oldLv = level;
         int newScore = 0;
         exp = exp + Constants.plusExp;
-        level += exp / (Constants.expCap(level));
-        exp = exp % Constants.expCap(oldLv);
+        level += exp / expCap(level);
+        exp = exp % expCap(oldLv);
         Cursor cursor = myDB.filteredData();
         if(cursor != null && cursor.getCount() != 0) {
             cursor.moveToFirst();
@@ -53,6 +56,11 @@ public class UserData {
         myDB.close();
         return userInf;
     }
+
+    public static int expCap(int level){
+        return expStartLevelCap * level;
+    }
+
 
     public boolean hasRecords(){
         return myDB.hasRecords();

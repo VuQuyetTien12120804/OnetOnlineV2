@@ -1,5 +1,7 @@
 package com.example.onetonline.business;
 
+import static com.example.onetonline.utils.Constants.DEFAULT_AVATAR_FILENAME;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
@@ -8,8 +10,6 @@ import com.example.onetonline.data.AvatarManager;
 import com.example.onetonline.data.AvatarRepo;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -29,11 +29,11 @@ public class AvatarUseCase {
         void onFailure(String err);
     }
 
-    public void loadAvatarFromServer(String id, String fileName, AvatarCallBack callBack){
-        avatarRepo.getAvatar(id, new AvatarRepo.GetCallBack() {
+    public void loadAvatarFromServer(String userName, AvatarCallBack callBack){
+        avatarRepo.getAvatar(userName, new AvatarRepo.GetCallBack() {
             @Override
             public void onSuccess(Bitmap bitmap) {
-                avatarManager.saveImage(bitmap, fileName, new AvatarManager.AvatarCallback() {
+                avatarManager.saveImage(bitmap, DEFAULT_AVATAR_FILENAME, new AvatarManager.AvatarCallback() {
                     @Override
                     public void onSuccess(Bitmap bitmap) {
                         callBack.onSuccess(bitmap);
@@ -53,8 +53,8 @@ public class AvatarUseCase {
         });
     }
 
-    public void loadAvatarFromLocal(String fileName, AvatarCallBack callback) {
-        avatarManager.loadImage(fileName, new AvatarManager.AvatarCallback() {
+    public void loadAvatarFromLocal(AvatarCallBack callback) {
+        avatarManager.loadImage(DEFAULT_AVATAR_FILENAME, new AvatarManager.AvatarCallback() {
             @Override
             public void onSuccess(Bitmap bitmap) {
                 callback.onSuccess(bitmap);
@@ -66,8 +66,8 @@ public class AvatarUseCase {
         });
     }
 
-    public void saveAvatar(Bitmap bitmap, String fileName, String userName, AvatarCallBack callBack) {
-        avatarManager.saveImage(bitmap, fileName, new AvatarManager.AvatarCallback() {
+    public void saveAvatar(Bitmap bitmap, String userName, AvatarCallBack callBack) {
+        avatarManager.saveImage(bitmap, DEFAULT_AVATAR_FILENAME, new AvatarManager.AvatarCallback() {
             @Override
             public void onSuccess(Bitmap bitmap) {
                 callBack.onSuccess(bitmap);
@@ -77,20 +77,7 @@ public class AvatarUseCase {
                         @Override
                         public void onSuccess() {
                             Log.i("AvatarUseCase", "Old avatar deleted");
-                            File avatarFile = avatarManager.convertBitmapToFile(bitmap, fileName);
-                            if (avatarFile != null) {
-                                avatarRepo.uploadAvatar(userName, avatarFile, new AvatarRepo.UploadCallBack() {
-                                    @Override
-                                    public void onSuccess() {
-                                        Log.i("AvatarUseCase", "Avatar uploaded successfully");
-                                    }
 
-                                    @Override
-                                    public void onFailure(String err) {
-                                        callBack.onFailure("Failed to upload: " + err);
-                                    }
-                                });
-                            }
                         }
 
                         @Override
@@ -98,6 +85,20 @@ public class AvatarUseCase {
                             Log.e("AvatarUseCase", "Failed to delete avatar: " + err);
                         }
                     });
+                    File avatarFile = avatarManager.convertBitmapToFile(bitmap, DEFAULT_AVATAR_FILENAME);
+                    if (avatarFile != null) {
+                        avatarRepo.uploadAvatar(userName, avatarFile, new AvatarRepo.UploadCallBack() {
+                            @Override
+                            public void onSuccess() {
+                                Log.i("AvatarUseCase", "Avatar uploaded successfully");
+                            }
+
+                            @Override
+                            public void onFailure(String err) {
+                                callBack.onFailure("Failed to upload: " + err);
+                            }
+                        });
+                    }
                 });
                 executor.shutdown();
             }

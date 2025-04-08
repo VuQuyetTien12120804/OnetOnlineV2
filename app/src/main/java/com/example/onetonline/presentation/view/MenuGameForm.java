@@ -52,7 +52,7 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
     @Override
     protected void onStart() {
         super.onStart();
-        menuController.loadAvatar();
+        //menuController.loadAvatar();
     }
 
     @Override
@@ -69,7 +69,7 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
                 Uri imageUri = result.getData().getData();
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-                    menuController.handleSaveAvatar(bitmap);
+                    //menuController.handleSaveAvatar(bitmap);
                 } catch (IOException e) {
                     showMessage("Lỗi khi xử lý ảnh: " + e.getMessage());
                 }
@@ -92,6 +92,51 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
     public void onClassicClicked() {
     }
 
+    public void handleClassicButtonClick() {
+        Dialog dialog = new Dialog(MenuGameForm.this);
+        dialog.setContentView(R.layout.dialog_win_game);
+        dialog.setCancelable(true);
+
+        Button btnNext = dialog.findViewById(R.id.btnNextWinGame);
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogBounceAnimation;
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuGameForm.this, MenuGameForm.class);
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    public void handleContinueButtonClick() {
+        Dialog dialog = new Dialog(MenuGameForm.this);
+        dialog.setContentView(R.layout.dialog_lose_game);
+        dialog.setCancelable(true);
+
+        Button btnExitLoseGame = dialog.findViewById(R.id.btnExitLoseGame);
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogBounceAnimation;
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        btnExitLoseGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuGameForm.this, MenuGameForm.class);
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
 
     @Override
     public void onContinueClicked() {
@@ -129,6 +174,10 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
     @Override
     public void onHelpClassicClicked() {
         DialogHelper.showScrollableAlertDialog(MenuGameForm.this);
+    }
+
+    public void handleAudioButtonClick() {
+        showCustomToast("Nút âm thanh được nhấn");
     }
 
     @Override
