@@ -18,6 +18,8 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+
+import com.example.onetonline.broadcast.SyncService;
 import com.example.onetonline.presentation.model.UserInf;
 import com.example.onetonline.presentation.BaseActivity;
 import com.example.onetonlinev2.R;
@@ -62,6 +64,11 @@ public class MenuGameForm extends BaseActivity implements MenuGameView{
         menuController = new MenuController(this, this);
         initWidgets();
 
+        menuController.loadUserData();
+//      start service to sync user data with server
+        Intent serviceIntent = new Intent(this, SyncService.class);
+        startService(serviceIntent);
+
         pickImageLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                 Uri imageUri = result.getData().getData();
@@ -87,62 +94,6 @@ public class MenuGameForm extends BaseActivity implements MenuGameView{
     @Override
     public void onClassicClicked() {
 
-    }
-
-    public void handleClassicButtonClick(){
-        Dialog dialog = new Dialog(MenuGameForm.this);
-        dialog.setContentView(R.layout.dialog_win_game);
-        dialog.setCancelable(true); //cho phep dong bang nut ben ngoai
-
-        Button btnNext = dialog.findViewById(R.id.btnNextWinGame);
-
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogBounceAnimation;
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        }
-
-        btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MenuGameForm.this, MenuGameForm.class);
-                startActivity(intent);
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
-
-    public void handleContinueButtonClick(){
-        //Tao dialog
-        Dialog dialog = new Dialog(MenuGameForm.this);
-        dialog.setContentView(R.layout.dialog_lose_game);
-        dialog.setCancelable(true); //cho phep dong bang nut ben ngoai
-
-        //gan cac nut cho dialog
-        Button btnExitLoseGame = dialog.findViewById(R.id.btnExitLoseGame);
-
-        // Áp dụng hiệu ứng cho dialog
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogBounceAnimation;
-            // Xóa nền trắng của Dialog
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        }
-
-        btnExitLoseGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MenuGameForm.this, MenuGameForm.class);
-                startActivity(intent);
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
-    public void handleOnlineButtonClick(){
-
-    }
-    public void handleExitButtonClick() {
-        Dialog dialog = new Dialog(MenuGameForm.this);
     }
 
     @Override
@@ -183,14 +134,6 @@ public class MenuGameForm extends BaseActivity implements MenuGameView{
     @Override
     public void onHelpClassicClicked() {
 
-    }
-
-    public void handleAudioButtonClick(){
-        showCustomToast("Audio button clicked");
-    }
-
-    public void handleHelpContinueButtonClick() {
-            DialogHelper.showScrollableAlertDialog(MenuGameForm.this);
     }
 
     @Override
@@ -240,7 +183,7 @@ public class MenuGameForm extends BaseActivity implements MenuGameView{
 
     @Override
     public void showLevel(int level) {
-        tvLevel.setText(level);
+        tvLevel.setText(String.valueOf(level));
     }
 
     @Override

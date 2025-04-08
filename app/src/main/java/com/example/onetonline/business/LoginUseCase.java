@@ -1,9 +1,8 @@
 package com.example.onetonline.business;
 
-import static com.example.onetonline.presentation.controller.MenuController.DEFAULT_AVATAR_FILENAME;
+import static com.example.onetonline.utils.Constants.DEFAULT_AVATAR_FILENAME;
 
 import android.graphics.Bitmap;
-
 import com.example.onetonline.broadcast.NetworkReceiver;
 import com.example.onetonline.data.AvatarManager;
 import com.example.onetonline.data.AvatarRepo;
@@ -14,11 +13,10 @@ import com.example.onetonline.data.token;
 import com.example.onetonline.presentation.model.ChangePassRequest;
 import com.example.onetonline.presentation.model.LoginRequest;
 import com.example.onetonline.presentation.model.userOTP;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class LoginUseCase implements NetworkReceiver.SyncTrigger {
+public class LoginUseCase {
     private UserRepo userRepo;
     private OTPRepo otpRepo;
     private AvatarRepo avatarRepo;
@@ -197,35 +195,6 @@ public class LoginUseCase implements NetworkReceiver.SyncTrigger {
             case "404": return "Account doesn't exist!";
             default: return "Error: " + errorCode;
         }
-    }
-
-    @Override
-    public void sync() {
-        User user = userRepo.getUserLocal();
-        userRepo.sync(user, new UserRepo.UpdateUserCallBack() {
-            @Override
-            public void onSuccess() {
-
-            }
-
-            @Override
-            public void onFailure(String err) {
-                if(err.equals("409")){
-                    String token = "Bearer" + userRepo.getToken();
-                    userRepo.getUser(token, new UserRepo.GetUserCallBack() {
-                        @Override
-                        public void onSuccess(User user) {
-                            userRepo.updateToLocal(user);
-                        }
-
-                        @Override
-                        public void onFailure(String err) {
-
-                        }
-                    });
-                }
-            }
-        });
     }
 
     public void close(){
