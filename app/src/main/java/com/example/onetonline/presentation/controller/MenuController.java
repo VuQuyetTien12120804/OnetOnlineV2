@@ -1,5 +1,6 @@
 package com.example.onetonline.presentation.controller;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -62,13 +63,6 @@ public class MenuController {
         menuGameView.showSettingsDialog(isMusicOn, isSoundClickOn);
     }
 
-    public void handleExitClick(){
-
-    }
-
-    public void handleHelpContinueClick(){
-        DialogHelper.showScrollableAlertDialog(context);
-    }
     public void saveSettings(boolean isMusicOn, boolean isSoundClickOn) {
         // Save settings to SharedPreferences
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -77,6 +71,20 @@ public class MenuController {
         editor.apply();
         // Notify the view that settings were saved
         menuGameView.onSettingsSaved(isMusicOn, isSoundClickOn);
+    }
+    public void handleExitClick(){
+        DialogExitConfirm.showExitConfirmationDialog(context, new DialogExitConfirm.ExitDialogListener() {
+            @Override
+            public void onExitConfirmed() {
+                if (context instanceof Activity) {
+                    ((Activity) context).finish(); // Thoát Activity hiện tại
+                }
+            }
+        });
+
+    }
+    public void handleHelpContinueClick(){
+        DialogHelper.showScrollableAlertDialog(context);
     }
 
     public void loadAvatar() {

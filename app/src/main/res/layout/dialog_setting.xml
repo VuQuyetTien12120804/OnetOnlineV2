@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="250dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@android:color/white"
+    android:padding="24dp"
+    android:background="@drawable/dialog_border"
     android:gravity="center">
 
     <!-- Title -->
@@ -12,27 +12,33 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cài đặt"
-        android:textSize="20sp"
+        android:text="SETTINGS"
+        android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="@android:color/black"
-        android:layout_marginBottom="16dp" />
+        android:textColor="#4CAF50"
+        android:layout_marginBottom="24dp"
+        android:fontFamily="@font/ltim_regular"
+        android:shadowColor="#80000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="4" />
 
     <!-- Music Switch -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="8dp">
+        android:gravity="center"
+        android:layout_marginBottom="12dp">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Nhạc"
-            android:textSize="16sp"
-            android:textColor="@android:color/black" />
+            android:fontFamily="@font/ltim_regular"
+            android:text="Music"
+            android:textColor="#555555"
+            android:textSize="18sp" />
 
         <Switch
             android:id="@+id/switchMusic"
@@ -45,16 +51,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="16dp">
+        android:gravity="center"
+        android:layout_marginBottom="24dp">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Âm thanh nhấn"
-            android:textSize="16sp"
-            android:textColor="@android:color/black" />
+            android:text="Sound Click"
+            android:textSize="18sp"
+            android:fontFamily="@font/ltim_regular"
+            android:textColor="#555555" />
 
         <Switch
             android:id="@+id/switchSoundClick"
@@ -63,13 +70,19 @@
     </LinearLayout>
 
     <!-- Save Button -->
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSave"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Lưu"
-        android:textSize="16sp"
-        android:backgroundTint="@android:color/holo_blue_light"
-        android:textColor="@android:color/white"
-        android:paddingHorizontal="16dp" />
+        android:layout_height="40dp"
+        android:text="Save"
+        android:textSize="@dimen/text_size_button"
+        android:background="@drawable/bg_button_menu_game"
+        android:textColor="#FFFFFF"
+        android:paddingHorizontal="24dp"
+        android:textStyle="bold"
+        android:shadowColor="#80000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="4"
+        android:elevation="4dp" />
 </LinearLayout>

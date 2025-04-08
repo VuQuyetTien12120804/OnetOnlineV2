@@ -36,29 +36,17 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
 
     public void initWidgets() {
         btnClassic = findViewById(R.id.btnClassic);
-        if (btnClassic == null) Log.e("MenuGameForm", "btnClassic là null");
         btnContinue = findViewById(R.id.btnContinue);
-        if (btnContinue == null) Log.e("MenuGameForm", "btnContinue là null");
         btnOnline = findViewById(R.id.btnOnline);
-        if (btnOnline == null) Log.e("MenuGameForm", "btnOnline là null");
-        btnExit = findViewById(R.id.btnExitLoseGame);
-        if (btnExit == null) Log.e("MenuGameForm", "btnExit là null");
+        btnExit = findViewById(R.id.btnExit);
         btnHelpClassic = findViewById(R.id.btnHelpClassic);
-        if (btnHelpClassic == null) Log.e("MenuGameForm", "btnHelpClassic là null");
         btnHelpContinue = findViewById(R.id.btnHelpContinue);
-        if (btnHelpContinue == null) Log.e("MenuGameForm", "btnHelpContinue là null");
-        btnHelpOnline = findViewById(R.id.btnHelpRandom);
-        if (btnHelpOnline == null) Log.e("MenuGameForm", "btnHelpOnline là null");
-        btnSetting = findViewById(R.id.btnSettingLoseGame);
-        if (btnSetting == null) Log.e("MenuGameForm", "btnSetting là null");
+        btnHelpOnline = findViewById(R.id.btnHelpOnline);
+        btnSetting = findViewById(R.id.btnSetting);
         ivAvatar = findViewById(R.id.ivAvatar);
-        if (ivAvatar == null) Log.e("MenuGameForm", "ivAvatar là null");
         tvUserName = findViewById(R.id.tvPlayerName);
-        if (tvUserName == null) Log.e("MenuGameForm", "tvUserName là null");
         tvLevel = findViewById(R.id.tvStarCount);
-        if (tvLevel == null) Log.e("MenuGameForm", "tvLevel là null");
         tvExp = findViewById(R.id.tvExp);
-        if (tvExp == null) Log.e("MenuGameForm", "tvExp là null");
     }
 
     @Override
@@ -89,66 +77,21 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
         });
 
         // Thêm kiểm tra null trước khi gọi setOnClickListener
-        if (btnClassic != null) btnClassic.setOnClickListener(v -> menuController.handleClassicClick());
-        if (btnContinue != null) btnContinue.setOnClickListener(v -> menuController.handleContinueClick());
-        if (btnOnline != null) btnOnline.setOnClickListener(v -> menuController.handleOnlineClick());
-        if (btnExit != null) btnExit.setOnClickListener(v -> menuController.handleExitClick());
-        if (ivAvatar != null) ivAvatar.setOnClickListener(v -> menuController.handleChangeAvatar());
-        if (btnHelpContinue != null) btnHelpContinue.setOnClickListener(v -> menuController.handleHelpContinueClick());
-        if (btnHelpOnline != null) btnHelpOnline.setOnClickListener(v -> menuController.handleHelpContinueClick());
-        if (btnHelpClassic != null) btnHelpClassic.setOnClickListener(v -> menuController.handleHelpContinueClick());
-        if (btnSetting != null) btnSetting.setOnClickListener(v -> menuController.handleSettingClick());
+        btnClassic.setOnClickListener(v -> menuController.handleClassicClick());
+        btnContinue.setOnClickListener(v -> menuController.handleContinueClick());
+        btnOnline.setOnClickListener(v -> menuController.handleOnlineClick());
+        btnExit.setOnClickListener(v -> menuController.handleExitClick());
+        ivAvatar.setOnClickListener(v -> menuController.handleChangeAvatar());
+        btnHelpContinue.setOnClickListener(v -> menuController.handleHelpContinueClick());
+        btnHelpOnline.setOnClickListener(v -> menuController.handleHelpContinueClick());
+        btnHelpClassic.setOnClickListener(v -> menuController.handleHelpContinueClick());
+        btnSetting.setOnClickListener(v -> menuController.handleSettingClick());
     }
 
     @Override
     public void onClassicClicked() {
     }
 
-    public void handleClassicButtonClick() {
-        Dialog dialog = new Dialog(MenuGameForm.this);
-        dialog.setContentView(R.layout.dialog_win_game);
-        dialog.setCancelable(true);
-
-        Button btnNext = dialog.findViewById(R.id.btnNextWinGame);
-
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogBounceAnimation;
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        }
-
-        btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MenuGameForm.this, MenuGameForm.class);
-                startActivity(intent);
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
-
-    public void handleContinueButtonClick() {
-        Dialog dialog = new Dialog(MenuGameForm.this);
-        dialog.setContentView(R.layout.dialog_lose_game);
-        dialog.setCancelable(true);
-
-        Button btnExitLoseGame = dialog.findViewById(R.id.btnExitLoseGame);
-
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogBounceAnimation;
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        }
-
-        btnExitLoseGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MenuGameForm.this, MenuGameForm.class);
-                startActivity(intent);
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
 
     @Override
     public void onContinueClicked() {
@@ -186,10 +129,6 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
     @Override
     public void onHelpClassicClicked() {
         DialogHelper.showScrollableAlertDialog(MenuGameForm.this);
-    }
-
-    public void handleAudioButtonClick() {
-        showCustomToast("Nút âm thanh được nhấn");
     }
 
     @Override
