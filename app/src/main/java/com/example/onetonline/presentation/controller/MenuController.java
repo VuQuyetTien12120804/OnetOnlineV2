@@ -1,6 +1,7 @@
 package com.example.onetonline.presentation.controller;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import androidx.core.app.ActivityCompat;
@@ -15,12 +16,23 @@ public class MenuController {
     private MenuGameView menuGameView;
     private AvatarUseCase avatarUseCase;
     private UserData userData;
+<<<<<<< HEAD
     private static final int STORAGE_PERMISSION_CODE = 100;
+=======
+    private MenuGameUseCase menuGameUseCase;
+    private Context context;
+    private static final int STORAGE_PERMISSION_CODE = 100;
+    public static final String DEFAULT_AVATAR_FILENAME = "avatar_image";
+    private SharedPreferences sharedPreferences;
+>>>>>>> 4989e382f6f48cf31498231c78d15ffe9dbb2ba9
 
     public MenuController(Context context, MenuGameForm menuView) {
         this.menuGameView = menuView;
         avatarUseCase = new AvatarUseCase(context);
+        this.context = context;
         userData = new UserData(context);
+        // Initialize SharedPreferences for saving settings
+        sharedPreferences = context.getSharedPreferences("GameSettings", Context.MODE_PRIVATE);
     }
 
     public void loadUserData(){
@@ -45,23 +57,28 @@ public class MenuController {
     }
 
     public void handleSettingClick(){
-        menuGameView.onSettingClicked();
+        // Load current settings from SharedPreferences
+        boolean isMusicOn = sharedPreferences.getBoolean("music", true); // Default: true
+        boolean isSoundClickOn = sharedPreferences.getBoolean("sound_click", true); // Default: true
+        // Show the settings dialog
+        menuGameView.showSettingsDialog(isMusicOn, isSoundClickOn);
     }
 
     public void handleExitClick(){
 
     }
 
-    public void handleHelpClassicClick(){
-
-    }
-
     public void handleHelpContinueClick(){
-
+        DialogHelper.showScrollableAlertDialog(context);
     }
-
-    public void handleHelpOnlineClick(){
-
+    public void saveSettings(boolean isMusicOn, boolean isSoundClickOn) {
+        // Save settings to SharedPreferences
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("music", isMusicOn);
+        editor.putBoolean("sound_click", isSoundClickOn);
+        editor.apply();
+        // Notify the view that settings were saved
+        menuGameView.onSettingsSaved(isMusicOn, isSoundClickOn);
     }
 
     public void loadAvatar() {

@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Onet Online</string>
-    <dimen name="text_size_game_play">15sp</dimen>
+    <dimen name="text_size_button">15sp</dimen>
 </resources>

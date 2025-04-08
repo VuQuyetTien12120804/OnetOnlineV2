@@ -28,7 +28,7 @@
         android:text="Lv . "
         android:fontFamily="@font/ltim_regular"
         android:textColor="#ffffff"
-        android:textSize="@dimen/text_size_game_play"
+        android:textSize="@dimen/text_size_button"
         android:textStyle="bold" />
 
     <TextView
@@ -39,7 +39,7 @@
         android:text="01"
         android:fontFamily="@font/ltim_regular"
         android:textColor="#ffffff"
-        android:textSize="@dimen/text_size_game_play"
+        android:textSize="@dimen/text_size_button"
         android:textStyle="bold"/>
 
     <LinearLayout
@@ -65,7 +65,7 @@
             android:gravity="center"
             android:text="07"
             android:textColor="#ffffff"
-            android:textSize="@dimen/text_size_game_play"
+            android:textSize="@dimen/text_size_button"
             android:textStyle="bold" />
 
         <ImageButton
@@ -87,7 +87,7 @@
             android:text="07"
             android:fontFamily="@font/ltim_regular"
             android:textColor="#ffffff"
-            android:textSize="@dimen/text_size_game_play"
+            android:textSize="@dimen/text_size_button"
             android:textStyle="bold"/>
     </LinearLayout>
 
@@ -112,7 +112,7 @@
         android:gravity="center"
         android:text="00"
         android:textColor="#ffffff"
-        android:textSize="@dimen/text_size_game_play"
+        android:textSize="@dimen/text_size_button"
         android:textStyle="bold" />
 
     <ImageButton
