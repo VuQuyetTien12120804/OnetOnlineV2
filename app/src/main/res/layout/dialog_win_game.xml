@@ -7,12 +7,13 @@
     app:cardElevation="50dp"
     android:layout_margin="16dp"
     android:background="@null"
+    android:layout_gravity="center"
     app:cardBackgroundColor="@android:color/transparent">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_win_dialog"
+        android:background="@drawable/dialog_border"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:padding="24dp">
@@ -55,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="YOU WIN!"
-            android:textColor="#FFD700"
+            android:textColor="#FF0000"
             android:textSize="32sp"
             android:fontFamily="@font/ltim_regular"
             android:shadowColor="#FF4500"
@@ -68,15 +69,19 @@
         <!-- Nút NEXT -->
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnNextWinGame"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:background="@drawable/button_win_gradient"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_button_menu_game"
             android:text="NEXT"
             android:textColor="#FFFFFF"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_size_button"
             android:fontFamily="@font/ltim_regular"
             android:gravity="center"
             android:layout_marginTop="8dp"
-            android:elevation="10dp"/>
+            android:shadowColor="#80000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="4"
+            android:elevation="4dp"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
