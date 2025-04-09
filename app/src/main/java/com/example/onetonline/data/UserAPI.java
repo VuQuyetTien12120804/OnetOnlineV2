@@ -21,7 +21,7 @@ public interface UserAPI {
     @POST("auth")
     Call<token> login(@Body LoginRequest loginRequest);
 
-    @PUT("sync")
+    @PATCH("sync")
     Call<Void> updateUser(@Body User user);
 
     @PATCH("user")

@@ -52,10 +52,6 @@ public class LoginForm extends BaseActivity implements LoginView{
         initWidgets();
         loginController = new LoginController(this, LoginForm.this);
 
-//        start service to sync user data with server
-        Intent serviceIntent = new Intent(this, SyncService.class);
-        startService(serviceIntent);
-
         btnBackLoginForm.setOnClickListener(v -> loginController.handleBackToHome(WellComeScreen.class));
         btnLogin.setOnClickListener(v -> loginController.handleLogin(MenuGameForm.class));
         tvForgotPassword.setOnClickListener(v -> loginController.handleSendOTP());

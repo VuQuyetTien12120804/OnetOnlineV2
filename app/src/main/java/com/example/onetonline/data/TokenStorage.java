@@ -3,8 +3,16 @@ package com.example.onetonline.data;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Base64;
+import android.util.Log;
+
 import java.nio.charset.StandardCharsets;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -19,23 +27,44 @@ public class TokenStorage {
     }
 
     //Encode and save access token to SharedPreferences
-    public void saveToken(String accessToken) throws Exception {
-        //Create a SecretKey by using HARD_CODED_KEY
-        SecretKeySpec secretKey = new SecretKeySpec(HARD_CODED_KEY.getBytes(StandardCharsets.UTF_8), "AES");
+    public void saveToken(String accessToken) {
+        try {
+            if (accessToken == null || accessToken.isEmpty()) {
+                Log.e("SaveToken", "accessToken không được null hoặc rỗng");
+                return;
+            }
 
-        Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            // Create a SecretKey by using HARD_CODED_KEY
+            SecretKeySpec secretKey = new SecretKeySpec(HARD_CODED_KEY.getBytes(StandardCharsets.UTF_8), "AES");
 
-        //Encode access token
-        byte[] iv = cipher.getIV();
-        byte[] encryptedToken = cipher.doFinal(accessToken.getBytes(StandardCharsets.UTF_8));
+            // Initialize cipher
+            Cipher cipher = Cipher.getInstance(TRANSFORMATION);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
 
-        //Save encoded access token to SharedPreferences
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("access_token", Base64.encodeToString(encryptedToken, Base64.DEFAULT));
-        editor.putString("iv", Base64.encodeToString(iv, Base64.DEFAULT));
-        editor.apply();
+            // Encode access token
+            byte[] iv = cipher.getIV();
+            byte[] encryptedToken = cipher.doFinal(accessToken.getBytes(StandardCharsets.UTF_8));
+
+            // Save encoded access token to SharedPreferences
+            SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("access_token", Base64.encodeToString(encryptedToken, Base64.DEFAULT));
+            editor.putString("iv", Base64.encodeToString(iv, Base64.DEFAULT));
+            editor.apply();
+
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
+            // Xử lý lỗi liên quan đến thuật toán hoặc padding không hợp lệ
+            Log.e("SaveToken", "Lỗi cấu hình mã hóa: " + e.getMessage(), e);
+        } catch (InvalidKeyException e) {
+            // Xử lý lỗi khóa bí mật không hợp lệ
+            Log.e("SaveToken", "Khóa mã hóa không hợp lệ: " + e.getMessage(), e);
+        } catch (IllegalBlockSizeException | BadPaddingException e) {
+            // Xử lý lỗi liên quan đến dữ liệu đầu vào hoặc padding
+            Log.e("SaveToken", "Lỗi mã hóa dữ liệu: " + e.getMessage(), e);
+        } catch (Exception e) {
+            // Xử lý các ngoại lệ chung khác
+            Log.e("SaveToken", "Lỗi không xác định khi lưu token: " + e.getMessage(), e);
+        }
     }
 
     // Decode and get access token
@@ -56,6 +85,7 @@ public class TokenStorage {
             cipher.init(Cipher.DECRYPT_MODE, secretKey, ivSpec);
             //Decrypt access token
             byte[] decryptedBytes = cipher.doFinal(Base64.decode(encryptedToken, Base64.DEFAULT));
+
             return new String(decryptedBytes, StandardCharsets.UTF_8);
         }
         catch (Exception e){

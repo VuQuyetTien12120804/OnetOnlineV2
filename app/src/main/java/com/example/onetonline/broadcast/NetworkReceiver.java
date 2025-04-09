@@ -7,7 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 public class NetworkReceiver extends BroadcastReceiver {
-    private SyncTrigger syncTrigger;
+    private final SyncTrigger syncTrigger;
 
     public NetworkReceiver(SyncTrigger syncTrigger) {
         this.syncTrigger = syncTrigger;
@@ -15,7 +15,7 @@ public class NetworkReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        ConnectivityManager connectivityManager =(ConnectivityManager) context.getSystemService(context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager =(ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
         if(activeNetwork != null && activeNetwork.isAvailable()){
             syncTrigger.sync();

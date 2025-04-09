@@ -5,14 +5,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
 import com.example.onetonline.business.AvatarUseCase;
-import com.example.onetonline.business.MenuGameUseCase;
 import com.example.onetonline.business.UserData;
-import com.example.onetonline.data.User;
 import com.example.onetonline.presentation.model.UserInf;
 import com.example.onetonline.presentation.view.*;
 import android.Manifest;
@@ -21,7 +17,6 @@ public class MenuController {
     private MenuGameView menuGameView;
     private AvatarUseCase avatarUseCase;
     private UserData userData;
-    private MenuGameUseCase menuGameUseCase;
     private Context context;
     private static final int STORAGE_PERMISSION_CODE = 100;
     public static final String DEFAULT_AVATAR_FILENAME = "avatar_image";
@@ -37,10 +32,12 @@ public class MenuController {
     }
 
     public void loadUserData(){
-        UserInf userInf = userData.getData();
-        menuGameView.showUserName(userInf.userName());
-        menuGameView.showLevel(userInf.level());
-        menuGameView.showExp(userInf.exp(), menuGameUseCase.getExpCap(userInf.level()));
+        if(userData.hasRecords()){
+            UserInf userInf = userData.getData();
+            menuGameView.showUserName(userInf.userName());
+            menuGameView.showLevel(userInf.level());
+            menuGameView.showExp(userInf.exp(), UserData.expCap(userInf.level()));
+        }
     }
 
     public void handleClassicClick(){
@@ -90,7 +87,7 @@ public class MenuController {
     public void loadAvatar() {
         // Ưu tiên tải từ local
         String userName = menuGameView.getUserName();
-        avatarUseCase.loadAvatarFromLocal(DEFAULT_AVATAR_FILENAME, new AvatarUseCase.AvatarCallBack() {
+        avatarUseCase.loadAvatarFromLocal(new AvatarUseCase.AvatarCallBack() {
             @Override
             public void onSuccess(Bitmap bitmap) {
                 menuGameView.showAvatar(bitmap); // Nếu local có, hiển thị ngay
@@ -98,7 +95,7 @@ public class MenuController {
             @Override
             public void onFailure(String err) {
                 // Nếu local không có, tải từ server
-                avatarUseCase.loadAvatarFromServer(userName, DEFAULT_AVATAR_FILENAME, new AvatarUseCase.AvatarCallBack() {
+                avatarUseCase.loadAvatarFromServer(userName, new AvatarUseCase.AvatarCallBack() {
                     @Override
                     public void onSuccess(Bitmap bitmap) {
                         menuGameView.showAvatar(bitmap); // Hiển thị ảnh từ server
@@ -114,7 +111,7 @@ public class MenuController {
 
     public void handleSaveAvatar(Bitmap bitmap) {
         String userName = menuGameView.getUserName();
-        avatarUseCase.saveAvatar(bitmap, DEFAULT_AVATAR_FILENAME, userName, new AvatarUseCase.AvatarCallBack() {
+        avatarUseCase.saveAvatar(bitmap, userName, new AvatarUseCase.AvatarCallBack() {
             @Override
             public void onSuccess(Bitmap bitmap) {
                 menuGameView.showAvatar(bitmap);

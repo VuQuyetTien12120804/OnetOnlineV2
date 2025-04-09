@@ -3,6 +3,7 @@ package com.example.onetonline.data;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import androidx.recyclerview.widget.DiffUtil;
 
@@ -149,13 +150,13 @@ public class UserRepo {
             cursor.moveToFirst();
             String id = cursor.getString(cursor.getColumnIndexOrThrow(myDBHelper.ID()));
             String name = cursor.getString(cursor.getColumnIndexOrThrow(myDBHelper.NAME()));
-            String email = cursor.getString(cursor.getColumnIndexOrThrow(myDBHelper.EMAIL()));
             int level = cursor.getInt(cursor.getColumnIndexOrThrow(myDBHelper.LEVEL()));
             int score = cursor.getInt(cursor.getColumnIndexOrThrow(myDBHelper.SCORE()));
             int exp = cursor.getInt(cursor.getColumnIndexOrThrow(myDBHelper.EXP()));
             String last_update = cursor.getString(cursor.getColumnIndexOrThrow(myDBHelper.LAST_UPDATE()));
+            Boolean isDeleted = cursor.getInt(cursor.getColumnIndexOrThrow(myDBHelper.IS_DELETED())) != 0;
             cursor.close();
-            user = new User(id, name, email, level, score, exp, last_update);
+            user = new User(id, name, level, score, exp, last_update, isDeleted);
         }
         return user;
     }
@@ -199,6 +200,10 @@ public class UserRepo {
                 callBack.onFailure("Network error: "+ t.getMessage());
             }
         });
+    }
+
+    public void saveToken(String accessToken) {
+        tokenStorage.saveToken(accessToken);
     }
 
     public String getToken(){

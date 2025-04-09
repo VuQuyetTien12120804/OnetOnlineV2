@@ -13,11 +13,11 @@ public class myDBHelper extends SQLiteOpenHelper {
     private static final String TABLE_NAME = "user";
     private static final String ID = "user_id";
     private static final String NAME = "user_name";
-    private static final String EMAIL = "email";
     private static final String LEVEL = "level";
     private static final String SCORE = "score";
     private static final String EXP = "exp";
     private static final String LAST_UPDATE = "last_update";
+    private static final String IS_DELETED = "is_deleted";
     private SQLiteDatabase myDB;
 
     public myDBHelper(@Nullable Context contexts) {
@@ -44,8 +44,8 @@ public class myDBHelper extends SQLiteOpenHelper {
         return LEVEL;
     }
 
-    public static String EMAIL() {
-        return EMAIL;
+    public static String IS_DELETED() {
+        return IS_DELETED;
     }
 
     public static String NAME() {
@@ -65,11 +65,11 @@ public class myDBHelper extends SQLiteOpenHelper {
         String sql = "Create table " + TABLE_NAME + " (" +
                 ID + " TEXT PRIMARY KEY, " +
                 NAME + " TEXT NOT NULL, " +
-                EMAIL + " TEXT NOT NULL, " +
                 LEVEL + " INTEGER DEFAULT 1, " +
                 SCORE + " INTEGER DEFAULT 0, " +
                 EXP + " INTEGER DEFAULT 0, " +
-                LAST_UPDATE + " TEXT NOT NULL" + ")";
+                LAST_UPDATE + " TEXT NOT NULL, " +
+                IS_DELETED + " INTEGER DEFAULT 0)";
         db.execSQL(sql);
     }
 
@@ -116,11 +116,11 @@ public class myDBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(ID, user.id());
         values.put(NAME, user.userName());
-        values.put(EMAIL, user.email());
         values.put(LEVEL, user.level());
         values.put(SCORE, user.score());
         values.put(EXP, user.exp());
         values.put(LAST_UPDATE, user.lastUpdate());
+        values.put(IS_DELETED, user.isDeleted() ? 1 :0);
 
         return myDB.insert(TABLE_NAME, null, values);
     }
@@ -128,12 +128,12 @@ public class myDBHelper extends SQLiteOpenHelper {
     public long Update(User user){
         ContentValues values = new ContentValues();
         values.put(NAME, user.userName());
-        values.put(EMAIL, user.email());
         values.put(LEVEL, user.level());
         values.put(SCORE, user.score());
         values.put(EXP, user.exp());
         values.put(LAST_UPDATE, user.lastUpdate());
-        String where = ID + " = " + user.id();
+        values.put(IS_DELETED,user.isDeleted());
+        String where = ID + " = " + "'" + user.id() + "'";
 
         return myDB.update(TABLE_NAME, values, where, null);
     }
@@ -159,8 +159,8 @@ public class myDBHelper extends SQLiteOpenHelper {
         Cursor cursor = Display();
         if(cursor != null && cursor.getCount() != 0){
             cursor.close();
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 }
