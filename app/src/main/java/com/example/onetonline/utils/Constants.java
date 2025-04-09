@@ -15,4 +15,5 @@ public class Constants {
     public static final int expStartLevelCap = 20;
     public static final String DEFAULT_AVATAR_FILENAME = "avatar_image";
     public static final String SYNC_SUCCESS_ACTION = "SYNC_SUCCESS";
+
 }

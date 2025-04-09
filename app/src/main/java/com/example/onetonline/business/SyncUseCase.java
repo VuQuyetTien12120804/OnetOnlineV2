@@ -2,13 +2,15 @@ package com.example.onetonline.business;
 
 import static com.example.onetonline.utils.Constants.DEFAULT_AVATAR_FILENAME;
 import static com.example.onetonline.utils.Constants.SYNC_SUCCESS_ACTION;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.Log;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.example.onetonline.broadcast.NetworkReceiver;
+import android.graphics.Bitmap;
+import com.example.onetonline.broadcast.NetworkReceiver;
+import com.example.onetonline.broadcast.SyncService;
 import com.example.onetonline.data.AvatarManager;
 import com.example.onetonline.data.AvatarRepo;
 import com.example.onetonline.data.User;

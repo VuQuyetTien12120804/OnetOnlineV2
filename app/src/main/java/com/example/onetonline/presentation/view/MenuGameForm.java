@@ -38,7 +38,7 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
         btnClassic = findViewById(R.id.btnClassic);
         btnContinue = findViewById(R.id.btnContinue);
         btnOnline = findViewById(R.id.btnOnline);
-        btnExit = findViewById(R.id.btnExitLoseGame);
+        btnExit = findViewById(R.id.btnExit);
         btnHelpClassic = findViewById(R.id.btnHelpClassic);
         btnHelpContinue = findViewById(R.id.btnHelpContinue);
         btnHelpOnline = findViewById(R.id.btnHelpOnline);
@@ -52,7 +52,7 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
     @Override
     protected void onStart() {
         super.onStart();
-        menuController.loadAvatar();
+        //menuController.loadAvatar();
     }
 
     @Override
@@ -69,7 +69,7 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
                 Uri imageUri = result.getData().getData();
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-                    menuController.handleSaveAvatar(bitmap);
+                    //menuController.handleSaveAvatar(bitmap);
                 } catch (IOException e) {
                     showMessage("Lỗi khi xử lý ảnh: " + e.getMessage());
                 }

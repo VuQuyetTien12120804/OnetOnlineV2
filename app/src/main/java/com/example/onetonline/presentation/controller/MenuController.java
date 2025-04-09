@@ -78,7 +78,6 @@ public class MenuController {
                 }
             }
         });
-
     }
     public void handleHelpContinueClick(){
         DialogHelper.showScrollableAlertDialog(context);
