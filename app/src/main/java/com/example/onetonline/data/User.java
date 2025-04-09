@@ -4,21 +4,21 @@ import java.io.Serializable;
 
 public class User implements Serializable {
     private String id;
-    private String email;
     private String userName;
     private String lastUpdate;
     private int level;
     private int score;
     private int exp;
+    private Boolean isDeleted;
 
-    public User(String id, String userName, String email, int level, int score, int exp, String lastUpdate) {
+    public User(String id, String userName, int level, int score, int exp, String lastUpdate, Boolean isDeleted) {
         this.id = id;
         this.userName = userName;
-        this.email = email;
         this.level = level;
         this.score = score;
         this.exp = exp;
         this.lastUpdate = lastUpdate;
+        this.isDeleted = isDeleted;
     }
 
     public String userName() {
@@ -39,6 +39,15 @@ public class User implements Serializable {
         return this;
     }
 
+    public Boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public User setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+        return this;
+    }
+
     public int exp() {
         return exp;
     }
@@ -54,15 +63,6 @@ public class User implements Serializable {
 
     public User setId(String id) {
         this.id = id;
-        return this;
-    }
-
-    public String email() {
-        return email;
-    }
-
-    public User setEmail(String email) {
-        this.email = email;
         return this;
     }
 

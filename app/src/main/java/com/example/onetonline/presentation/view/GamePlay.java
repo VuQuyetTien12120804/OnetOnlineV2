@@ -41,6 +41,7 @@ public class GamePlay extends BaseActivity implements GamePlayView{
         recyclerView.setAdapter(pikachuAdapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this, Constants.MAP_COL));
     }
+
     public void initWidget(){
         matrix = new Matrix(Constants.MAP_ROW + 2, Constants.MAP_COL + 2);
         pikachuList = new ArrayList<>();

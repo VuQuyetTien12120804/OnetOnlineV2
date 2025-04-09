@@ -43,6 +43,7 @@ public class LoginUseCase {
         userRepo.login(loginRequest, new UserRepo.LoginCallBack() {
             @Override
             public void onSuccess(token t) {
+                userRepo.saveToken(t.access_token());
                 String access_token = "Bearer " + t.access_token();
                 ExecutorService executor = Executors.newFixedThreadPool(1);
                 executor.submit(() -> {

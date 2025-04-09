@@ -344,7 +344,7 @@
                     android:shadowRadius="3"/>
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnHelpRandom"
+                    android:id="@+id/btnHelpOnline"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
@@ -366,7 +366,7 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnSettingLoseGame"
+                    android:id="@+id/btnSetting"
                     android:layout_width="0dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="50dp"

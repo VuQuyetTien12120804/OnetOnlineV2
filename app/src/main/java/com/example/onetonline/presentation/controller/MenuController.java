@@ -16,15 +16,10 @@ public class MenuController {
     private MenuGameView menuGameView;
     private AvatarUseCase avatarUseCase;
     private UserData userData;
-<<<<<<< HEAD
-    private static final int STORAGE_PERMISSION_CODE = 100;
-=======
-    private MenuGameUseCase menuGameUseCase;
     private Context context;
     private static final int STORAGE_PERMISSION_CODE = 100;
     public static final String DEFAULT_AVATAR_FILENAME = "avatar_image";
     private SharedPreferences sharedPreferences;
->>>>>>> 4989e382f6f48cf31498231c78d15ffe9dbb2ba9
 
     public MenuController(Context context, MenuGameForm menuView) {
         this.menuGameView = menuView;
