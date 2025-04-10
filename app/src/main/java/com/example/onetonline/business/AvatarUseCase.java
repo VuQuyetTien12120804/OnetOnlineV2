@@ -53,6 +53,11 @@ public class AvatarUseCase {
         });
     }
 
+//    public void loadAvatarToServer(){
+//        File avatarFile = avatarManager.convertBitmapToFile(bitmap, DEFAULT_AVATAR_FILENAME);
+//        avatarRepo.uploadAvatar();
+//    }
+
     public void loadAvatarFromLocal(AvatarCallBack callback) {
         avatarManager.loadImage(DEFAULT_AVATAR_FILENAME, new AvatarManager.AvatarCallback() {
             @Override

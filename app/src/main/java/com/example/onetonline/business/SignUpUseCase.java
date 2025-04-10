@@ -1,18 +1,24 @@
 package com.example.onetonline.business;
 
+import com.example.onetonline.data.AvatarRepo;
 import com.example.onetonline.data.OTPRepo;
 import com.example.onetonline.data.PostResponse;
 import com.example.onetonline.data.UserRepo;
 import com.example.onetonline.presentation.model.SignupRequest;
 import com.example.onetonline.presentation.model.userOTP;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class SignUpUseCase {
     private final UserRepo userRepo;
     private final OTPRepo otpRepo;
+    private final AvatarUseCase avatarUseCase;
 
-    public SignUpUseCase(UserRepo userRepo, OTPRepo otpRepo) {
+    public SignUpUseCase(UserRepo userRepo, OTPRepo otpRepo, AvatarUseCase avatarUseCase) {
         this.userRepo = userRepo;
         this.otpRepo = otpRepo;
+        this.avatarUseCase = avatarUseCase;
     }
 
     public interface SignUpResultCallback {
@@ -122,6 +128,24 @@ public class SignUpUseCase {
             @Override
             public void onFailure(String err) {
                 callBack.onFailure(mapError(err));
+            }
+        });
+    }
+
+    public void linAccount(SignupRequest signupRequest){
+        userRepo.addUser(signupRequest, new UserRepo.SignUpCallBack() {
+            @Override
+            public void onSuccess(PostResponse postResponse) {
+                ExecutorService executor = Executors.newFixedThreadPool(1);
+                executor.submit(() -> {
+//                    avatarUseCase.loadAvatarFromLocal();
+                });
+                executor.shutdown();
+            }
+
+            @Override
+            public void onFailure(String err) {
+
             }
         });
     }
