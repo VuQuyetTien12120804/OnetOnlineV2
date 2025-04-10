@@ -1,98 +1,104 @@
-<androidx.cardview.widget.CardView
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="80dp"
-    android:layout_margin="16dp"
-    android:background="@null">
+    android:fillViewport="true"
+    android:background="@color/transparent">
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:padding="16dp"
-        android:background="@drawable/background_dlalog_confirm_otp">
+        app:cardCornerRadius="16dp"
+        app:cardElevation="10dp"
+        android:layout_margin="16dp"
+        android:background="@color/transparent">
 
-        <!-- Tiêu đề -->
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enter OTP"
-            android:textColor="#FFAA00"
-            android:textSize="30sp"
-            android:fontFamily="@font/ltim_regular"
-            android:layout_marginBottom="16dp"
-            android:shadowColor="#FFFFFF"
-            android:shadowDx="4"
-            android:shadowDy="4"
-            android:shadowRadius="4"/>
-
-        <!-- Ô nhập OTP -->
-        <com.mukeshsolanki.OtpView
-            android:id="@+id/otp_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:textAllCaps="true"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:background="@drawable/background_dlalog_confirm_otp"
             android:layout_gravity="center"
-            android:gravity="center"
-            android:textColor="#FFAA00"
-            android:background="@color/white"
-            android:textSize="18dp"
-            android:fontFamily="@font/ltim_regular"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:cursorVisible="true"
-            app:OtpHideLineWhenFilled="true"
-            app:OtpItemCount="6"
-            app:OtpItemSpacing="0dp"
-            app:OtpLineColor="#85E7AA"
-            app:OtpState_filled="true"
-            app:OtpViewType="rectangle" />
+            android:padding="16dp">
 
-        <!-- Nút VERIFY -->
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnVerify_ConfirmOTP"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:fontFamily="@font/ltim_regular"
-            android:text="VERIFY"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/background_button_confirm_otp"
-            android:textSize="18sp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="8dp"
-            android:layout_gravity="center"/>
+            <!-- Tiêu đề -->
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ENTER OTP CONFIRM"
+                android:textColor="#009688"
+                android:textSize="30sp"
+                android:fontFamily="@font/ltim_regular"
+                android:layout_marginBottom="16dp"
+                android:shadowColor="#FFFFFF"
+                android:shadowDx="4"
+                android:shadowDy="4"
+                android:shadowRadius="4" />
 
-        <!-- Nút RESEND -->
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnResend_ConfirmOTP"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:fontFamily="@font/ltim_regular"
-            android:text="RESEND"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/background_button_confirm_otp"
-            android:textSize="18sp"
-            android:layout_marginBottom="8dp"
-            android:layout_gravity="center"/>
+            <!-- Ô nhập OTP -->
+            <com.mukeshsolanki.OtpView
+                android:id="@+id/otp_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="#673AB7"
+                android:background="#FFFFFF"
+                android:textSize="20sp"
+                android:fontFamily="@font/ltim_regular"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:cursorVisible="true"
+                app:OtpHideLineWhenFilled="true"
+                app:OtpItemCount="6"
+                app:OtpItemSpacing="8dp"
+                app:OtpLineColor="#85E7AA"
+                app:OtpViewType="rectangle" />
 
-        <!-- Nút Back -->
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnCancel"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:fontFamily="@font/ltim_regular"
-            android:text="CANCEL"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/background_button_confirm_otp"
-            android:textSize="18sp"
-            android:layout_marginBottom="8dp" />
-    </LinearLayout>
+            <!-- Nút VERIFY -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnVerify_ConfirmOTP"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/bg_button_menu_game"
+                android:fontFamily="@font/ltim_regular"
+                android:textStyle="bold"
+                android:text="VERIFY"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/text_size_button" />
 
-</androidx.cardview.widget.CardView>
+            <!-- Nút RESEND -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnResend_ConfirmOTP"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:fontFamily="@font/ltim_regular"
+                android:text="RESEND"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/bg_button_menu_game"
+                android:textSize="@dimen/text_size_button"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"
+                android:layout_gravity="center" />
+
+            <!-- Nút CANCEL -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/ltim_regular"
+                android:text="CANCEL"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/bg_button_menu_game"
+                android:textSize="@dimen/text_size_button"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</ScrollView>

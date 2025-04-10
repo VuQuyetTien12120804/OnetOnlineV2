@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@drawable/dialog_border">
@@ -52,15 +52,22 @@
     </ScrollView>
 
     <!-- Nút hành động -->
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnClose"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:backgroundTint="#FF5722"
         android:text="CLOSE"
-        android:textColor="#FFFFFF"
         android:layout_gravity="center"
         android:fontFamily="@font/ltim_regular"
-        android:textStyle="bold"/>
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:textSize="@dimen/text_size_button"
+        android:background="@drawable/bg_button_menu_game"
+        android:textColor="#FFFFFF"
+        android:paddingHorizontal="24dp"
+        android:textStyle="bold"
+        android:shadowColor="#80000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="4"
+        android:elevation="4dp" />
 </LinearLayout>

@@ -19,5 +19,5 @@ public interface MenuGameView {
     //method for settings
     void showSettingsDialog(boolean isMusicOn, boolean isSoundClickOn);
     void onSettingsSaved(boolean isMusicOn, boolean isSoundClickOn);
-    void navigateTo(Class<?> activityClass);
+
 }

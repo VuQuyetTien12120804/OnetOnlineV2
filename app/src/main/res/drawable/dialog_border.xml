@@ -6,11 +6,11 @@
     <solid android:color="#9EF1FB" />
 
     <!-- Độ bo góc -->
-    <corners android:radius="30dp" />
+    <corners android:radius="20dp" />
 
     <!-- Viền -->
     <stroke
-        android:width="5dp"
-        android:color="#FF5722" />
+        android:width="3dp"
+        android:color="#FF0000" />
 
 </shape>

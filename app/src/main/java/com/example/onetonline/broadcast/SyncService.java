@@ -18,7 +18,7 @@ public class SyncService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        userRepo = new UserRepo(this);
+        UserRepo userRepo = new UserRepo(this);
         AvatarManager avatarManager = new AvatarManager(this);
         SyncUseCase syncUseCase = new SyncUseCase(userRepo, new AvatarRepo(), avatarManager, this);
         networkReceiver = new NetworkReceiver(syncUseCase);
@@ -37,7 +37,9 @@ public class SyncService extends Service {
         if (networkReceiver != null) {
             unregisterReceiver(networkReceiver);
         }
-        userRepo.close();
+        if (userRepo != null){
+            userRepo.close();
+        }
     }
 
     @Nullable

@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_lose_dialog"
+        android:background="@drawable/dialog_border"
         android:orientation="vertical"
         android:padding="20dp"
         android:gravity="center_horizontal">
@@ -19,12 +19,11 @@
         <!-- Animation Effect -->
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottieAnimationLose"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="90dp"
+            android:layout_height="77dp"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
-            app:lottie_rawRes="@raw/animation_lose_sad_face"
-            />
+            app:lottie_rawRes="@raw/animation_lose_sad_face" />
 
         <!-- Tiêu đề -->
         <TextView
@@ -39,7 +38,6 @@
             android:shadowDy="2"
             android:shadowRadius="8"
             android:fontFamily="@font/ltim_regular"
-            android:layout_marginTop="16dp"
             android:gravity="center" />
 
         <!-- Nội dung thông báo -->
@@ -58,30 +56,38 @@
             android:layout_marginTop="8dp"
             android:gravity="center" />
 
-        <!-- Nút Try Again -->
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnTryAgainLoseGame"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/button_win_gradient"
-            android:text="TRY AGAIN"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:padding="10dp"
-            android:fontFamily="@font/ltim_regular"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <!-- Nút Try Again -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnTryAgainLoseGame"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_button_menu_game"
+                android:text="TRY AGAIN"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:padding="10dp"
+                android:fontFamily="@font/ltim_regular"
+                android:layout_marginRight="10dp"/>
 
-        <!-- Nút Exit -->
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnExitLoseGame"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/button_win_gradient"
-            android:text="    EXIT    "
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:padding="10dp"
-            android:fontFamily="@font/ltim_regular"/>
+            <!-- Nút Exit -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnExitLoseGame"
+                android:layout_width="120dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_button_menu_game"
+                android:text="    EXIT    "
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:padding="10dp"
+                android:fontFamily="@font/ltim_regular"
+                android:layout_marginLeft="10dp"/>
+        </LinearLayout>
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>
