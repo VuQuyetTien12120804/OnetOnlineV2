@@ -37,7 +37,9 @@ public class SyncService extends Service {
         if (networkReceiver != null) {
             unregisterReceiver(networkReceiver);
         }
-        userRepo.close();
+        if (userRepo != null){
+            userRepo.close();
+        }
     }
 
     @Nullable

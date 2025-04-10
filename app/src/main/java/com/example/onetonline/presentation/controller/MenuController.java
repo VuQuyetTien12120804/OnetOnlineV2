@@ -1,17 +1,19 @@
 package com.example.onetonline.presentation.controller;
 
-import android.app.Activity;
+import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
 import com.example.onetonline.business.AvatarUseCase;
 import com.example.onetonline.business.UserData;
 import com.example.onetonline.presentation.model.UserInf;
-import com.example.onetonline.presentation.view.*;
-import android.Manifest;
+import com.example.onetonline.presentation.view.MenuGameForm;
+import com.example.onetonline.presentation.view.MenuGameView;
 
 public class MenuController {
     private MenuGameView menuGameView;
@@ -53,34 +55,19 @@ public class MenuController {
     }
 
     public void handleSettingClick(){
-        // Load current settings from SharedPreferences
-        boolean isMusicOn = sharedPreferences.getBoolean("music", true); // Default: true
-        boolean isSoundClickOn = sharedPreferences.getBoolean("sound_click", true); // Default: true
-        // Show the settings dialog
-        menuGameView.showSettingsDialog(isMusicOn, isSoundClickOn);
-    }
-
-    public void saveSettings(boolean isMusicOn, boolean isSoundClickOn) {
-        // Save settings to SharedPreferences
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("music", isMusicOn);
-        editor.putBoolean("sound_click", isSoundClickOn);
-        editor.apply();
-        // Notify the view that settings were saved
-        menuGameView.onSettingsSaved(isMusicOn, isSoundClickOn);
+        if(context instanceof MenuGameForm) {
+            ((MenuGameForm) context).showSettingsDialog(true, true);
+        }
     }
     public void handleExitClick(){
-        DialogExitConfirm.showExitConfirmationDialog(context, new DialogExitConfirm.ExitDialogListener() {
-            @Override
-            public void onExitConfirmed() {
-                if (context instanceof Activity) {
-                    ((Activity) context).finish(); // Thoát Activity hiện tại
-                }
-            }
-        });
+        if(context instanceof MenuGameForm) {
+            ((MenuGameForm) context).showExitConfirmDialog();
+        }
     }
     public void handleHelpContinueClick(){
-        DialogHelper.showScrollableAlertDialog(context);
+        if(context instanceof MenuGameForm){
+            ((MenuGameForm)context).showHelpDialog();
+        }
     }
 
     public void loadAvatar() {
@@ -132,5 +119,4 @@ public class MenuController {
             ((MenuGameForm)menuGameView).openImagePicker();
         }
     }
-
 }

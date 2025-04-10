@@ -1,12 +1,17 @@
 package com.example.onetonline.presentation.view;
 
-import android.app.Dialog;
+import static com.example.onetonline.utils.Constants.SYNC_SUCCESS_ACTION;
+
+import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,10 +25,13 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.example.onetonline.broadcast.SyncService;
 import com.example.onetonline.presentation.BaseActivity;
+import com.example.onetonline.presentation.controller.MenuController;
 import com.example.onetonlinev2.R;
-import com.example.onetonline.presentation.controller.*;
 
 import java.io.IOException;
 
@@ -32,7 +40,9 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
     private Button btnClassic, btnContinue, btnOnline, btnExit, btnHelpClassic, btnHelpContinue, btnHelpOnline, btnSetting;
     private ImageView ivAvatar;
     private TextView tvUserName, tvLevel, tvExp;
+
     private ActivityResultLauncher<Intent> pickImageLauncher;
+    private BroadcastReceiver syncReceiver;
 
     public void initWidgets() {
         btnClassic = findViewById(R.id.btnClassic);
@@ -52,7 +62,8 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
     @Override
     protected void onStart() {
         super.onStart();
-        //menuController.loadAvatar();
+        menuController.loadAvatar();
+        menuController.loadUserData();
     }
 
     @Override
@@ -64,78 +75,45 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
         menuController = new MenuController(this, this);
         initWidgets();
 
+        //      start service to sync user data with server
+        Intent serviceIntent = new Intent(this, SyncService.class);
+        startService(serviceIntent);
+
+        // Đăng ký receiver để nhận broadcast đồng bộ
+        syncReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                menuController.loadUserData();
+                menuController.loadAvatar();
+            }
+        };
+        LocalBroadcastManager.getInstance(this).registerReceiver(syncReceiver, new IntentFilter(SYNC_SUCCESS_ACTION));
+
         pickImageLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK && result.getData() != null) {
                 Uri imageUri = result.getData().getData();
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-                    //menuController.handleSaveAvatar(bitmap);
+                    menuController.handleSaveAvatar(bitmap);
                 } catch (IOException e) {
                     showMessage("Lỗi khi xử lý ảnh: " + e.getMessage());
                 }
             }
         });
 
-        // Thêm kiểm tra null trước khi gọi setOnClickListener
-        if (btnClassic != null) btnClassic.setOnClickListener(v -> menuController.handleClassicClick());
-        if (btnContinue != null) btnContinue.setOnClickListener(v -> menuController.handleContinueClick());
-        if (btnOnline != null) btnOnline.setOnClickListener(v -> menuController.handleOnlineClick());
-        if (btnExit != null) btnExit.setOnClickListener(v -> menuController.handleExitClick());
-        if (ivAvatar != null) ivAvatar.setOnClickListener(v -> menuController.handleChangeAvatar());
-        if (btnHelpContinue != null) btnHelpContinue.setOnClickListener(v -> menuController.handleHelpContinueClick());
-        if (btnHelpOnline != null) btnHelpOnline.setOnClickListener(v -> menuController.handleHelpContinueClick());
-        if (btnHelpClassic != null) btnHelpClassic.setOnClickListener(v -> menuController.handleHelpContinueClick());
-        if (btnSetting != null) btnSetting.setOnClickListener(v -> menuController.handleSettingClick());
+        btnClassic.setOnClickListener(v -> menuController.handleClassicClick());
+        btnContinue.setOnClickListener(v -> menuController.handleContinueClick());
+        btnOnline.setOnClickListener(v -> menuController.handleOnlineClick());
+        btnExit.setOnClickListener(v -> menuController.handleExitClick());
+        ivAvatar.setOnClickListener(v -> menuController.handleChangeAvatar());
+        btnHelpContinue.setOnClickListener(v -> menuController.handleHelpContinueClick());
+        btnHelpOnline.setOnClickListener(v -> menuController.handleHelpContinueClick());
+        btnHelpClassic.setOnClickListener(v -> menuController.handleHelpContinueClick());
+        btnSetting.setOnClickListener(v -> menuController.handleSettingClick());
     }
 
     @Override
     public void onClassicClicked() {
-    }
-
-    public void handleClassicButtonClick() {
-        Dialog dialog = new Dialog(MenuGameForm.this);
-        dialog.setContentView(R.layout.dialog_win_game);
-        dialog.setCancelable(true);
-
-        Button btnNext = dialog.findViewById(R.id.btnNextWinGame);
-
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogBounceAnimation;
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        }
-
-        btnNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MenuGameForm.this, MenuGameForm.class);
-                startActivity(intent);
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-    }
-
-    public void handleContinueButtonClick() {
-        Dialog dialog = new Dialog(MenuGameForm.this);
-        dialog.setContentView(R.layout.dialog_lose_game);
-        dialog.setCancelable(true);
-
-        Button btnExitLoseGame = dialog.findViewById(R.id.btnExitLoseGame);
-
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogBounceAnimation;
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        }
-
-        btnExitLoseGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MenuGameForm.this, MenuGameForm.class);
-                startActivity(intent);
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
     }
 
     @Override
@@ -148,63 +126,18 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
 
     @Override
     public void onExitClicked() {
-        Dialog dialog = new Dialog(MenuGameForm.this);
-
-        dialog.setContentView(R.layout.dialog_exit_confirmation);
-        dialog.setCancelable(false);
-
-        Button btnYes = dialog.findViewById(R.id.btnYes);
-        Button btnNo = dialog.findViewById(R.id.btnNo);
-
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogBounceAnimation;
-            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        }
-
-        btnYes.setOnClickListener(v -> {
-            dialog.dismiss();
-            finish();
-        });
-
-        btnNo.setOnClickListener(v -> dialog.dismiss());
-
-        dialog.show();
     }
 
     @Override
     public void onHelpClassicClicked() {
-        DialogHelper.showScrollableAlertDialog(MenuGameForm.this);
-    }
-
-    public void handleAudioButtonClick() {
-        showCustomToast("Nút âm thanh được nhấn");
     }
 
     @Override
     public void onHelpContinueClicked() {
-        DialogHelper.showScrollableAlertDialog(MenuGameForm.this);
     }
 
     @Override
     public void onSettingClicked() {
-    }
-
-    public void openImagePicker() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        pickImageLauncher.launch(intent);
-    }
-
-    private void showCustomToast(String message) {
-        LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.custom_toast, (ViewGroup) findViewById(R.id.custom_toast_container));
-        TextView toastMessage = layout.findViewById(R.id.toast_message);
-        toastMessage.setText(message);
-
-        Toast toast = new Toast(getApplicationContext());
-        toast.setDuration(Toast.LENGTH_LONG);
-        toast.setView(layout);
-        toast.setGravity(Gravity.BOTTOM, 0, 0);
-        toast.show();
     }
 
     @Override
@@ -238,22 +171,132 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
         return tvUserName.getText().toString();
     }
 
-    @Override
-    public void navigateTo(Class<?> activityClass) {
-        Intent i = new Intent(MenuGameForm.this, activityClass);
-        startActivity(i);
-        finish();
-    }
 
+
+    //Xử lý nút setting
     @Override
     public void showSettingsDialog(boolean isMusicOn, boolean isSoundClickOn) {
-        DialogSetting.showSettingsDialog(this, isMusicOn, isSoundClickOn, (newMusicState, newSoundClickState) -> {
-            menuController.saveSettings(newMusicState, newSoundClickState);
+        //tạo dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        //load giao diện lại từ file xml
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_setting, null);
+
+        //gán giao diện vào dialog
+        builder.setView(dialogView);
+        AlertDialog dialog = builder.create();
+
+        //xóa nền
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+        //xử lý cho switch
+        TextView tvTitle = dialogView.findViewById(R.id.tvTitle);
+        Switch switchMusic = dialogView.findViewById(R.id.switchMusic);
+        Switch switchSoundClick = dialogView.findViewById(R.id.switchSoundClick);
+
+        // Lấy trạng thái từ SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("GameSettings", Context.MODE_PRIVATE);
+        boolean musicState = sharedPreferences.getBoolean("MUSIC_STATE", isMusicOn);
+        boolean soundState = sharedPreferences.getBoolean("SOUND_STATE", isSoundClickOn);
+
+        // Hiển thị trạng thái hiện tại
+        switchMusic.setChecked(musicState);
+        switchSoundClick.setChecked(soundState);
+
+        //Xử ly nut save
+        AppCompatButton btnSave = dialogView.findViewById(R.id.btnSave);
+        btnSave.setOnClickListener(v->{
+            // Lưu trạng thái mới vào SharedPreferences
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("MUSIC_STATE", switchMusic.isChecked());
+            editor.putBoolean("SOUND_STATE", switchSoundClick.isChecked());
+            editor.apply();
+
+            // Đóng dialog
+            dialog.dismiss();
+            Toast.makeText(this, "Settings saved!", Toast.LENGTH_SHORT).show();
         });
+
+        //show
+        dialog.show();
     }
 
     @Override
     public void onSettingsSaved(boolean isMusicOn, boolean isSoundClickOn) {
         showMessage("Cài đặt đã lưu: Nhạc " + (isMusicOn ? "BẬT" : "TẮT") + ", Âm thanh nhấn " + (isSoundClickOn ? "BẬT" : "TẮT"));
+    }
+
+    public void openImagePicker() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        pickImageLauncher.launch(intent);
+    }
+
+    private void showCustomToast(String message) {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.custom_toast, (ViewGroup) findViewById(R.id.custom_toast_container));
+        TextView toastMessage = layout.findViewById(R.id.toast_message);
+        toastMessage.setText(message);
+
+        Toast toast = new Toast(getApplicationContext());
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.setGravity(Gravity.BOTTOM, 0, 0);
+        toast.show();
+    }
+    //Xử lý click nút Exit
+    public void showExitConfirmDialog(){
+        //tạo dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        //load giao diện lại từ file xml
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_exit_confirmation, null);
+
+        //gán giao diện vào dialog
+        builder.setView(dialogView);
+        AlertDialog dialog = builder.create();
+
+        //xóa nền
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+        TextView tvExitMessage = dialogView.findViewById(R.id.tvExitMessage);
+        AppCompatButton btnYesConfirmExitGame = dialogView.findViewById(R.id.btnYesConfirmExitGame);
+        AppCompatButton btnNoConfirmExitGame = dialogView.findViewById(R.id.btnNoConfirmExitGame);
+
+        //xử lý cho nut yes
+        btnYesConfirmExitGame.setOnClickListener(v->{
+            dialog.dismiss(); //đóng dialog
+            finish(); //đóng activity hiện tại
+        });
+
+        //xử lý cho nut no
+        btnNoConfirmExitGame.setOnClickListener(v->{
+            dialog.dismiss(); //đóng dialog
+        });
+
+        //Hiển thị dialog
+        dialog.show();
+    }
+
+    //Xử lý click 3 nút Help
+    public void showHelpDialog(){
+        //tạo dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //Load giao dien tu file xml
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_helper_scrollable, null);
+        //gan giao dien vao dialog
+        builder.setView(dialogView);
+        AlertDialog dialog = builder.create();
+        //xóa nền
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        //xử lý cho nut close
+        Button btnClose = dialogView.findViewById(R.id.btnClose);
+        btnClose.setOnClickListener(v->{
+            dialog.dismiss();
+        });
+        //Hiển thị dialog
+        dialog.show();
     }
 }
