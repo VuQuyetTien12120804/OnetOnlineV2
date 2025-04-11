@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,7 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
     private Button btnClassic, btnContinue, btnOnline, btnExit, btnHelpClassic, btnHelpContinue, btnHelpOnline, btnSetting;
     private ImageView ivAvatar;
     private TextView tvUserName, tvLevel, tvExp;
+    private TabHost tabHost;
 
     private ActivityResultLauncher<Intent> pickImageLauncher;
     private BroadcastReceiver syncReceiver;
@@ -57,8 +59,33 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
         tvUserName = findViewById(R.id.tvPlayerName);
         tvLevel = findViewById(R.id.tvStarCount);
         tvExp = findViewById(R.id.tvExp);
+        tabHost = findViewById(R.id.mytab);
     }
 
+    private void setupTabs() {
+        tabHost.setup();
+
+        // Tab for "Today"
+        TabHost.TabSpec todayTab = tabHost.newTabSpec("Today");
+        todayTab.setContent(R.id.tab1);
+        todayTab.setIndicator("Today");
+        tabHost.addTab(todayTab);
+
+        // Tab for "Week"
+        TabHost.TabSpec weekTab = tabHost.newTabSpec("Week");
+        weekTab.setContent(R.id.tab2);
+        weekTab.setIndicator("Week");
+        tabHost.addTab(weekTab);
+    }
+
+//    private void setupPlayerList() {
+//        ArrayList<Player> players = new ArrayList<>();
+//        players.add(new Player("Player 1", R.drawable.avatar1, R.drawable.flag1, 2000, 35));
+//        players.add(new Player("Player 2", R.drawable.avatar2, R.drawable.flag2, 1500, 20));
+//
+//        PlayerAdapter adapter = new PlayerAdapter(this, players);
+//        playerListView.setAdapter(adapter);
+//    }
     @Override
     protected void onStart() {
         super.onStart();
@@ -294,6 +321,63 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
         //xử lý cho nut close
         Button btnClose = dialogView.findViewById(R.id.btnClose);
         btnClose.setOnClickListener(v->{
+            dialog.dismiss();
+        });
+        //Hiển thị dialog
+        dialog.show();
+    }
+    public void showWinGameDialog(){
+        //tạo dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //Load giao dien tu file xml
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_win_game, null);
+        //gan giao dien vao dialog
+        builder.setView(dialogView);
+        AlertDialog dialog = builder.create();
+        //xóa nền
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        //xử lý cho nut close
+        Button btnNextWinGame = dialogView.findViewById(R.id.btnNextWinGame);
+        btnNextWinGame.setOnClickListener(v->{
+            dialog.dismiss();
+        });
+        //Hiển thị dialog
+        dialog.show();
+    }
+    public void showLoseGameDialog(){
+        //tạo dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //Load giao dien tu file xml
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_lose_game, null);
+        //gan giao dien vao dialog
+        builder.setView(dialogView);
+        AlertDialog dialog = builder.create();
+        //xóa nền
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        //xử lý cho nut close
+        Button btnExitLoseGame = dialogView.findViewById(R.id.btnExitLoseGame);
+        btnExitLoseGame.setOnClickListener(v->{
+            dialog.dismiss();
+        });
+        //Hiển thị dialog
+        dialog.show();
+    }
+    public void showPauseGameDialog(){
+        //tạo dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //Load giao dien tu file xml
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_pause, null);
+        //gan giao dien vao dialog
+        builder.setView(dialogView);
+        AlertDialog dialog = builder.create();
+        //xóa nền
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        //xử lý cho nut close
+        Button btnExitPauseGame = dialogView.findViewById(R.id.btnExitPauseGame);
+        btnExitPauseGame.setOnClickListener(v->{
             dialog.dismiss();
         });
         //Hiển thị dialog
