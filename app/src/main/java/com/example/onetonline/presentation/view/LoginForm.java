@@ -26,6 +26,9 @@ import com.example.onetonline.presentation.controller.LoginController;
 import com.example.onetonlinev2.R;
 import com.mukeshsolanki.OtpView;
 
+import eightbitlab.com.blurview.BlurView;
+import eightbitlab.com.blurview.RenderScriptBlur;
+
 
 public class LoginForm extends BaseActivity implements LoginView{
     private Button btnBackLoginForm, btnLogin;
@@ -39,7 +42,7 @@ public class LoginForm extends BaseActivity implements LoginView{
         btnLogin = findViewById(R.id.btnLogin);
         etLogin = findViewById(R.id.etNameOrEmail);
         etPassword = findViewById(R.id.etPasswordLogin);
-        btnBackLoginForm = findViewById(R.id.btnBackLoginForm);
+        //btnBackLoginForm = findViewById(R.id.btnBackLoginForm);
         tvForgotPassword = findViewById(R.id.tvForgotPassword);
     }
 
@@ -52,7 +55,7 @@ public class LoginForm extends BaseActivity implements LoginView{
         initWidgets();
         loginController = new LoginController(this, LoginForm.this);
 
-        btnBackLoginForm.setOnClickListener(v -> loginController.handleBackToHome(WellComeScreen.class));
+        //btnBackLoginForm.setOnClickListener(v -> loginController.handleBackToHome(WellComeScreen.class));
         btnLogin.setOnClickListener(v -> loginController.handleLogin(MenuGameForm.class));
         tvForgotPassword.setOnClickListener(v -> loginController.handleSendOTP());
     }
