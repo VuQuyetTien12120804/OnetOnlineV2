@@ -1,6 +1,7 @@
 package com.example.onetonline.business;
 
 import static com.example.onetonline.utils.Constants.DEFAULT_AVATAR_FILENAME;
+import static com.example.onetonline.utils.Constants.now;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -8,6 +9,7 @@ import android.util.Log;
 
 import com.example.onetonline.data.AvatarManager;
 import com.example.onetonline.data.AvatarRepo;
+import com.example.onetonline.data.UserRepo;
 
 import java.io.File;
 import java.util.concurrent.ExecutorService;
@@ -53,6 +55,31 @@ public class AvatarUseCase {
         });
     }
 
+    public void loadAvatarToServer(AvatarCallBack callBack){
+        loadAvatarFromLocal(new AvatarCallBack() {
+            @Override
+            public void onSuccess(Bitmap bitmap) {
+                File avatarFile = avatarManager.convertBitmapToFile(bitmap, DEFAULT_AVATAR_FILENAME);
+                avatarRepo.uploadAvatar(DEFAULT_AVATAR_FILENAME, avatarFile, new AvatarRepo.UploadCallBack() {
+                    @Override
+                    public void onSuccess() {
+                        callBack.onSuccess(bitmap);
+                    }
+
+                    @Override
+                    public void onFailure(String err) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(String err) {
+
+            }
+        });
+    }
+
     public void loadAvatarFromLocal(AvatarCallBack callback) {
         avatarManager.loadImage(DEFAULT_AVATAR_FILENAME, new AvatarManager.AvatarCallback() {
             @Override
@@ -77,7 +104,6 @@ public class AvatarUseCase {
                         @Override
                         public void onSuccess() {
                             Log.i("AvatarUseCase", "Old avatar deleted");
-
                         }
 
                         @Override

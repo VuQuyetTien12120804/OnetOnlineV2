@@ -2,7 +2,10 @@ package com.example.onetonline.presentation.controller;
 
 import android.content.Context;
 
+import com.example.onetonline.business.AvatarUseCase;
 import com.example.onetonline.business.SignUpUseCase;
+import com.example.onetonline.business.SyncUseCase;
+import com.example.onetonline.data.AvatarRepo;
 import com.example.onetonline.data.OTPRepo;
 import com.example.onetonline.data.PostResponse;
 import com.example.onetonline.presentation.model.SignupRequest;
@@ -20,7 +23,8 @@ public class SignUpController {
         this.signUpView = signUpView;
         UserRepo userRepo = new UserRepo(context);
         OTPRepo otpRepo = new OTPRepo();
-        signUpUseCase = new SignUpUseCase(userRepo, otpRepo);
+        AvatarUseCase avatarUseCase = new AvatarUseCase(context);
+        signUpUseCase = new SignUpUseCase(userRepo, otpRepo, avatarUseCase);
     }
 
     public void handleBackToHome(Class<?> activityClass){

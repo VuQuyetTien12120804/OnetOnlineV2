@@ -169,6 +169,18 @@ public class UserRepo {
         myDB.Insert(user);
     }
 
+    public void deleteFromLocal(String id){
+        myDB.Delete(id);
+    }
+
+    public boolean hasRecords(){
+        return myDB.hasRecords();
+    }
+
+    public void updateVersion(String last_upadte){
+        myDB.UpdateVersion(last_upadte);
+    }
+
     public void saveAvatar(Bitmap bitmap, String nameFile, final AvatarManager.AvatarCallback callback){
         avatarManager.saveImage(bitmap, nameFile, new AvatarManager.AvatarCallback() {
             @Override
