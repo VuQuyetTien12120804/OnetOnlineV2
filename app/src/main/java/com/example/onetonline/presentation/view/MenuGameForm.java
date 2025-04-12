@@ -18,7 +18,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Switch;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,19 +30,23 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.example.onetonline.broadcast.MusicGameService;
 import com.example.onetonline.broadcast.SyncService;
+import com.example.onetonline.data.User;
 import com.example.onetonline.presentation.BaseActivity;
 import com.example.onetonline.presentation.controller.MenuController;
 import com.example.onetonlinev2.R;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MenuGameForm extends BaseActivity implements MenuGameView {
     private MenuController menuController;
     private Button btnClassic, btnContinue, btnOnline, btnExit, btnHelpClassic, btnHelpContinue, btnHelpOnline, btnSetting;
     private ImageView ivAvatar;
     private TextView tvUserName, tvLevel, tvExp;
-
+    private TabHost tabHost;
+    private boolean isMusicOn = true, isSoundClickOn = true;
     private ActivityResultLauncher<Intent> pickImageLauncher;
     private BroadcastReceiver syncReceiver;
 
@@ -57,6 +63,33 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
         tvUserName = findViewById(R.id.tvPlayerName);
         tvLevel = findViewById(R.id.tvStarCount);
         tvExp = findViewById(R.id.tvExp);
+        tabHost = findViewById(R.id.mytab);
+    }
+
+    private void setupTabs() {
+        tabHost.setup();
+
+        // Tab for "Today"
+        TabHost.TabSpec todayTab = tabHost.newTabSpec("Today");
+        todayTab.setContent(R.id.tab1);
+        todayTab.setIndicator("Today");
+        tabHost.addTab(todayTab);
+
+        // Tab for "Week"
+        TabHost.TabSpec weekTab = tabHost.newTabSpec("Week");
+        weekTab.setContent(R.id.tab2);
+        weekTab.setIndicator("Week");
+        tabHost.addTab(weekTab);
+    }
+
+    private void setupPlayerList() {
+        // Lấy danh sách User từ MenuController
+        ArrayList<User> users = menuController.getUserList();
+
+        // Tạo adapter và gán vào ListView
+        UserAdapter adapter = new UserAdapter(this, users);
+        ListView playerListView = findViewById(R.id.playerListView);
+        playerListView.setAdapter(adapter);
     }
 
     @Override
@@ -85,9 +118,13 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
             public void onReceive(Context context, Intent intent) {
                 menuController.loadUserData();
                 menuController.loadAvatar();
+                setupPlayerList(); // Làm mới danh sách User
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(syncReceiver, new IntentFilter(SYNC_SUCCESS_ACTION));
+
+        setupTabs();
+        setupPlayerList();
 
         pickImageLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK && result.getData() != null) {
@@ -171,7 +208,13 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
         return tvUserName.getText().toString();
     }
 
-
+    @Override
+    public void onBackPressed() {
+        // Điều hướng về màn hình WellComeScreen
+        Intent intent = new Intent(this, WellComeScreen.class);
+        startActivity(intent);
+        finish(); // Kết thúc Activity hiện tại
+    }
 
     //Xử lý nút setting
     @Override
@@ -213,11 +256,17 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
             editor.putBoolean("SOUND_STATE", switchSoundClick.isChecked());
             editor.apply();
 
+            //xử lý phát nhạc
+            if(switchMusic.isChecked()){
+                startService(new Intent(MenuGameForm.this, MusicGameService.class));
+            }else{
+                stopService(new Intent(MenuGameForm.this, MusicGameService.class));
+            }
+
             // Đóng dialog
             dialog.dismiss();
             Toast.makeText(this, "Settings saved!", Toast.LENGTH_SHORT).show();
         });
-
         //show
         dialog.show();
     }
@@ -294,6 +343,63 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
         //xử lý cho nut close
         Button btnClose = dialogView.findViewById(R.id.btnClose);
         btnClose.setOnClickListener(v->{
+            dialog.dismiss();
+        });
+        //Hiển thị dialog
+        dialog.show();
+    }
+    public void showWinGameDialog(){
+        //tạo dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //Load giao dien tu file xml
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_win_game, null);
+        //gan giao dien vao dialog
+        builder.setView(dialogView);
+        AlertDialog dialog = builder.create();
+        //xóa nền
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        //xử lý cho nut close
+        Button btnNextWinGame = dialogView.findViewById(R.id.btnNextWinGame);
+        btnNextWinGame.setOnClickListener(v->{
+            dialog.dismiss();
+        });
+        //Hiển thị dialog
+        dialog.show();
+    }
+    public void showLoseGameDialog(){
+        //tạo dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //Load giao dien tu file xml
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_lose_game, null);
+        //gan giao dien vao dialog
+        builder.setView(dialogView);
+        AlertDialog dialog = builder.create();
+        //xóa nền
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        //xử lý cho nut close
+        Button btnExitLoseGame = dialogView.findViewById(R.id.btnExitLoseGame);
+        btnExitLoseGame.setOnClickListener(v->{
+            dialog.dismiss();
+        });
+        //Hiển thị dialog
+        dialog.show();
+    }
+    public void showPauseGameDialog(){
+        //tạo dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //Load giao dien tu file xml
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_pause, null);
+        //gan giao dien vao dialog
+        builder.setView(dialogView);
+        AlertDialog dialog = builder.create();
+        //xóa nền
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        //xử lý cho nut close
+        Button btnExitPauseGame = dialogView.findViewById(R.id.btnExitPauseGame);
+        btnExitPauseGame.setOnClickListener(v->{
             dialog.dismiss();
         });
         //Hiển thị dialog

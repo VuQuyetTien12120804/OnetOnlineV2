@@ -41,46 +41,45 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <!-- Tabs -->
                 <TabWidget
                     android:id="@android:id/tabs"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
+                <!-- Tab Content -->
                 <FrameLayout
                     android:id="@android:id/tabcontent"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1">
 
-                    <!-- Tab 1 -->
+                    <!-- Tab 1 Content -->
                     <LinearLayout
                         android:id="@+id/tab1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
-                        <include layout="@layout/layout1" />
+                        <!-- Danh sách người chơi -->
+                        <ListView
+                            android:id="@+id/playerListView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:divider="@android:color/transparent"
+                            android:dividerHeight="10dp" />
                     </LinearLayout>
 
-                    <!-- Tab 2 -->
+                    <!-- Tab 2 Content -->
                     <LinearLayout
                         android:id="@+id/tab2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-
-                        <include layout="@layout/layout1" />
+                        <!-- Nội dung tab khác -->
                     </LinearLayout>
 
-                    <!-- Tab 3 -->
-                    <LinearLayout
-                        android:id="@+id/tab3"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <include layout="@layout/layout1" />
-                    </LinearLayout>
                 </FrameLayout>
             </LinearLayout>
         </TabHost>

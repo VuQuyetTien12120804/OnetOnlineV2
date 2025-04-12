@@ -20,16 +20,13 @@ import com.example.onetonlinev2.R;
 import com.mukeshsolanki.OtpView;
 
 public class SignUpForm extends BaseActivity implements SignUpView{
-    private Button btnBackRegisterForm, btnRegister;
+    private Button btnRegister;
     private EditText etUserName, etEmail, etPassword, etConfirmPassword;
-    private TextView tvBackToLogin;
     private SignUpController sign;
     private String otp = "";
 
     public void initWidgets(){
-        btnBackRegisterForm = findViewById(R.id.btnBackRegisterForm);
         btnRegister = findViewById(R.id.btnRegister);
-        tvBackToLogin = findViewById(R.id.tvBackToLogin);
         etUserName = findViewById(R.id.etUsername);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPasswordRegister);
@@ -45,9 +42,7 @@ public class SignUpForm extends BaseActivity implements SignUpView{
         initWidgets();
         sign = new SignUpController(this, SignUpForm.this);
 
-        btnBackRegisterForm.setOnClickListener(v -> sign.handleBackToHome(WellComeScreen.class));
         btnRegister.setOnClickListener(v -> sign.handleSendOTP());
-        tvBackToLogin.setOnClickListener(v -> sign.handleBackToLogin(LoginForm.class));
     }
 
     public void showCustomToast(String message){
@@ -129,4 +124,13 @@ public class SignUpForm extends BaseActivity implements SignUpView{
         startActivity(intent);
         finish();
     }
+
+    @Override
+    public void onBackPressed() {
+        // Điều hướng về màn hình WellComeScreen
+        Intent intent = new Intent(SignUpForm.this, WellComeScreen.class);
+        startActivity(intent);
+        finish(); // Kết thúc Activity hiện tại
+    }
+
 }

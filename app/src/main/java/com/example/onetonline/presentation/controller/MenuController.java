@@ -11,9 +11,12 @@ import androidx.core.content.ContextCompat;
 
 import com.example.onetonline.business.AvatarUseCase;
 import com.example.onetonline.business.UserData;
+import com.example.onetonline.data.User;
 import com.example.onetonline.presentation.model.UserInf;
 import com.example.onetonline.presentation.view.MenuGameForm;
 import com.example.onetonline.presentation.view.MenuGameView;
+
+import java.util.ArrayList;
 
 public class MenuController {
     private MenuGameView menuGameView;
@@ -43,11 +46,17 @@ public class MenuController {
     }
 
     public void handleClassicClick(){
-        menuGameView.onClassicClicked();
+        //menuGameView.onClassicClicked();
+        if(context instanceof MenuGameForm) {
+            ((MenuGameForm) context).showPauseGameDialog();
+        }
     }
 
     public void handleContinueClick(){
-        menuGameView.onContinueClicked();
+        //menuGameView.onContinueClicked();
+        if(context instanceof MenuGameForm) {
+            ((MenuGameForm) context).showLoseGameDialog();
+        }
     }
 
     public void handleOnlineClick(){
@@ -68,6 +77,18 @@ public class MenuController {
         if(context instanceof MenuGameForm){
             ((MenuGameForm)context).showHelpDialog();
         }
+    }
+    public ArrayList<User> getUserList() {
+        // Giả lập lấy dữ liệu từ server hoặc cơ sở dữ liệu
+        ArrayList<User> users = new ArrayList<>();
+        // Thay bằng logic thực tế, ví dụ: gọi API
+        users.add(new User("1", "User 1", 5, 2000, 150, "2025-04-12", false));
+        users.add(new User("2", "User 2", 3, 1500, 100, "2025-04-12", false));
+        users.add(new User("3", "User 3", 7, 3000, 200, "2025-04-12", false));
+        users.add(new User("1", "User 1", 5, 2000, 150, "2025-04-12", false));
+        users.add(new User("2", "User 2", 3, 1500, 100, "2025-04-12", false));
+        users.add(new User("3", "User 3", 7, 3000, 200, "2025-04-12", false));
+        return users;
     }
 
     public void loadAvatar() {

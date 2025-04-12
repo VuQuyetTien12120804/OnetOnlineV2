@@ -13,13 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 import android.widget.ImageView;
 import android.widget.TextView;
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AppCompatActivity;
+import android.widget.Toast;
 
-import com.example.onetonline.broadcast.SyncService;
+import androidx.activity.EdgeToEdge;
+
 import com.example.onetonline.data.User;
 import com.example.onetonline.presentation.BaseActivity;
 import com.example.onetonline.presentation.controller.LoginController;
@@ -39,7 +38,7 @@ public class LoginForm extends BaseActivity implements LoginView{
         btnLogin = findViewById(R.id.btnLogin);
         etLogin = findViewById(R.id.etNameOrEmail);
         etPassword = findViewById(R.id.etPasswordLogin);
-        btnBackLoginForm = findViewById(R.id.btnBackLoginForm);
+        //btnBackLoginForm = findViewById(R.id.btnBackLoginForm);
         tvForgotPassword = findViewById(R.id.tvForgotPassword);
     }
 
@@ -52,7 +51,7 @@ public class LoginForm extends BaseActivity implements LoginView{
         initWidgets();
         loginController = new LoginController(this, LoginForm.this);
 
-        btnBackLoginForm.setOnClickListener(v -> loginController.handleBackToHome(WellComeScreen.class));
+        //btnBackLoginForm.setOnClickListener(v -> loginController.handleBackToHome(WellComeScreen.class));
         btnLogin.setOnClickListener(v -> loginController.handleLogin(MenuGameForm.class));
         tvForgotPassword.setOnClickListener(v -> loginController.handleSendOTP());
     }
@@ -61,6 +60,13 @@ public class LoginForm extends BaseActivity implements LoginView{
     protected void onDestroy() {
         super.onDestroy();
         loginController.onDestroy();
+    }
+    @Override
+    public void onBackPressed() {
+        // Điều hướng về màn hình WellComeScreen
+        Intent intent = new Intent(this, WellComeScreen.class);
+        startActivity(intent);
+        finish(); // Kết thúc Activity hiện tại
     }
 
     @Override

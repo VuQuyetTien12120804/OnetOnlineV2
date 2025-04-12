@@ -1,5 +1,6 @@
 package com.example.onetonline.presentation.view;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -46,4 +47,14 @@ public class WellComeScreen extends BaseActivity implements WellComeScreenView {
         startActivity(intent);
         finish();
     }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setMessage("Do you want to exit the app?")
+                .setPositiveButton("Yes", (dialog, which) -> finish())
+                .setNegativeButton("No", null)
+                .show();
+    }
+
 }
