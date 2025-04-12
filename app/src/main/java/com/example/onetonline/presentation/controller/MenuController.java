@@ -85,9 +85,9 @@ public class MenuController {
         users.add(new User("1", "User 1", 5, 2000, 150, "2025-04-12", false));
         users.add(new User("2", "User 2", 3, 1500, 100, "2025-04-12", false));
         users.add(new User("3", "User 3", 7, 3000, 200, "2025-04-12", false));
-        users.add(new User("1", "User 1", 5, 2000, 150, "2025-04-12", false));
-        users.add(new User("2", "User 2", 3, 1500, 100, "2025-04-12", false));
-        users.add(new User("3", "User 3", 7, 3000, 200, "2025-04-12", false));
+        users.add(new User("4", "User 4", 5, 2000, 150, "2025-04-12", false));
+        users.add(new User("5", "User 5", 3, 1500, 100, "2025-04-12", false));
+        users.add(new User("6", "User 6", 7, 3000, 200, "2025-04-12", false));
         return users;
     }
 

@@ -90,4 +90,9 @@ public class SignUpController {
             }
         });
     }
+
+    public void handleBackToLogin(){
+        signUpView.navigateTo(LoginForm.class);
+
+    }
 }
