@@ -208,7 +208,13 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
         return tvUserName.getText().toString();
     }
 
-
+    @Override
+    public void onBackPressed() {
+        // Điều hướng về màn hình WellComeScreen
+        Intent intent = new Intent(this, WellComeScreen.class);
+        startActivity(intent);
+        finish(); // Kết thúc Activity hiện tại
+    }
 
     //Xử lý nút setting
     @Override
