@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -29,12 +30,15 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.example.onetonline.broadcast.MusicGameService;
 import com.example.onetonline.broadcast.SyncService;
+import com.example.onetonline.data.User;
 import com.example.onetonline.presentation.BaseActivity;
 import com.example.onetonline.presentation.controller.MenuController;
 import com.example.onetonlinev2.R;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MenuGameForm extends BaseActivity implements MenuGameView {
     private MenuController menuController;
@@ -42,7 +46,7 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
     private ImageView ivAvatar;
     private TextView tvUserName, tvLevel, tvExp;
     private TabHost tabHost;
-
+    private boolean isMusicOn = true, isSoundClickOn = true;
     private ActivityResultLauncher<Intent> pickImageLauncher;
     private BroadcastReceiver syncReceiver;
 
@@ -78,14 +82,16 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
         tabHost.addTab(weekTab);
     }
 
-//    private void setupPlayerList() {
-//        ArrayList<Player> players = new ArrayList<>();
-//        players.add(new Player("Player 1", R.drawable.avatar1, R.drawable.flag1, 2000, 35));
-//        players.add(new Player("Player 2", R.drawable.avatar2, R.drawable.flag2, 1500, 20));
-//
-//        PlayerAdapter adapter = new PlayerAdapter(this, players);
-//        playerListView.setAdapter(adapter);
-//    }
+    private void setupPlayerList() {
+        // Lấy danh sách User từ MenuController
+        ArrayList<User> users = menuController.getUserList();
+
+        // Tạo adapter và gán vào ListView
+        UserAdapter adapter = new UserAdapter(this, users);
+        ListView playerListView = findViewById(R.id.playerListView);
+        playerListView.setAdapter(adapter);
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -112,9 +118,13 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
             public void onReceive(Context context, Intent intent) {
                 menuController.loadUserData();
                 menuController.loadAvatar();
+                setupPlayerList(); // Làm mới danh sách User
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(syncReceiver, new IntentFilter(SYNC_SUCCESS_ACTION));
+
+        setupTabs();
+        setupPlayerList();
 
         pickImageLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK && result.getData() != null) {
@@ -240,11 +250,17 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
             editor.putBoolean("SOUND_STATE", switchSoundClick.isChecked());
             editor.apply();
 
+            //xử lý phát nhạc
+            if(switchMusic.isChecked()){
+                startService(new Intent(MenuGameForm.this, MusicGameService.class));
+            }else{
+                stopService(new Intent(MenuGameForm.this, MusicGameService.class));
+            }
+
             // Đóng dialog
             dialog.dismiss();
             Toast.makeText(this, "Settings saved!", Toast.LENGTH_SHORT).show();
         });
-
         //show
         dialog.show();
     }
