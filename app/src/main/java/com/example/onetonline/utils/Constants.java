@@ -1,5 +1,11 @@
 package com.example.onetonline.utils;
 
+import android.util.Log;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
 public class Constants {
     public static final int MAP_COL = 16;
     public static final int MAP_ROW = 9;
@@ -15,5 +21,10 @@ public class Constants {
     public static final int expStartLevelCap = 20;
     public static final String DEFAULT_AVATAR_FILENAME = "avatar_image";
     public static final String SYNC_SUCCESS_ACTION = "SYNC_SUCCESS";
-
+    public static final String now(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date now = new Date();
+        return sdf.format(now) + "000+00:00";
+    }
 }

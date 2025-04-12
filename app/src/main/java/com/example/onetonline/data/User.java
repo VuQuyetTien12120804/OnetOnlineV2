@@ -24,7 +24,7 @@ public class User implements Serializable {
     public User(){
         this.id = "I'm Batman";
         this.userName = "Guest";
-        this.level = 0;
+        this.level = 1;
         this.score = 0;
         this.exp = 0;
         this.lastUpdate = "";

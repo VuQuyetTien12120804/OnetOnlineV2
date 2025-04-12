@@ -26,7 +26,8 @@
             android:textSize="18sp"
             android:textColor="#673AB7"
             android:textColorHint="#BDBDBD"
-            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 _-" />
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 _-"
+            android:imeOptions="actionDone" />
 
         <!-- Email Field -->
         <EditText
@@ -41,7 +42,8 @@
             android:inputType="textEmailAddress"
             android:textSize="18sp"
             android:textColor="#673AB7"
-            android:textColorHint="#BDBDBD" />
+            android:textColorHint="#BDBDBD"
+            android:imeOptions="actionDone" />
 
         <!-- Password Field -->
         <EditText
@@ -56,7 +58,8 @@
             android:inputType="textPassword"
             android:textSize="18sp"
             android:textColor="#673AB7"
-            android:textColorHint="#BDBDBD" />
+            android:textColorHint="#BDBDBD"
+            android:imeOptions="actionDone" />
 
         <!-- Confirm Password Field -->
         <EditText
@@ -71,7 +74,8 @@
             android:inputType="textPassword"
             android:textSize="18sp"
             android:textColor="#673AB7"
-            android:textColorHint="#BDBDBD" />
+            android:textColorHint="#BDBDBD"
+            android:imeOptions="actionDone" />
 
         <!-- Register Button -->
         <androidx.appcompat.widget.AppCompatButton

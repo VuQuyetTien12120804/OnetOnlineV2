@@ -35,7 +35,7 @@
         android:inputType="text"
         android:fontFamily="@font/ltim_regular"
         android:singleLine="true"
-        android:imeOptions="actionNext" />
+        android:imeOptions="actionDone" />
 
     <!-- Nhập mật khẩu -->
     <EditText

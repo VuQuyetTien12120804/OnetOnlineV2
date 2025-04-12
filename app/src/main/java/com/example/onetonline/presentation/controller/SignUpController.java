@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.onetonline.business.AvatarUseCase;
 import com.example.onetonline.business.SignUpUseCase;
+import com.example.onetonline.business.SyncUseCase;
 import com.example.onetonline.data.AvatarRepo;
 import com.example.onetonline.data.OTPRepo;
 import com.example.onetonline.data.PostResponse;

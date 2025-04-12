@@ -3,6 +3,8 @@ package com.example.onetonline.business;
 import static com.example.onetonline.utils.Constants.DEFAULT_AVATAR_FILENAME;
 
 import android.graphics.Bitmap;
+import android.util.Log;
+
 import com.example.onetonline.broadcast.NetworkReceiver;
 import com.example.onetonline.data.AvatarManager;
 import com.example.onetonline.data.AvatarRepo;
@@ -13,6 +15,10 @@ import com.example.onetonline.data.token;
 import com.example.onetonline.presentation.model.ChangePassRequest;
 import com.example.onetonline.presentation.model.LoginRequest;
 import com.example.onetonline.presentation.model.userOTP;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -47,7 +53,6 @@ public class LoginUseCase {
                 String access_token = "Bearer " + t.access_token();
                 ExecutorService executor = Executors.newFixedThreadPool(1);
                 executor.submit(() -> {
-                    User newUser = null;
                     userRepo.getUser(access_token, new UserRepo.GetUserCallBack() {
                         @Override
                         public void onSuccess(User user) {

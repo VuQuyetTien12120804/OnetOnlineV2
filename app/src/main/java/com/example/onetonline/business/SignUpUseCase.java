@@ -1,8 +1,12 @@
 package com.example.onetonline.business;
 
-import com.example.onetonline.data.AvatarRepo;
+import static com.example.onetonline.utils.Constants.now;
+
+import android.graphics.Bitmap;
+
 import com.example.onetonline.data.OTPRepo;
 import com.example.onetonline.data.PostResponse;
+import com.example.onetonline.data.User;
 import com.example.onetonline.data.UserRepo;
 import com.example.onetonline.presentation.model.SignupRequest;
 import com.example.onetonline.presentation.model.userOTP;
@@ -104,25 +108,40 @@ public class SignUpUseCase {
         });
     }
 
-    public void signUp(SignupRequest signupRequest, String otp, UserRepo.SignUpCallBack callBack){
-        if (!Checker.checkOTPLen(otp)) { // Giả sử OTP là 6 ký tự
+    public void signUp(SignupRequest signupRequest, String otp, UserRepo.SignUpCallBack callBack) {
+        if (!Checker.checkOTPLen(otp)) {
             callBack.onFailure("Enter a valid 6-digit OTP!");
             return;
         }
         otpRepo.verifyOTP(signupRequest.email(), otp, new OTPRepo.VerifyCallBack() {
             @Override
             public void onSuccess() {
-                userRepo.addUser(signupRequest, new UserRepo.SignUpCallBack() {
-                    @Override
-                    public void onSuccess(PostResponse postResponse) {
-                        callBack.onSuccess(postResponse);
-                    }
+                if (userRepo.hasRecords()) {
+                    linkAccount(signupRequest, new UserRepo.SignUpCallBack() {
+                        @Override
+                        public void onSuccess(PostResponse postResponse) {
+                            callBack.onSuccess(postResponse);
+                        }
 
-                    @Override
-                    public void onFailure(String err) {
-                        callBack.onFailure(mapError(err));
-                    }
-                });
+                        @Override
+                        public void onFailure(String err) {
+                            callBack.onFailure(mapError(err));
+                        }
+                    });
+                }
+                else{
+                    newAccount(signupRequest, new UserRepo.SignUpCallBack() {
+                        @Override
+                        public void onSuccess(PostResponse postResponse) {
+                            callBack.onSuccess(postResponse);
+                        }
+
+                        @Override
+                        public void onFailure(String err) {
+                            callBack.onFailure(mapError(err));
+                        }
+                    });
+                }
             }
 
             @Override
@@ -132,13 +151,54 @@ public class SignUpUseCase {
         });
     }
 
-    public void linAccount(SignupRequest signupRequest){
+    public void newAccount(SignupRequest signupRequest, UserRepo.SignUpCallBack callBack){
+        userRepo.addUser(signupRequest, new UserRepo.SignUpCallBack() {
+            @Override
+            public void onSuccess(PostResponse postResponse) {
+                callBack.onSuccess(postResponse);
+            }
+
+            @Override
+            public void onFailure(String err) {
+                callBack.onFailure(mapError(err));
+            }
+        });
+    }
+
+    public void linkAccount(SignupRequest signupRequest, UserRepo.SignUpCallBack callBack){
         userRepo.addUser(signupRequest, new UserRepo.SignUpCallBack() {
             @Override
             public void onSuccess(PostResponse postResponse) {
                 ExecutorService executor = Executors.newFixedThreadPool(1);
                 executor.submit(() -> {
-//                    avatarUseCase.loadAvatarFromLocal();
+                    avatarUseCase.loadAvatarToServer(new AvatarUseCase.AvatarCallBack() {
+                        @Override
+                        public void onSuccess(Bitmap bitmap) {
+
+                        }
+
+                        @Override
+                        public void onFailure(String err) {
+
+                        }
+                    });
+                    User user = userRepo.getUserLocal();
+                    user.setUserName(signupRequest.userName());
+                    user.setLastUpdate(now());
+                    userRepo.deleteFromLocal(user.id());
+                    user.setId(postResponse.user_id());
+                    userRepo.insertToLocal(user);
+                    userRepo.sync(user, new UserRepo.UpdateUserCallBack() {
+                        @Override
+                        public void onSuccess() {
+                            callBack.onSuccess(postResponse);
+                        }
+
+                        @Override
+                        public void onFailure(String err) {
+                            callBack.onFailure(mapError(err));
+                        }
+                    });
                 });
                 executor.shutdown();
             }

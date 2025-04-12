@@ -154,6 +154,13 @@ public class myDBHelper extends SQLiteOpenHelper {
         return myDB.delete(TABLE_NAME, where, null);
     }
 
+    public long UpdateVersion(String last_update){
+        ContentValues values = new ContentValues();
+        values.put(LAST_UPDATE, last_update);
+
+        return myDB.update(TABLE_NAME, values, null , null);
+    }
+
     public boolean hasRecords() {
         openDB();
         Cursor cursor = Display();

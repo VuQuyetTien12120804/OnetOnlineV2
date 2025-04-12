@@ -84,11 +84,10 @@ public class MenuController {
                 avatarUseCase.loadAvatarFromServer(userName, new AvatarUseCase.AvatarCallBack() {
                     @Override
                     public void onSuccess(Bitmap bitmap) {
-                        menuGameView.showAvatar(bitmap); // Hiển thị ảnh từ server
+                        menuGameView.showAvatar(bitmap);
                     }
                     @Override
                     public void onFailure(String serverErr) {
-                        menuGameView.showMessage("No avatar found");
                     }
                 });
             }
