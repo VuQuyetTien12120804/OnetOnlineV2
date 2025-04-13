@@ -26,7 +26,7 @@ public class AvatarRepo {
     public AvatarRepo() {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         avatarAPI = new Retrofit.Builder()
-                .baseUrl("http://192.168.170.193:8002/")
+                .baseUrl("http://192.168.97.193:8002/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
                 .create(AvatarAPI.class);

@@ -165,7 +165,7 @@ public class LoginUseCase {
             @Override
             public void onFailure(String err) {
                 if(err.equals("401")){
-                    callBack.onFailure("Incorrect password!");
+                    callBack.onFailure("Incorrect otp!");
                     return;
                 }
                 callBack.onFailure(err);

@@ -30,7 +30,7 @@ public class LoginForm extends BaseActivity implements LoginView{
     private Button btnBackLoginForm, btnLogin;
     private EditText etLogin, etPassword;
     private LoginController loginController;
-    private TextView tvForgotPassword;
+    private TextView tvForgotPassword, tvRegister;
     private Dialog loadingDialog;
     private String otp = "", newPassword = "", confirmPassword = "";
 
@@ -40,6 +40,7 @@ public class LoginForm extends BaseActivity implements LoginView{
         etPassword = findViewById(R.id.etPasswordLogin);
         //btnBackLoginForm = findViewById(R.id.btnBackLoginForm);
         tvForgotPassword = findViewById(R.id.tvForgotPassword);
+        tvRegister = findViewById(R.id.tvRegister);
     }
 
     @Override
@@ -54,6 +55,7 @@ public class LoginForm extends BaseActivity implements LoginView{
         //btnBackLoginForm.setOnClickListener(v -> loginController.handleBackToHome(WellComeScreen.class));
         btnLogin.setOnClickListener(v -> loginController.handleLogin(MenuGameForm.class));
         tvForgotPassword.setOnClickListener(v -> loginController.handleSendOTP());
+        tvRegister.setOnClickListener(v -> loginController.handleRegister());
     }
 
     @Override
@@ -148,8 +150,9 @@ public class LoginForm extends BaseActivity implements LoginView{
 
         // Xử lý nút verify đây là nếu đúng thì chuyển sang reset password
         Button btnVerify = dialog.findViewById(R.id.btnVerify_ConfirmOTP);
-        btnVerify.setOnClickListener(v -> loginController.handleVerifyOTP(dialog));
-
+        btnVerify.setOnClickListener(v -> {
+                otp = otpView.getText().toString();
+                loginController.handleVerifyOTP(dialog);});
         // Hiển thị Dialog
         dialog.show();
     }

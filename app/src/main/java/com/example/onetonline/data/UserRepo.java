@@ -28,7 +28,7 @@ public class UserRepo {
     public UserRepo(Context context) {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         userAPI = new Retrofit.Builder()
-                .baseUrl("http://192.168.170.193:8000/")
+                .baseUrl("http://192.168.97.193:8000/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
                 .create(UserAPI.class);

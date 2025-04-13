@@ -18,6 +18,7 @@ import com.example.onetonline.presentation.model.LoginRequest;
 import com.example.onetonline.presentation.model.userOTP;
 import com.example.onetonline.presentation.view.LoginForm;
 import com.example.onetonline.presentation.view.LoginView;
+import com.example.onetonline.presentation.view.SignUpForm;
 import com.example.onetonline.presentation.view.WellComeScreen;
 
 public class LoginController {
@@ -67,6 +68,10 @@ public class LoginController {
                 loginView.showMessage(err);
             }
         });
+    }
+
+    public void handleRegister(){
+        loginView.navigateTo(SignUpForm.class);
     }
 
     public void handleReSendOTP(){
