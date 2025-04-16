@@ -215,6 +215,7 @@ public class SignUpUseCase {
             case "400": return "Error! The email or username already exists";
             case "401": return "Incorrect OTP!";
             case "404": return "Account doesn't exist!";
+            case "409": return "Please wait";
             default: return "Error: " + errorCode;
         }
     }

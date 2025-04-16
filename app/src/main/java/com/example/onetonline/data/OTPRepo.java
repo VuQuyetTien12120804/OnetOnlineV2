@@ -15,7 +15,7 @@ public class OTPRepo {
     public OTPRepo() {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         otpApi = new Retrofit.Builder()
-                .baseUrl("http://192.168.97.193:8001/")
+                .baseUrl("http://192.168.25.193:8001/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
                 .create(OTP_API.class);

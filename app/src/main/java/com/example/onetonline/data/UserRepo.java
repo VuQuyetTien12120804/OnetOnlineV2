@@ -13,6 +13,9 @@ import com.example.onetonline.presentation.model.SignupRequest;
 import com.example.onetonline.presentation.model.UserInf;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -28,7 +31,7 @@ public class UserRepo {
     public UserRepo(Context context) {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         userAPI = new Retrofit.Builder()
-                .baseUrl("http://192.168.97.193:8000/")
+                .baseUrl("http://192.168.25.193:8000/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
                 .create(UserAPI.class);
@@ -45,6 +48,11 @@ public class UserRepo {
 
     public interface LoginCallBack{
         void onSuccess(token t);
+        void onFailure(String err);
+    }
+
+    public interface GetTopUserCallBack{
+        void onSuccess(List<userRanking> rankingList);
         void onFailure(String err);
     }
 
@@ -78,6 +86,26 @@ public class UserRepo {
 
             @Override
             public void onFailure(Call<token> call, Throwable t) {
+                callBack.onFailure("Network error: "+ t.getMessage());
+            }
+        });
+    }
+
+    public void getTopUser(final GetTopUserCallBack callBack){
+        userAPI.getTopUser().enqueue(new Callback<List<userRanking>>() {
+            @Override
+            public void onResponse(Call<List<userRanking>> call, Response<List<userRanking>> response) {
+                if(response.isSuccessful()){
+                    List<userRanking> rankingList = response.body();
+                    callBack.onSuccess(rankingList);
+                }
+                else{
+                    callBack.onFailure(String.valueOf(response.code()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<userRanking>> call, Throwable t) {
                 callBack.onFailure("Network error: "+ t.getMessage());
             }
         });

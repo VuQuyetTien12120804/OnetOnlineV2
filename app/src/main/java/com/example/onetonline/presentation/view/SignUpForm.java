@@ -24,6 +24,7 @@ public class SignUpForm extends BaseActivity implements SignUpView{
     private EditText etUserName, etEmail, etPassword, etConfirmPassword;
     private SignUpController sign;
     private String otp = "";
+    private TextView tvBackToLogin;
 
     public void initWidgets(){
         btnRegister = findViewById(R.id.btnRegister);
@@ -31,6 +32,7 @@ public class SignUpForm extends BaseActivity implements SignUpView{
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPasswordRegister);
         etConfirmPassword =findViewById(R.id.etConfirmPassword);
+        tvBackToLogin = findViewById(R.id.tvBackToLogin);
     }
 
     @Override
@@ -43,6 +45,7 @@ public class SignUpForm extends BaseActivity implements SignUpView{
         sign = new SignUpController(this, SignUpForm.this);
 
         btnRegister.setOnClickListener(v -> sign.handleSendOTP());
+        tvBackToLogin.setOnClickListener(v -> sign.handleBackToLogin());
     }
 
     public void showCustomToast(String message){

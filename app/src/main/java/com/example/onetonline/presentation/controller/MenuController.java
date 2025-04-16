@@ -1,5 +1,7 @@
 package com.example.onetonline.presentation.controller;
 
+import static com.example.onetonline.utils.Constants.STORAGE_PERMISSION_CODE;
+
 import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,28 +14,26 @@ import androidx.core.content.ContextCompat;
 import com.example.onetonline.business.AvatarUseCase;
 import com.example.onetonline.business.UserData;
 import com.example.onetonline.data.User;
+import com.example.onetonline.data.UserRepo;
+import com.example.onetonline.data.userRanking;
 import com.example.onetonline.presentation.model.UserInf;
 import com.example.onetonline.presentation.view.MenuGameForm;
 import com.example.onetonline.presentation.view.MenuGameView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MenuController {
     private MenuGameView menuGameView;
     private AvatarUseCase avatarUseCase;
     private UserData userData;
     private Context context;
-    private static final int STORAGE_PERMISSION_CODE = 100;
-    public static final String DEFAULT_AVATAR_FILENAME = "avatar_image";
-    private SharedPreferences sharedPreferences;
 
     public MenuController(Context context, MenuGameForm menuView) {
         this.menuGameView = menuView;
         avatarUseCase = new AvatarUseCase(context);
         this.context = context;
         userData = new UserData(context);
-        // Initialize SharedPreferences for saving settings
-        sharedPreferences = context.getSharedPreferences("GameSettings", Context.MODE_PRIVATE);
     }
 
     public void loadUserData(){
@@ -68,27 +68,31 @@ public class MenuController {
             ((MenuGameForm) context).showSettingsDialog(true, true);
         }
     }
+
     public void handleExitClick(){
         if(context instanceof MenuGameForm) {
             ((MenuGameForm) context).showExitConfirmDialog();
         }
     }
+
     public void handleHelpContinueClick(){
         if(context instanceof MenuGameForm){
             ((MenuGameForm)context).showHelpDialog();
         }
     }
-    public ArrayList<User> getUserList() {
-        // Giả lập lấy dữ liệu từ server hoặc cơ sở dữ liệu
-        ArrayList<User> users = new ArrayList<>();
-        // Thay bằng logic thực tế, ví dụ: gọi API
-        users.add(new User("1", "User 1", 5, 2000, 150, "2025-04-12", false));
-        users.add(new User("2", "User 2", 3, 1500, 100, "2025-04-12", false));
-        users.add(new User("3", "User 3", 7, 3000, 200, "2025-04-12", false));
-        users.add(new User("1", "User 1", 5, 2000, 150, "2025-04-12", false));
-        users.add(new User("2", "User 2", 3, 1500, 100, "2025-04-12", false));
-        users.add(new User("3", "User 3", 7, 3000, 200, "2025-04-12", false));
-        return users;
+
+    public void showRankingList() {
+        userData.getRankingList(new UserRepo.GetTopUserCallBack() {
+            @Override
+            public void onSuccess(List<userRanking> rankingList) {
+                ((MenuGameForm)menuGameView).setupPlayerList(rankingList);
+            }
+
+            @Override
+            public void onFailure(String err) {
+                menuGameView.showMessage(err);
+            }
+        });
     }
 
     public void loadAvatar() {

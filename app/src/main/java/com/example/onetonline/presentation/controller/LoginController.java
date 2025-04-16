@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.security.keystore.UserPresenceUnavailableException;
+import android.util.Log;
 
 import com.example.onetonline.business.LoginUseCase;
 import com.example.onetonline.data.AvatarRepo;
@@ -95,8 +96,8 @@ public class LoginController {
         loginUseCase.verifyOTP(emailOrName, otp, new OTPRepo.VerifyCallBack() {
             @Override
             public void onSuccess() {
-                ((LoginForm) loginView).showResetPasswordDialog();
                 dialog.dismiss();
+                ((LoginForm) loginView).showResetPasswordDialog();
             }
 
             @Override

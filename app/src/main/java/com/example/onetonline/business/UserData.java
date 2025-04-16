@@ -7,18 +7,37 @@ import android.content.Context;
 import android.database.Cursor;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import com.example.onetonline.data.User;
+import com.example.onetonline.data.UserRepo;
 import com.example.onetonline.data.myDBHelper;
+import com.example.onetonline.data.userRanking;
 import com.example.onetonline.presentation.model.UserInf;
 import com.example.onetonline.utils.*;
 
 public class UserData {
     private myDBHelper myDB;
+    private UserRepo userRepo;
 
     public UserData(Context context) {
         this.myDB = new myDBHelper(context);
+        userRepo = new UserRepo(context);
+    }
+
+    public void getRankingList(UserRepo.GetTopUserCallBack callBack){
+        userRepo.getTopUser(new UserRepo.GetTopUserCallBack() {
+            @Override
+            public void onSuccess(List<userRanking> rankingList) {
+                callBack.onSuccess(rankingList);
+            }
+
+            @Override
+            public void onFailure(String err) {
+                callBack.onFailure(err);
+            }
+        });
     }
 
     public UserInf getData(){

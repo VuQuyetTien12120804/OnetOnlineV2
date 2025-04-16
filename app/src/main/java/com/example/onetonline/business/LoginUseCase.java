@@ -159,7 +159,7 @@ public class LoginUseCase {
         otpRepo.verifyOTP(email, otp, new OTPRepo.VerifyCallBack() {
             @Override
             public void onSuccess() {
-
+                callBack.onSuccess();
             }
 
             @Override
@@ -199,6 +199,7 @@ public class LoginUseCase {
         switch (errorCode) {
             case "400": return "Error! The email or username already exists";
             case "404": return "Account doesn't exist!";
+            case "409": return "Please wait";
             default: return "Error: " + errorCode;
         }
     }

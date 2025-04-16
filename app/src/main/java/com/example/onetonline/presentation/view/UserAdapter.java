@@ -12,12 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.onetonline.data.User;
+import com.example.onetonline.data.userRanking;
 import com.example.onetonlinev2.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class UserAdapter extends ArrayAdapter<User> {
-    public UserAdapter(Context context, ArrayList<User> users) {
+public class UserAdapter extends ArrayAdapter<userRanking> {
+    public UserAdapter(Context context, List<userRanking> users) {
         super(context, 0, users);
     }
 
@@ -25,7 +27,7 @@ public class UserAdapter extends ArrayAdapter<User> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         // Lấy dữ liệu của User tại vị trí hiện tại
-        User user = getItem(position);
+        userRanking user = getItem(position);
 
         // Kiểm tra nếu view có thể tái sử dụng, nếu không thì inflate layout mới
         if (convertView == null) {
@@ -37,12 +39,14 @@ public class UserAdapter extends ArrayAdapter<User> {
         ImageView ivAvatar = convertView.findViewById(R.id.ivAvatar);
         TextView tvPlayerName = convertView.findViewById(R.id.tvPlayerName);
         TextView tvPlayerScore = convertView.findViewById(R.id.tvPlayerScore);
+        TextView tvLevel = convertView.findViewById(R.id.textViewLevel);
 
         // Gán dữ liệu từ User vào các view
         tvRank.setText(String.valueOf(position + 1)); // Xếp hạng = vị trí + 1
         // ivAvatar.setImageResource(R.drawable.icon_game); // Mặc định từ XML, hoặc thay bằng logic avatar động
         tvPlayerName.setText(user.userName());
-        tvPlayerScore.setText("Today: " + user.score());
+        tvPlayerScore.setText("Score: " + user.score());
+        tvLevel.setText(String.valueOf(user.level()));
 
         return convertView;
     }

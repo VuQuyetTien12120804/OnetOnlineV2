@@ -152,7 +152,8 @@ public class LoginForm extends BaseActivity implements LoginView{
         Button btnVerify = dialog.findViewById(R.id.btnVerify_ConfirmOTP);
         btnVerify.setOnClickListener(v -> {
                 otp = otpView.getText().toString();
-                loginController.handleVerifyOTP(dialog);});
+                loginController.handleVerifyOTP(dialog);
+        });
         // Hiển thị Dialog
         dialog.show();
     }
@@ -170,7 +171,6 @@ public class LoginForm extends BaseActivity implements LoginView{
 
         //Xử lý nút xác nhận
         Button btnConfirmReset = resetPasswordDialog.findViewById(R.id.btn_confirm_reset);
-
         EditText etNewPassword = resetPasswordDialog.findViewById(R.id.et_new_password);
         EditText etConfirmPassword = resetPasswordDialog.findViewById(R.id.et_confirm_password);
 

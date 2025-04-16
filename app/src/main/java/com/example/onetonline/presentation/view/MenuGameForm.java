@@ -33,12 +33,14 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.example.onetonline.broadcast.MusicGameService;
 import com.example.onetonline.broadcast.SyncService;
 import com.example.onetonline.data.User;
+import com.example.onetonline.data.userRanking;
 import com.example.onetonline.presentation.BaseActivity;
 import com.example.onetonline.presentation.controller.MenuController;
 import com.example.onetonlinev2.R;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MenuGameForm extends BaseActivity implements MenuGameView {
     private MenuController menuController;
@@ -69,25 +71,15 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
     private void setupTabs() {
         tabHost.setup();
 
-        // Tab for "Today"
-        TabHost.TabSpec todayTab = tabHost.newTabSpec("Today");
+        TabHost.TabSpec todayTab = tabHost.newTabSpec("Best Score");
         todayTab.setContent(R.id.tab1);
-        todayTab.setIndicator("Today");
+        todayTab.setIndicator("Best Score");
         tabHost.addTab(todayTab);
-
-        // Tab for "Week"
-        TabHost.TabSpec weekTab = tabHost.newTabSpec("Week");
-        weekTab.setContent(R.id.tab2);
-        weekTab.setIndicator("Week");
-        tabHost.addTab(weekTab);
     }
 
-    private void setupPlayerList() {
-        // Lấy danh sách User từ MenuController
-        ArrayList<User> users = menuController.getUserList();
-
+    public void setupPlayerList(List<userRanking> rankingList) {
         // Tạo adapter và gán vào ListView
-        UserAdapter adapter = new UserAdapter(this, users);
+        UserAdapter adapter = new UserAdapter(this, rankingList);
         ListView playerListView = findViewById(R.id.playerListView);
         playerListView.setAdapter(adapter);
     }
@@ -118,13 +110,13 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
             public void onReceive(Context context, Intent intent) {
                 menuController.loadUserData();
                 menuController.loadAvatar();
-                setupPlayerList(); // Làm mới danh sách User
+                menuController.showRankingList(); // Làm mới danh sách User
             }
         };
         LocalBroadcastManager.getInstance(this).registerReceiver(syncReceiver, new IntentFilter(SYNC_SUCCESS_ACTION));
 
         setupTabs();
-        setupPlayerList();
+        menuController.showRankingList();
 
         pickImageLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode() == RESULT_OK && result.getData() != null) {

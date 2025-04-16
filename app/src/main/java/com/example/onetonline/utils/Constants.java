@@ -20,6 +20,7 @@ public class Constants {
     public static final int plusExp = 10;
     public static final int expStartLevelCap = 20;
     public static final String DEFAULT_AVATAR_FILENAME = "avatar_image";
+    public static final int STORAGE_PERMISSION_CODE = 100;
     public static final String SYNC_SUCCESS_ACTION = "SYNC_SUCCESS";
     public static final String now(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");

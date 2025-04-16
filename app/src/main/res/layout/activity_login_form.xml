@@ -25,6 +25,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/background_gradient">
         </ImageView>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,19 +33,20 @@
             android:padding="16dp">
 
             <!-- Tiêu đề -->
+
+            <!-- Ô nhập Email -->
             <TextView
                 android:id="@+id/tvLoginTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Login"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:textColor="#000000"
                 android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/ltim_regular"
                 android:paddingBottom="10dp"
-                android:fontFamily="@font/ltim_regular"/>
+                android:text="Login"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                android:textStyle="bold" />
 
-            <!-- Ô nhập Email -->
             <EditText
                 android:id="@+id/etNameOrEmail"
                 android:layout_width="match_parent"
@@ -110,6 +112,11 @@
                 android:textColor="#000000"
                 android:gravity="center"
                 android:fontFamily="@font/ltim_regular"/>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_gradient"></ImageView>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>
