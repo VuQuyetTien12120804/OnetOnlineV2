@@ -17,6 +17,7 @@ public interface MenuGameView {
     void showExp(int exp, int expCap);
     String getUserName();
     //method for settings
+    void navigateTo(Class<?> avtivityClass);
     void showSettingsDialog(boolean isMusicOn, boolean isSoundClickOn);
     void onSettingsSaved(boolean isMusicOn, boolean isSoundClickOn);
 

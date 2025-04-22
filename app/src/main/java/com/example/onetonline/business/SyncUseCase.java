@@ -10,6 +10,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import com.example.onetonline.broadcast.NetworkReceiver;
 import com.example.onetonline.data.AvatarManager;
 import com.example.onetonline.data.AvatarRepo;
+import com.example.onetonline.data.TokenStorage;
 import com.example.onetonline.data.User;
 import com.example.onetonline.data.UserRepo;
 import java.io.File;
@@ -20,13 +21,15 @@ public class SyncUseCase implements NetworkReceiver.SyncTrigger {
     private final UserRepo userRepo;
     private final AvatarRepo avatarRepo;
     private final AvatarManager avatarManager;
+    private final TokenStorage tokenStorage;
     private final Context context;
 
-    public SyncUseCase(UserRepo userRepo, AvatarRepo avatarRepo, AvatarManager avatarManager, Context context) {
+    public SyncUseCase(UserRepo userRepo, AvatarRepo avatarRepo, AvatarManager avatarManager, TokenStorage tokenStorage, Context context) {
         this.userRepo = userRepo;
         this.avatarRepo = avatarRepo;
         this.avatarManager = avatarManager;
         this.context = context;
+        this.tokenStorage = tokenStorage;
     }
 
     @Override
@@ -113,6 +116,9 @@ public class SyncUseCase implements NetworkReceiver.SyncTrigger {
 
                         }
                     });
+                }else if(err.equals("419")){
+                    tokenStorage.removeToken();
+                    userRepo.deleteFromLocal(user.id());
                 }
             }
         });

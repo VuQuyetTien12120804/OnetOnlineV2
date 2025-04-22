@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 
 import com.example.onetonline.data.OTPRepo;
 import com.example.onetonline.data.PostResponse;
+import com.example.onetonline.data.TokenStorage;
 import com.example.onetonline.data.User;
 import com.example.onetonline.data.UserRepo;
 import com.example.onetonline.presentation.model.SignupRequest;
@@ -182,6 +183,7 @@ public class SignUpUseCase {
 
                         }
                     });
+
                     User user = userRepo.getUserLocal();
                     user.setUserName(signupRequest.userName());
                     user.setLastUpdate(now());

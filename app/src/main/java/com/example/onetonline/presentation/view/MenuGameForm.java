@@ -87,8 +87,8 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
     @Override
     protected void onStart() {
         super.onStart();
-        menuController.loadAvatar();
         menuController.loadUserData();
+        menuController.loadAvatar();
     }
 
     @Override
@@ -193,6 +193,13 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
     public void showExp(int exp, int expCap) {
         String experience = exp + "/" + expCap;
         tvExp.setText(experience);
+    }
+
+    @Override
+    public void navigateTo(Class<?> avtivityClass) {
+        Intent intent = new Intent(this, avtivityClass);
+        startActivity(intent);
+        finish();
     }
 
     @Override

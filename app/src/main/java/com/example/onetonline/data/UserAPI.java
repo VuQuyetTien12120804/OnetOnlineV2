@@ -27,7 +27,7 @@ public interface UserAPI {
     Call<token> login(@Body LoginRequest loginRequest);
 
     @PATCH("sync")
-    Call<Void> updateUser(@Body User user);
+    Call<Void> updateUser(@Body User user, @Header("Authorization") String Authorization);
 
     @PATCH("user")
     Call<Void> changePass(@Body ChangePassRequest changePassRequest);

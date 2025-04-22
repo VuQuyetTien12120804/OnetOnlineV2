@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import com.example.onetonline.business.SyncUseCase;
 import com.example.onetonline.data.AvatarManager;
 import com.example.onetonline.data.AvatarRepo;
+import com.example.onetonline.data.TokenStorage;
 import com.example.onetonline.data.UserRepo;
 
 public class SyncService extends Service {
@@ -20,7 +21,8 @@ public class SyncService extends Service {
         super.onCreate();
         UserRepo userRepo = new UserRepo(this);
         AvatarManager avatarManager = new AvatarManager(this);
-        SyncUseCase syncUseCase = new SyncUseCase(userRepo, new AvatarRepo(), avatarManager, this);
+        TokenStorage tokenStorage = new TokenStorage(this);
+        SyncUseCase syncUseCase = new SyncUseCase(userRepo, new AvatarRepo(), avatarManager, tokenStorage, this);
         networkReceiver = new NetworkReceiver(syncUseCase);
         IntentFilter intentFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         registerReceiver(networkReceiver, intentFilter);

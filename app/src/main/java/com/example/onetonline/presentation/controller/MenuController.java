@@ -19,6 +19,7 @@ import com.example.onetonline.data.userRanking;
 import com.example.onetonline.presentation.model.UserInf;
 import com.example.onetonline.presentation.view.MenuGameForm;
 import com.example.onetonline.presentation.view.MenuGameView;
+import com.example.onetonline.presentation.view.WellComeScreen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,9 @@ public class MenuController {
             menuGameView.showUserName(userInf.userName());
             menuGameView.showLevel(userInf.level());
             menuGameView.showExp(userInf.exp(), UserData.expCap(userInf.level()));
+        }
+        else{
+            menuGameView.navigateTo(WellComeScreen.class);
         }
     }
 

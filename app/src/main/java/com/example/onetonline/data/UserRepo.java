@@ -31,7 +31,7 @@ public class UserRepo {
     public UserRepo(Context context) {
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         userAPI = new Retrofit.Builder()
-                .baseUrl("http://192.168.25.193:8000/")
+                .baseUrl("https://user-onetonline.fly.dev/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
                 .create(UserAPI.class);
@@ -224,7 +224,8 @@ public class UserRepo {
     }
 
     public void sync(User user, final UpdateUserCallBack callBack){
-        userAPI.updateUser(user).enqueue(new Callback<Void>() {
+        String access_token = "Bearer " + tokenStorage.getToken();
+        userAPI.updateUser(user, access_token).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if(response.isSuccessful()){
