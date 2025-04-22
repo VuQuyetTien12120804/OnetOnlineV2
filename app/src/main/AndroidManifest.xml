@@ -17,10 +17,13 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name="com.example.onetonline.presentation.view.RoomChat"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="sensorLandscape"/>
         <activity
             android:name="com.example.onetonline.presentation.view.Room"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/TransparentActivityTheme"
+            android:screenOrientation="sensorLandscape"/>
 
         <service
             android:name="com.example.onetonline.broadcast.MusicGameService"

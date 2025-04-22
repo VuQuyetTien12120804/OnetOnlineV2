@@ -1,7 +1,11 @@
 package com.example.onetonline.presentation.view;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -21,7 +25,13 @@ public class Room extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Thiết lập nền trong suốt và loại bỏ khung cửa sổ mặc định
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        getWindow().setDimAmount(0.6f); // Làm tối nền (từ 0.0 đến 1.0)
+
         setContentView(R.layout.activity_room);
+
 
         editTextRoomId = findViewById(R.id.editTextRoomId);
         buttonCreateRoom = findViewById(R.id.buttonCreateRoom);
