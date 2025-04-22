@@ -21,6 +21,7 @@ public class RoomChat extends AppCompatActivity {
     private EditText editTextMessage;
     private TextView textViewChat;
     private Button buttonSend, buttonHide;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,7 @@ public class RoomChat extends AppCompatActivity {
         // Lấy dữ liệu từ StartActivity
         String roomId = getIntent().getStringExtra("ROOM_ID");
         String actionType = getIntent().getStringExtra("ROOM_ACTION"); // "create" hoặc "join"
+        name = getIntent().getStringExtra("name");
 
         // Gọi hàm kết nối WebSocket với thông tin room
         connectWebSocket(roomId, actionType);
@@ -39,12 +41,22 @@ public class RoomChat extends AppCompatActivity {
         buttonSend = findViewById(R.id.buttonSend);
         buttonHide = findViewById(R.id.buttonHide);
 
+        editTextMessage.setOnEditorActionListener((v, actionId, event) -> {
+            String message = editTextMessage.getText().toString().trim();
+            if (!message.isEmpty() && webSocketClient != null) {
+                String jsonMessage = "{\"type\": \"message\", \"name\": \"" + name + "\", \"text\": \"" + message + "\"}";
+                webSocketClient.send(jsonMessage);
+                editTextMessage.setText("");
+                return true;
+            }
+            return false;
+        });
 
         buttonSend.setOnClickListener(view -> {
             String message = editTextMessage.getText().toString();
             if (!message.isEmpty() && webSocketClient != null) {
                 // Gửi tin nhắn với type = "message"
-                String jsonMessage = "{\"type\": \"message\", \"name\": \"Me\", \"text\": \"" + message + "\"}";
+                String jsonMessage = "{\"type\": \"message\", \"name\": \"" + name + "\", \"text\": \"" + message + "\"}";
                 webSocketClient.send(jsonMessage);
                 editTextMessage.setText("");
             }
@@ -91,13 +103,20 @@ public class RoomChat extends AppCompatActivity {
 
                         switch (type) {
                             case "message":
-                                String name = data.getString("name");
+                                String senderName = data.getString("name");
                                 String text = data.getString("text");
-                                textViewChat.append(name + ": " + text + "\n");
+
+                                if (senderName.equals(name)) {
+                                    textViewChat.append("Tôi: " + text + "\n");
+                                } else {
+                                    textViewChat.append(senderName + ": " + text + "\n");
+                                }
                                 break;
+
                             case "hide_button":
                                 buttonHide.setVisibility(View.GONE);
                                 break;
+
                             case "status":
                             case "error":
                                 String msg = data.getString("message");
@@ -109,6 +128,7 @@ public class RoomChat extends AppCompatActivity {
                     }
                 });
             }
+
 
             @Override
             public void onClose(int code, String reason, boolean remote) {
