@@ -12,13 +12,17 @@
         android:layout_weight="1"
         android:background="#EEEEEE"
         android:padding="8dp"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        />
 
     <EditText
         android:id="@+id/editTextMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter message" />
+        android:hint="Nhập tin nhắn..."
+        android:imeOptions="actionSend"
+        android:inputType="text"
+        android:singleLine="true" />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -132,7 +132,7 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
 
         btnClassic.setOnClickListener(v -> menuController.handleClassicClick());
         btnContinue.setOnClickListener(v -> menuController.handleContinueClick());
-        btnOnline.setOnClickListener(v -> menuController.handleOnlineClick());
+        btnOnline.setOnClickListener(v -> menuController.handleOnlineClick(tvUserName.getText().toString()));
         btnExit.setOnClickListener(v -> menuController.handleExitClick());
         ivAvatar.setOnClickListener(v -> menuController.handleChangeAvatar());
         btnHelpContinue.setOnClickListener(v -> menuController.handleHelpContinueClick());

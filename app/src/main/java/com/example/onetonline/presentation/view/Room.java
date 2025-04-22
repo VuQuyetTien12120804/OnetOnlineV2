@@ -17,6 +17,7 @@ import com.example.onetonlinev2.R;
 public class Room extends AppCompatActivity {
     private EditText editTextRoomId;
     private Button buttonCreateRoom, buttonJoinRoom;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,9 @@ public class Room extends AppCompatActivity {
         editTextRoomId = findViewById(R.id.editTextRoomId);
         buttonCreateRoom = findViewById(R.id.buttonCreateRoom);
         buttonJoinRoom = findViewById(R.id.buttonJoinRoom);
+
+        Intent intent = getIntent();
+        name = intent.getStringExtra("name");
 
         buttonCreateRoom.setOnClickListener(v -> handleRoom("create"));
         buttonJoinRoom.setOnClickListener(v -> handleRoom("join"));
@@ -41,6 +45,7 @@ public class Room extends AppCompatActivity {
         Intent intent = new Intent(Room.this, RoomChat.class);
         intent.putExtra("ROOM_ID", roomId);
         intent.putExtra("ROOM_ACTION", type); // "create" or "join"
+        intent.putExtra("name", name);
         startActivity(intent);
     }
 }
