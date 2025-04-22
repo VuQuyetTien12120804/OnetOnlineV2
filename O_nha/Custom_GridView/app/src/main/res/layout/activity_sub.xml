@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Sub_Activity">
+
+    <TextView
+        android:id="@+id/txtsubtensp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#4CAF50"
+        android:text="Gậy bẻ lò xo"
+        android:textAlignment="center"
+        android:textColor="#E91E63"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtsubgiasp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#E91E63"
+        android:text="Giá: 100000 VND"
+        android:textAlignment="center"
+        android:textColor="#EBE5E5"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imgsubsp"
+        android:layout_width="match_parent"
+        android:layout_height="386dp"
+        app:srcCompat="@drawable/hinh1" />
+</LinearLayout>

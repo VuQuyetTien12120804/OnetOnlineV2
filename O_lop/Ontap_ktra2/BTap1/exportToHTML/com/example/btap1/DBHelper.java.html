@@ -1,0 +1,130 @@
+<html>
+<head>
+<title>DBHelper.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #2aacb8;}
+.s5 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+DBHelper.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com</span><span class="s2">.</span><span class="s1">example</span><span class="s2">.</span><span class="s1">btap1</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">content</span><span class="s2">.</span><span class="s1">ContentValues</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">content</span><span class="s2">.</span><span class="s1">Context</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">database</span><span class="s2">.</span><span class="s1">Cursor</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">database</span><span class="s2">.</span><span class="s1">sqlite</span><span class="s2">.</span><span class="s1">SQLiteDatabase</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">android</span><span class="s2">.</span><span class="s1">database</span><span class="s2">.</span><span class="s1">sqlite</span><span class="s2">.</span><span class="s1">SQLiteOpenHelper</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">androidx</span><span class="s2">.</span><span class="s1">annotation</span><span class="s2">.</span><span class="s1">Nullable</span><span class="s2">;</span>
+
+<span class="s0">import </span><span class="s1">com</span><span class="s2">.</span><span class="s1">google</span><span class="s2">.</span><span class="s1">android</span><span class="s2">.</span><span class="s1">material</span><span class="s2">.</span><span class="s1">tabs</span><span class="s2">.</span><span class="s1">TabLayout</span><span class="s2">;</span>
+
+<span class="s0">public class </span><span class="s1">DBHelper </span><span class="s0">extends </span><span class="s1">SQLiteOpenHelper </span><span class="s2">{</span>
+    <span class="s0">public static final </span><span class="s1">String DBName </span><span class="s2">= </span><span class="s3">&quot;mydb&quot;</span><span class="s2">;</span>
+    <span class="s0">public static final </span><span class="s1">String Table </span><span class="s2">= </span><span class="s3">&quot;Songs&quot;</span><span class="s2">;</span>
+    <span class="s0">public static final int </span><span class="s1">Version </span><span class="s2">= </span><span class="s4">1</span><span class="s2">;</span>
+    <span class="s0">public static final </span><span class="s1">String Id </span><span class="s2">= </span><span class="s3">&quot;Id&quot;</span><span class="s2">;</span>
+    <span class="s0">public static final </span><span class="s1">String Name </span><span class="s2">= </span><span class="s3">&quot;Name&quot;</span><span class="s2">;</span>
+    <span class="s0">public static final </span><span class="s1">String Singer </span><span class="s2">= </span><span class="s3">&quot;Singer&quot;</span><span class="s2">;</span>
+    <span class="s0">public static final </span><span class="s1">String Time </span><span class="s2">= </span><span class="s3">&quot;Time&quot;</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">SQLiteDatabase myDB</span><span class="s2">;</span>
+
+    <span class="s0">public </span><span class="s1">DBHelper</span><span class="s2">(</span><span class="s1">@Nullable Context context</span><span class="s2">) {</span>
+        <span class="s0">super</span><span class="s2">(</span><span class="s1">context</span><span class="s2">, </span><span class="s1">DBName</span><span class="s2">, </span><span class="s0">null</span><span class="s2">, </span><span class="s1">Version</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">onCreate</span><span class="s2">(</span><span class="s1">SQLiteDatabase sqLiteDatabase</span><span class="s2">) {</span>
+        <span class="s1">String sql </span><span class="s2">= </span><span class="s3">&quot;Create table &quot; </span><span class="s2">+ </span><span class="s1">Table </span><span class="s2">+ </span><span class="s3">&quot; (&quot; </span><span class="s2">+</span>
+                <span class="s1">Id </span><span class="s2">+ </span><span class="s3">&quot; INTEGER PRIMARY KEY AUTOINCREMENT, &quot; </span><span class="s2">+</span>
+                <span class="s1">Name </span><span class="s2">+ </span><span class="s3">&quot; TEXT NOT NULL, &quot; </span><span class="s2">+</span>
+                <span class="s1">Singer </span><span class="s2">+ </span><span class="s3">&quot; TEXT NOT NULL, &quot; </span><span class="s2">+</span>
+                <span class="s1">Time</span><span class="s2">+ </span><span class="s3">&quot; FLOAT)&quot;</span><span class="s2">;</span>
+        <span class="s1">sqLiteDatabase</span><span class="s2">.</span><span class="s1">execSQL</span><span class="s2">(</span><span class="s1">sql</span><span class="s2">);</span>
+
+        <span class="s1">insertSampleData</span><span class="s2">(</span><span class="s1">sqLiteDatabase</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">insertSampleData</span><span class="s2">(</span><span class="s1">SQLiteDatabase db</span><span class="s2">) {</span>
+        <span class="s5">// Dữ liệu mẫu</span>
+        <span class="s1">String</span><span class="s2">[][] </span><span class="s1">sampleData </span><span class="s2">= {</span>
+                <span class="s2">{</span><span class="s3">&quot;Phút cuối&quot;</span><span class="s2">, </span><span class="s3">&quot;Bằng Kiều&quot;</span><span class="s2">, </span><span class="s3">&quot;3.27&quot;</span><span class="s2">},</span>
+                <span class="s2">{</span><span class="s3">&quot;Bông hồng thủy tinh&quot;</span><span class="s2">, </span><span class="s3">&quot;Bức Tường&quot;</span><span class="s2">, </span><span class="s3">&quot;4.18&quot;</span><span class="s2">},</span>
+                <span class="s2">{</span><span class="s3">&quot;Hà Nội mùa thu&quot;</span><span class="s2">, </span><span class="s3">&quot;Mỹ Linh&quot;</span><span class="s2">, </span><span class="s3">&quot;4.11&quot;</span><span class="s2">},</span>
+                <span class="s2">{</span><span class="s3">&quot;Bà tôi&quot;</span><span class="s2">, </span><span class="s3">&quot;Tùng Dương&quot;</span><span class="s2">, </span><span class="s3">&quot;3.51&quot;</span><span class="s2">},</span>
+                <span class="s2">{</span><span class="s3">&quot;Gót Hồng&quot;</span><span class="s2">, </span><span class="s3">&quot;Quang Dũng&quot;</span><span class="s2">, </span><span class="s3">&quot;4.01&quot;</span><span class="s2">},</span>
+                <span class="s2">{</span><span class="s3">&quot;Đêm đông&quot;</span><span class="s2">, </span><span class="s3">&quot;Bằng Kiều&quot;</span><span class="s2">, </span><span class="s3">&quot;4.12&quot;</span><span class="s2">}</span>
+        <span class="s2">};</span>
+
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">String</span><span class="s2">[] </span><span class="s1">data </span><span class="s2">: </span><span class="s1">sampleData</span><span class="s2">) {</span>
+            <span class="s1">ContentValues values </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ContentValues</span><span class="s2">();</span>
+            <span class="s1">values</span><span class="s2">.</span><span class="s1">put</span><span class="s2">(</span><span class="s1">Name</span><span class="s2">, </span><span class="s1">data</span><span class="s2">[</span><span class="s4">0</span><span class="s2">]);</span>
+            <span class="s1">values</span><span class="s2">.</span><span class="s1">put</span><span class="s2">(</span><span class="s1">Singer</span><span class="s2">, </span><span class="s1">data</span><span class="s2">[</span><span class="s4">1</span><span class="s2">]);</span>
+            <span class="s1">values</span><span class="s2">.</span><span class="s1">put</span><span class="s2">(</span><span class="s1">Time</span><span class="s2">, </span><span class="s1">Float</span><span class="s2">.</span><span class="s1">parseFloat</span><span class="s2">(</span><span class="s1">data</span><span class="s2">[</span><span class="s4">2</span><span class="s2">]));</span>
+            <span class="s1">db</span><span class="s2">.</span><span class="s1">insert</span><span class="s2">(</span><span class="s1">Table</span><span class="s2">, </span><span class="s0">null</span><span class="s2">, </span><span class="s1">values</span><span class="s2">);</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">onUpgrade</span><span class="s2">(</span><span class="s1">SQLiteDatabase sqLiteDatabase</span><span class="s2">, </span><span class="s0">int </span><span class="s1">i</span><span class="s2">, </span><span class="s0">int </span><span class="s1">i1</span><span class="s2">) {</span>
+
+    <span class="s2">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public synchronized void </span><span class="s1">close</span><span class="s2">() {</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">myDB </span><span class="s2">!= </span><span class="s0">null </span><span class="s2">&amp;&amp; </span><span class="s1">myDB</span><span class="s2">.</span><span class="s1">isOpen</span><span class="s2">()){</span>
+            <span class="s1">myDB</span><span class="s2">.</span><span class="s1">close</span><span class="s2">();</span>
+        <span class="s2">}</span>
+        <span class="s0">super</span><span class="s2">.</span><span class="s1">close</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">openDB</span><span class="s2">(){</span>
+        <span class="s1">myDB </span><span class="s2">= </span><span class="s1">getWritableDatabase</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public static </span><span class="s1">String Id</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">Id</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public static </span><span class="s1">String Name</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">Name</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public static </span><span class="s1">String Singer</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">Singer</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public static </span><span class="s1">String Time</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">Time</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public </span><span class="s1">Cursor Display</span><span class="s2">(){</span>
+        <span class="s1">openDB</span><span class="s2">();</span>
+        <span class="s1">String queryDisplay </span><span class="s2">= </span><span class="s3">&quot;Select * From &quot; </span><span class="s2">+ </span><span class="s1">Table </span><span class="s2">+ </span><span class="s3">&quot; Order by &quot; </span><span class="s2">+ </span><span class="s1">Time </span><span class="s2">+ </span><span class="s3">&quot; ASC&quot;</span><span class="s2">;</span>
+        <span class="s0">return </span><span class="s1">myDB</span><span class="s2">.</span><span class="s1">rawQuery</span><span class="s2">(</span><span class="s1">queryDisplay</span><span class="s2">, </span><span class="s0">null</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public long </span><span class="s1">Insert</span><span class="s2">(</span><span class="s1">String name</span><span class="s2">, </span><span class="s1">String singer</span><span class="s2">, </span><span class="s0">float </span><span class="s1">time</span><span class="s2">){</span>
+        <span class="s1">openDB</span><span class="s2">();</span>
+        <span class="s1">SQLiteDatabase db </span><span class="s2">= </span><span class="s1">getWritableDatabase</span><span class="s2">();</span>
+        <span class="s1">ContentValues values </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ContentValues</span><span class="s2">();</span>
+        <span class="s1">values</span><span class="s2">.</span><span class="s1">put</span><span class="s2">(</span><span class="s1">Name</span><span class="s2">, </span><span class="s1">name</span><span class="s2">);</span>
+        <span class="s1">values</span><span class="s2">.</span><span class="s1">put</span><span class="s2">(</span><span class="s1">Singer</span><span class="s2">, </span><span class="s1">singer</span><span class="s2">);</span>
+        <span class="s1">values</span><span class="s2">.</span><span class="s1">put</span><span class="s2">(</span><span class="s1">Time</span><span class="s2">, </span><span class="s1">time</span><span class="s2">);</span>
+
+        <span class="s0">return </span><span class="s1">db</span><span class="s2">.</span><span class="s1">insert</span><span class="s2">(</span><span class="s1">Table</span><span class="s2">, </span><span class="s0">null</span><span class="s2">, </span><span class="s1">values</span><span class="s2">);</span>
+    <span class="s2">}</span>
+<span class="s2">}</span>
+</pre>
+</body>
+</html>
