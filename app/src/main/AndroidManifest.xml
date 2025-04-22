@@ -15,10 +15,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OnetOnlineV2"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name="com.example.onetonline.presentation.view.RoomChat"
+            android:exported="false" />
+        <activity
+            android:name="com.example.onetonline.presentation.view.Room"
+            android:exported="false" />
+
         <service
             android:name="com.example.onetonline.broadcast.MusicGameService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
         <service
             android:name="com.example.onetonline.broadcast.SyncService"
             android:enabled="true"

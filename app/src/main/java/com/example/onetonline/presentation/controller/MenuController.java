@@ -4,6 +4,7 @@ import static com.example.onetonline.utils.Constants.STORAGE_PERMISSION_CODE;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -19,6 +20,7 @@ import com.example.onetonline.data.userRanking;
 import com.example.onetonline.presentation.model.UserInf;
 import com.example.onetonline.presentation.view.MenuGameForm;
 import com.example.onetonline.presentation.view.MenuGameView;
+import com.example.onetonline.presentation.view.Room;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +63,8 @@ public class MenuController {
 
     public void handleOnlineClick(){
         menuGameView.onContinueClicked();
+        Intent intent = new Intent(context, Room.class);
+        context.startActivity(intent);
     }
 
     public void handleSettingClick(){
@@ -77,6 +81,7 @@ public class MenuController {
 
     public void handleHelpContinueClick(){
         if(context instanceof MenuGameForm){
+
             ((MenuGameForm)context).showHelpDialog();
         }
     }
