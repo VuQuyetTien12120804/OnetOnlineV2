@@ -72,7 +72,7 @@ public class RoomChat extends AppCompatActivity {
     private void connectWebSocket(String roomId, String actionType) {
         URI uri;
         try {
-            uri = new URI("ws://10.90.213.122:8080");
+            uri = new URI("wss://chat-ws-jlxj.onrender.com");
         } catch (Exception e) {
             e.printStackTrace();
             return;
