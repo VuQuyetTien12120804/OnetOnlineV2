@@ -201,6 +201,10 @@ public class UserRepo {
         myDB.Delete(id);
     }
 
+    public void deleteAllFromLocal(){
+        myDB.DeleteAll();
+    }
+
     public boolean hasRecords(){
         return myDB.hasRecords();
     }

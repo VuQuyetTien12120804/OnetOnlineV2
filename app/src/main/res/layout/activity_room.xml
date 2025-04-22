@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="400dp"
+    android:layout_height="300dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp"
+    android:layout_gravity="center"
+    android:background="@drawable/dialog_background">
+
+    <EditText
+        android:id="@+id/editTextRoomId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter 6-digit Room ID"
+        android:inputType="number"
+        android:background="@drawable/text_background"
+        android:padding="10dp"
+        android:fontFamily="@font/ltim_regular"
+        android:layout_marginBottom="16dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonCreateRoom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create Room"
+        android:background="@drawable/bg_button_menu_game"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="8dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/buttonJoinRoom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Join Room"
+        android:background="@drawable/bg_button_menu_game"
+        android:textColor="@android:color/white" />
+</LinearLayout>

@@ -132,7 +132,7 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
 
         btnClassic.setOnClickListener(v -> menuController.handleClassicClick());
         btnContinue.setOnClickListener(v -> menuController.handleContinueClick());
-        btnOnline.setOnClickListener(v -> menuController.handleOnlineClick());
+        btnOnline.setOnClickListener(v -> menuController.handleOnlineClick(tvUserName.getText().toString()));
         btnExit.setOnClickListener(v -> menuController.handleExitClick());
         ivAvatar.setOnClickListener(v -> menuController.handleChangeAvatar());
         btnHelpContinue.setOnClickListener(v -> menuController.handleHelpContinueClick());
@@ -245,6 +245,9 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
         // Hiển thị trạng thái hiện tại
         switchMusic.setChecked(musicState);
         switchSoundClick.setChecked(soundState);
+
+        AppCompatButton btnLogOut = dialogView.findViewById(R.id.btnLogOut);
+        btnLogOut.setOnClickListener(v -> menuController.handleLogOutClick());
 
         //Xử ly nut save
         AppCompatButton btnSave = dialogView.findViewById(R.id.btnSave);

@@ -4,6 +4,7 @@ import static com.example.onetonline.utils.Constants.STORAGE_PERMISSION_CODE;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -13,6 +14,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.onetonline.business.AvatarUseCase;
 import com.example.onetonline.business.UserData;
+import com.example.onetonline.data.TokenStorage;
 import com.example.onetonline.data.User;
 import com.example.onetonline.data.UserRepo;
 import com.example.onetonline.data.userRanking;
@@ -20,6 +22,7 @@ import com.example.onetonline.presentation.model.UserInf;
 import com.example.onetonline.presentation.view.MenuGameForm;
 import com.example.onetonline.presentation.view.MenuGameView;
 import com.example.onetonline.presentation.view.WellComeScreen;
+import com.example.onetonline.presentation.view.Room;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +32,16 @@ public class MenuController {
     private AvatarUseCase avatarUseCase;
     private UserData userData;
     private Context context;
+    private TokenStorage tokenStorage;
+    private UserRepo userRepo;
 
     public MenuController(Context context, MenuGameForm menuView) {
         this.menuGameView = menuView;
         avatarUseCase = new AvatarUseCase(context);
         this.context = context;
         userData = new UserData(context);
+        this.tokenStorage = new TokenStorage(context);
+        this.userRepo = new UserRepo(context);
     }
 
     public void loadUserData(){
@@ -63,14 +70,23 @@ public class MenuController {
         }
     }
 
-    public void handleOnlineClick(){
+    public void handleOnlineClick(String a){
         menuGameView.onContinueClicked();
+        Intent intent = new Intent(context, Room.class);
+        intent.putExtra("name", a);
+        context.startActivity(intent);
     }
 
     public void handleSettingClick(){
         if(context instanceof MenuGameForm) {
             ((MenuGameForm) context).showSettingsDialog(true, true);
         }
+    }
+
+    public void handleLogOutClick(){
+        userRepo.deleteAllFromLocal();
+        tokenStorage.removeToken();
+        menuGameView.navigateTo(WellComeScreen.class);
     }
 
     public void handleExitClick(){
@@ -81,6 +97,7 @@ public class MenuController {
 
     public void handleHelpContinueClick(){
         if(context instanceof MenuGameForm){
+
             ((MenuGameForm)context).showHelpDialog();
         }
     }

@@ -72,10 +72,27 @@
             android:checked="true"/>
     </LinearLayout>
 
+    <!-- Log Out Button -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnLogOut"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:text="Log Out"
+        android:textSize="@dimen/text_size_button"
+        android:background="@drawable/bg_button_menu_game"
+        android:textColor="#FFFFFF"
+        android:paddingHorizontal="24dp"
+        android:textStyle="bold"
+        android:shadowColor="#80000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="4"
+        android:elevation="4dp" />
+
     <!-- Save Button -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSave"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="40dp"
         android:text="Save"
         android:textSize="@dimen/text_size_button"
@@ -87,5 +104,7 @@
         android:shadowDx="2"
         android:shadowDy="2"
         android:shadowRadius="4"
-        android:elevation="4dp" />
+        android:elevation="4dp"
+        android:layout_marginTop="10dp"/>
+
 </LinearLayout>
