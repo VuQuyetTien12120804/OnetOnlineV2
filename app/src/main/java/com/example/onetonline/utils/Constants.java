@@ -8,7 +8,7 @@ import java.util.TimeZone;
 
 public class Constants {
     public static final int MAP_COL = 16;
-    public static final int MAP_ROW = 20;
+    public static final int MAP_ROW = 9;
     public static final int MAX_LEVEL = 2;
     public static final int MIN_LEVEL = 1;
     public static final int PIKACHU_NUMBER = 36;

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,6 +23,8 @@ public class RoomChat extends AppCompatActivity {
     private TextView textViewChat;
     private Button buttonSend, buttonHide;
     private String name;
+    private ScrollView scrollView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,7 @@ public class RoomChat extends AppCompatActivity {
         textViewChat = findViewById(R.id.textViewChat);
         buttonSend = findViewById(R.id.buttonSend);
         buttonHide = findViewById(R.id.buttonHide);
+        scrollView = findViewById(R.id.scrollView);
 
         editTextMessage.setOnEditorActionListener((v, actionId, event) -> {
             String message = editTextMessage.getText().toString().trim();
@@ -82,6 +86,7 @@ public class RoomChat extends AppCompatActivity {
             @Override
             public void onOpen(ServerHandshake handshakedata) {
                 runOnUiThread(() -> textViewChat.append("Connected to server\n"));
+                scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
 
                 // Gửi roomId và actionType ("create" hoặc "join") tới server
                 JSONObject json = new JSONObject();
@@ -108,8 +113,10 @@ public class RoomChat extends AppCompatActivity {
 
                                 if (senderName.equals(name)) {
                                     textViewChat.append("Tôi: " + text + "\n");
+                                    scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
                                 } else {
                                     textViewChat.append(senderName + ": " + text + "\n");
+                                    scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
                                 }
                                 break;
 
@@ -121,6 +128,7 @@ public class RoomChat extends AppCompatActivity {
                             case "error":
                                 String msg = data.getString("message");
                                 textViewChat.append("[System]: " + msg + "\n");
+                                scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
                                 break;
                         }
                     } catch (JSONException e) {
@@ -133,11 +141,13 @@ public class RoomChat extends AppCompatActivity {
             @Override
             public void onClose(int code, String reason, boolean remote) {
                 runOnUiThread(() -> textViewChat.append("Disconnected\n"));
+                scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
             }
 
             @Override
             public void onError(Exception ex) {
                 runOnUiThread(() -> textViewChat.append("Error: " + ex.getMessage() + "\n"));
+                scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
             }
         };
 

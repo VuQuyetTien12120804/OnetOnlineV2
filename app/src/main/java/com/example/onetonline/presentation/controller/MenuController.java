@@ -67,7 +67,6 @@ public class MenuController {
     }
 
     public void handleOnlineClick(String a){
-        menuGameView.onContinueClicked();
         Intent intent = new Intent(context, Room.class);
         intent.putExtra("name", a);
         context.startActivity(intent);

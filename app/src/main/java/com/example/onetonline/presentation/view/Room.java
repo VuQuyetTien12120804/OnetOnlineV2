@@ -16,9 +16,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.onetonline.presentation.BaseActivity;
 import com.example.onetonlinev2.R;
 
-public class Room extends AppCompatActivity {
+public class Room extends BaseActivity {
     private EditText editTextRoomId;
     private Button buttonCreateRoom, buttonJoinRoom;
     private String name;
@@ -32,7 +33,6 @@ public class Room extends AppCompatActivity {
         getWindow().setDimAmount(0.6f); // Làm tối nền (từ 0.0 đến 1.0)
 
         setContentView(R.layout.activity_room);
-
 
         editTextRoomId = findViewById(R.id.editTextRoomId);
         buttonCreateRoom = findViewById(R.id.buttonCreateRoom);
