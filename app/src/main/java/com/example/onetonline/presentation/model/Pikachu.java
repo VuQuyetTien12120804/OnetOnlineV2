@@ -2,23 +2,28 @@ package com.example.onetonline.presentation.model;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 public class Pikachu {
     private int xPoint;
     private int yPoint;
     private int imageID;
-
-    public Pikachu(int ImageID){
-        this.imageID = ImageID;
-    }
-    public Pikachu(int xPoint, int yPoint){
-        this.xPoint = xPoint;
-        this.yPoint = yPoint;
-    }
+    private boolean isSelected;
     public Pikachu(int xPoint, int yPoint, int imageID){
         this.xPoint = xPoint;
         this.yPoint = yPoint;
         this.imageID = imageID;
+        this.isSelected = false;
     }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
     public int getxPoint() {
         return xPoint;
     }
@@ -40,6 +45,12 @@ public class Pikachu {
     }
     public void setImageID(int imageID) {
         this.imageID = imageID;
+    }
+
+    @NonNull
+    @Override
+    public java.lang.String toString() {
+        return String.valueOf(imageID);
     }
 }
 

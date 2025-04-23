@@ -1,14 +1,14 @@
 package com.example.onetonline.presentation.controller;
 
-import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.onetonline.business.Matrix;
 import com.example.onetonline.presentation.model.Pikachu;
 import com.example.onetonline.presentation.view.PikachuViewHolder;
 import com.example.onetonline.utils.Constants;
@@ -19,23 +19,53 @@ import java.util.List;
 
 public class PikachuAdapter extends RecyclerView.Adapter<PikachuViewHolder> {
     private List<Pikachu> pikachuList;
-    private Matrix matrix;
     private OnPikachuClickListener onPikachuClickListener;
     public interface OnPikachuClickListener{
         public void onPikachuClick(int position);
     }
-    public PikachuAdapter(List<Pikachu> list, Matrix matrix) {
-        this.pikachuList = list;
-        this.matrix = matrix;
-        pikachuList = new ArrayList<>();
-        int[][] gameMatrix = matrix.getMatrix();
-        for (int i = 0; i < Constants.MAP_ROW + 2; i++) {
-            for (int j = 0; j < Constants.MAP_COL + 2; j++) {
-                pikachuList.add(new Pikachu(gameMatrix[i][j]));
-            }
-        }
+    public void setOnPikachuClickListener(OnPikachuClickListener listener){
+        this.onPikachuClickListener = listener;
+        Log.d("PikachuAdapter", "setOnPikachuClickListener: " + (listener != null));
     }
 
+    public PikachuAdapter(List<Pikachu> list) {
+        this.pikachuList = list;
+    }
+
+    public void updatePikachuList(List<Pikachu> newList) {
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new DiffUtil.Callback() {
+            @Override
+            public int getOldListSize() {
+                return pikachuList.size();
+            }
+
+            @Override
+            public int getNewListSize() {
+                return newList.size();
+            }
+
+            @Override
+            public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+                Pikachu oldPikachu = pikachuList.get(oldItemPosition);
+                Pikachu newPikachu = newList.get(newItemPosition);
+                return oldPikachu != null && newPikachu != null &&
+                        oldPikachu.getxPoint() == newPikachu.getxPoint() &&
+                        oldPikachu.getyPoint() == newPikachu.getyPoint();
+            }
+
+            @Override
+            public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+                Pikachu oldPikachu = pikachuList.get(oldItemPosition);
+                Pikachu newPikachu = newList.get(newItemPosition);
+                return oldPikachu != null && newPikachu != null &&
+                        oldPikachu.getImageID() == newPikachu.getImageID() &&
+                        oldPikachu.isSelected() == newPikachu.isSelected();
+            }
+        });
+        pikachuList = new ArrayList<>(newList);
+        diffResult.dispatchUpdatesTo(this);
+        Log.d("GamePlayAdapter", "Updated pikachuList, size: " + pikachuList.size());
+    }
     @NonNull
     @Override
     public PikachuViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,11 +78,17 @@ public class PikachuAdapter extends RecyclerView.Adapter<PikachuViewHolder> {
     public void onBindViewHolder(@NonNull PikachuViewHolder holder, int position) {
         Pikachu pikachu = pikachuList.get(position);
         holder.bind(pikachu);
-
+        holder.itemView.setOnClickListener(v -> {
+            Log.d("PikachuAdapter", "Click event triggered for position: " + position);
+            if (onPikachuClickListener != null) {
+                Log.d("PikachuAdapter", "Clicked position: " + position);
+                onPikachuClickListener.onPikachuClick(position);
+            }
+        });
     }
-
     @Override
     public int getItemCount() {
         return pikachuList.size();
     }
+
 }

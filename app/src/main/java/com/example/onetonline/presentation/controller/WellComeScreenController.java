@@ -31,5 +31,6 @@ public class WellComeScreenController {
     public void handleGuest(Class<?> activityClass){
         userData.insert(new User());
         wellComeScreen.navigateTo(activityClass);
+        System.out.println("WelcomeController chuyen sang MenuGameForm");
     }
 }

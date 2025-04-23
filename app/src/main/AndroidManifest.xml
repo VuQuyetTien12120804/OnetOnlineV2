@@ -25,7 +25,6 @@
             android:theme="@style/TransparentActivityTheme"
             android:screenOrientation="sensorLandscape"/>
 
->>>>>>> 0c216319daf31f63552169e79692a898ee07f59f
         <service
             android:name="com.example.onetonline.broadcast.MusicGameService"
             android:enabled="true"

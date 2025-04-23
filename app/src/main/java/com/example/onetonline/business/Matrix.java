@@ -11,84 +11,32 @@ import java.util.Random;
 import com.example.onetonline.presentation.model.Pikachu;
 import com.example.onetonline.utils.*;
 public class Matrix {
-
-    private int[][] matrix;
-    private int row; // map_row + 2;
-    private int col; // map_col + 2;
-    private int value;
     private static final int CONST_VALUE = 0;
-    private HashMap<Integer, Integer> countMap;
-
-    public Matrix(int row, int col) {
-        this.row = row;
-        this.col = col;
-    }
-    public Matrix(int [][] matrix, int row, int col) {
-        this.matrix = matrix;
-        this.row = row;
-        this.col = col;
-    }
-    public HashMap<Integer, Integer> getCountMap() {
-        return countMap;
-    }
-
-    public void setCountMap(HashMap<Integer, Integer> countMap) {
-        this.countMap = countMap;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
-    }
-
-    public int getCol() {
-        return col;
-    }
-
-    public void setCol(int col) {
-        this.col = col;
-    }
-
-    public int getRow() {
-        return row;
-    }
-
-    public void setRow(int row) {
-        this.row = row;
-    }
-
-    public int[][] getMatrix() {
-        return matrix;
-    }
-
-    public void setMatrix(int[][] matrix) {
-        this.matrix = matrix;
-    }
+    public Matrix(){}
 
     /**
      * Set value for Pikachu(x,y)
      */
-    public void setXY(Pikachu pikachu, int value) {
-        this.matrix[pikachu.getxPoint()][pikachu.getyPoint()] = value;
+    public void setXY(int[][] matrix,Pikachu pikachu, int value) {
+        matrix[pikachu.getxPoint()][pikachu.getyPoint()] = value;
     }
 
     /**
      * Get value for Pikachu(x,y)
      */
-    public int getXY(Pikachu pikachu) {
-        return this.matrix[pikachu.getxPoint()][pikachu.getyPoint()];
+    public int getXY(int[][] matrix,Pikachu pikachu) {
+        return matrix[pikachu.getxPoint()][pikachu.getyPoint()];
     }
 
     /**
-     * Initialize matrix
+     * Initialize matrix with random value
+     * @param matrix from game
+     * @return this matrix
      */
-
-    public void randomMatrix() {
-        this.matrix = new int[row][col];
-        this.countMap = new HashMap<>();
+    public int[][] randomMatrix(int[][] matrix) {
+        int row = matrix.length;
+        int col = matrix[0].length;
+        HashMap<Integer, Integer> countMap = new HashMap<>();
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
                 matrix[i][j] = CONST_VALUE;
@@ -103,7 +51,6 @@ public class Matrix {
                 } else {
                     countMap.put(matrix[i][j], 1);
                 }
-
             }
         }
         /**
@@ -138,12 +85,13 @@ public class Matrix {
                 }
             }
         }
+        return matrix;
     }
 
     /**
      * Check Pikachu matches in the horizontal direction.
      */
-    private boolean checkLineX(int y1, int y2, int x) {
+    private boolean checkLineX(int[][] matrix, int y1, int y2, int x) {
         int min = Math.min(y1, y2);
         int max = Math.max(y1, y2);
         for (int y = min + 1; y < max; y++) {
@@ -157,7 +105,7 @@ public class Matrix {
     /**
      * Check Pikachu matches in the vertical direction.
      */
-    private boolean checkLineY(int x1, int x2, int y) {
+    private boolean checkLineY(int[][] matrix, int x1, int x2, int y) {
         int min = Math.min(x1, x2);
         int max = Math.max(x1, x2);
         for (int x = min + 1; x < max; x++) {
@@ -171,7 +119,7 @@ public class Matrix {
     /**
      * Check Pikachu matches in the rectangle direction.
      */
-    private boolean checkRectX(Pikachu one, Pikachu two) {
+    private boolean checkRectX(int[][] matrix, Pikachu one, Pikachu two) {
         Pikachu pMinY = one;
         Pikachu pMaxY = two;
         if (one.getyPoint() > two.getyPoint()) {
@@ -183,8 +131,8 @@ public class Matrix {
                 return false;
             }
             if ((matrix[pMaxY.getxPoint()][y] == CONST_VALUE || y == pMaxY.getyPoint())
-                    && checkLineY(pMinY.getxPoint(), pMaxY.getxPoint(), y)
-                    && checkLineX(y, pMaxY.getyPoint(), pMaxY.getxPoint())) {
+                    && checkLineY(matrix, pMinY.getxPoint(), pMaxY.getxPoint(), y)
+                    && checkLineX(matrix,y, pMaxY.getyPoint(), pMaxY.getxPoint())) {
 //                System.out.println("Rect x");
 //                System.out.println("(" + pMinY.getxPoint() + "," + pMinY.getyPoint() + ") -> ("
 //                        + pMinY.getxPoint() + "," + y + ") -> (" + pMaxY.getxPoint() + "," + y
@@ -198,7 +146,7 @@ public class Matrix {
     /**
      * Check Pikachu matches in the rectangle direction.
      */
-    private boolean checkRectY(Pikachu one, Pikachu two) {
+    private boolean checkRectY(int[][] matrix, Pikachu one, Pikachu two) {
         Pikachu pMinX = one;
         Pikachu pMaxX = two;
         if (one.getxPoint() > two.getxPoint()) {
@@ -209,8 +157,8 @@ public class Matrix {
             if (x > pMinX.getxPoint() && matrix[x][pMinX.getyPoint()] != CONST_VALUE)
                 return false;
             if ((matrix[x][pMaxX.getyPoint()] == CONST_VALUE || x == pMaxX.getxPoint())
-                    && checkLineX(pMinX.getyPoint(), pMaxX.getyPoint(), x)
-                    && checkLineY(x, pMaxX.getxPoint(), pMaxX.getyPoint())) {
+                    && checkLineX(matrix, pMinX.getyPoint(), pMaxX.getyPoint(), x)
+                    && checkLineY(matrix, x, pMaxX.getxPoint(), pMaxX.getyPoint())) {
                 //  System.out.println("Rect y");
                 // System.out.println("(" + pMinX.getxPoint() + "," + pMinX.getyPoint() + ") -> (" + x
                 //     + "," + pMinX.getyPoint() + ") -> (" + x + "," + pMaxX.getyPoint()
@@ -224,7 +172,7 @@ public class Matrix {
     /**
      * Check Pikachu matches in the more line direction.
      */
-    private boolean checkMoreLineX(Pikachu one, Pikachu two, int type) {
+    private boolean checkMoreLineX(int[][] matrix, Pikachu one, Pikachu two, int type) {
         Pikachu pMinY = one;
         Pikachu pMaxY = two;
         if (one.getyPoint() > two.getyPoint()) {
@@ -240,10 +188,10 @@ public class Matrix {
             colFinish = pMinY.getyPoint();
         }
         if ((matrix[row][colFinish] == CONST_VALUE || pMinY.getyPoint() == pMaxY.getyPoint())
-                && checkLineX(pMinY.getyPoint(), pMaxY.getyPoint(), row)) {
-            while (this.matrix[pMinY.getxPoint()][y] == CONST_VALUE
-                    && this.matrix[pMaxY.getxPoint()][y] == CONST_VALUE) {
-                if (checkLineY(pMinY.getxPoint(), pMaxY.getxPoint(), y)) {
+                && checkLineX(matrix, pMinY.getyPoint(), pMaxY.getyPoint(), row)) {
+            while (matrix[pMinY.getxPoint()][y] == CONST_VALUE
+                    && matrix[pMaxY.getxPoint()][y] == CONST_VALUE) {
+                if (checkLineY(matrix, pMinY.getxPoint(), pMaxY.getxPoint(), y)) {
                     //  System.out.println("checkMoreLineX" + " type: " + type);
                     return true;
                 }
@@ -256,7 +204,7 @@ public class Matrix {
     /**
      * Check Pikachu matches in the more line direction.
      */
-    private boolean checkMoreLineY(Pikachu one, Pikachu two, int type) {
+    private boolean checkMoreLineY(int[][] matrix, Pikachu one, Pikachu two, int type) {
         Pikachu pMinX = one;
         Pikachu pMaxX = two;
         if (one.getxPoint() > two.getxPoint()) {
@@ -271,11 +219,11 @@ public class Matrix {
             col = pMaxX.getyPoint();
             rowFinish = pMinX.getxPoint();
         }
-        if ((this.matrix[rowFinish][col] == CONST_VALUE || pMinX.getxPoint() == pMaxX.getxPoint())
-                && checkLineY(pMinX.getxPoint(), pMaxX.getxPoint(), col)) {
-            while (this.matrix[x][pMinX.getyPoint()] == CONST_VALUE
-                    && this.matrix[x][pMaxX.getyPoint()] == CONST_VALUE) {
-                if (checkLineX(pMinX.getyPoint(), pMaxX.getyPoint(), x)) {
+        if ((matrix[rowFinish][col] == CONST_VALUE || pMinX.getxPoint() == pMaxX.getxPoint())
+                && checkLineY(matrix, pMinX.getxPoint(), pMaxX.getxPoint(), col)) {
+            while (matrix[x][pMinX.getyPoint()] == CONST_VALUE
+                    && matrix[x][pMaxX.getyPoint()] == CONST_VALUE) {
+                if (checkLineX(matrix, pMinX.getyPoint(), pMaxX.getyPoint(), x)) {
                     // System.out.println("checkMoreLineY"+ " type: " + type);
                     return true;
                 }
@@ -288,34 +236,34 @@ public class Matrix {
     /**
      * Check Pikachu matches.
      */
-    public boolean algorithm(Pikachu one, Pikachu two) {
+    public boolean algorithm(int[][] matrix, Pikachu one, Pikachu two) {
         if (matrix[one.getxPoint()][one.getyPoint()] == matrix[two.getxPoint()][two.getyPoint()]) {
             if (one.getxPoint() == two.getxPoint()) {
-                if (this.checkLineX(one.getyPoint(), two.getyPoint(), one.getxPoint())) {
+                if (this.checkLineX(matrix, one.getyPoint(), two.getyPoint(), one.getxPoint())) {
                     return true;
                 }
             }
             if (one.getyPoint() == two.getyPoint()) {
-                if (this.checkLineY(one.getxPoint(), two.getxPoint(), one.getyPoint())) {
+                if (this.checkLineY(matrix, one.getxPoint(), two.getxPoint(), one.getyPoint())) {
                     return true;
                 }
             }
-            if (this.checkRectX(one, two)) {
+            if (this.checkRectX(matrix,one, two)) {
                 return true;
             }
-            if (this.checkRectY(one, two)) {
+            if (this.checkRectY(matrix,one, two)) {
                 return true;
             }
-            if (this.checkMoreLineX(one, two, 1)) {
+            if (this.checkMoreLineX(matrix, one, two, 1)) {
                 return true;
             }
-            if (this.checkMoreLineX(one, two, -1)) {
+            if (this.checkMoreLineX(matrix, one, two, -1)) {
                 return true;
             }
-            if (this.checkMoreLineY(one, two, 1)) {
+            if (this.checkMoreLineY(matrix, one, two, 1)) {
                 return true;
             }
-            if (this.checkMoreLineY(one, two, -1)) {
+            if (this.checkMoreLineY(matrix, one, two, -1)) {
                 return true;
             }
         }
@@ -326,15 +274,17 @@ public class Matrix {
      * Check can play.
      */
 
-    public boolean canPlay() {
+    public boolean canPlay(int[][] matrix) {
+        int row = matrix.length;
+        int col = matrix[0].length;
         for (int i = 1; i <= row - 2; i++) {
             for (int j = 1; j <= col - 2; j++) {
                 if (matrix[i][j] != CONST_VALUE) {
                     for (int m = 1; m <= row - 2; m++) {
                         for (int n = 1; n <= col - 2; n++) {
                             if ((m != i || n != j) && matrix[m][n] != CONST_VALUE && matrix[m][n] == matrix[i][j]) {
-                                if (algorithm(new Pikachu(i, j), new Pikachu(m, n))) {
-                                    System.out.printf("i:" + i + " j:" + j + " ->" + "m:" + m + " n:" + n);
+                                if (algorithm(matrix, new Pikachu(i, j,matrix[i][j]), new Pikachu(m, n, matrix[m][n]))) {
+                                    System.out.printf("i:" + i + " j:" + j + " val:" + matrix[i][j] + " ->" + "m:" + m + " n:" + n + " val:" + matrix[i][j]);
                                     System.out.println("---");
                                     System.out.println();
                                     return true;
@@ -349,9 +299,42 @@ public class Matrix {
     }
 
     /**
+     * Find Pikachu couple
+     * @param matrix from game
+     * @return Pikachu couple
+     */
+    public Pikachu[] findPikachu(int[][] matrix) {
+        int row = matrix.length;
+        int col = matrix[0].length;
+        for (int i = 1; i <= row - 2; i++) {
+            for (int j = 1; j <= col - 2; j++) {
+                if (matrix[i][j] != CONST_VALUE) {
+                    for (int m = 1; m <= row - 2; m++) {
+                        for (int n = 1; n <= col - 2; n++) {
+                            if ((m != i || n != j) && matrix[m][n] != CONST_VALUE && matrix[m][n] == matrix[i][j]) {
+                                Pikachu pikachu1 = new Pikachu(i,j,matrix[i][j]);
+                                Pikachu pikachu2 = new Pikachu(m,n,matrix[m][n]);
+                                if (algorithm(matrix, pikachu1, pikachu2)) {
+                                    System.out.printf("i:" + i + " j:" + j + " val:" + matrix[i][j] + " ->" + "m:" + m + " n:" + n + " val:" + matrix[i][j]);
+                                    System.out.println("---");
+                                    System.out.println();
+                                    return new Pikachu[]{pikachu1, pikachu2};
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
      * Shuffle matrix when have no Pikachu couple valid
      */
-    public void shuffleMatrix2() {
+    public int[][] shuffleMatrix2(int[][] matrix)  {
+        int row = matrix.length;
+        int col = matrix[0].length;
         List<int[]> nonZero = new ArrayList<>();
         List<int[]> ori = new ArrayList<>();
         for (int i = 1; i <= row - 2; i++) {
@@ -369,22 +352,24 @@ public class Matrix {
             int[] index = ori.get(k);
             int x = index[0];
             int y = index[1];
-            int temp = this.matrix[x][y];
+            int temp = matrix[x][y];
 
             int[] newIndex = nonZero.get(k);
             int newX = newIndex[0];
             int newY = newIndex[1];
 
-            this.matrix[x][y] = this.matrix[newX][newY];
-            // this.matrix[newX][newY] = temp;
+            matrix[x][y] = matrix[newX][newY];
         }
+        return matrix;
     }
 
     /**
      * Shuffle matrix when have no Pikachu couple valid
      */
 
-    public void shuffleMatrix() {
+    public int[][] shuffleMatrix(int[][] matrix) {
+        int row = matrix.length;
+        int col = matrix[0].length;
         List<Integer> values = new ArrayList<>();
 
         for (int i = 1; i <= row - 2; i++) {
@@ -406,9 +391,12 @@ public class Matrix {
                 }
             }
         }
+        return matrix;
     }
 
-    public void printMatrix() {
+    public void printMatrix(int[][] matrix) {
+        int row = matrix.length;
+        int col = matrix[0].length;
         System.out.println("Ma tran hien tai");
         for (int i = 1; i <= row - 2; i++) {
             for (int j = 1; j <= col - 2; j++) {
@@ -418,7 +406,7 @@ public class Matrix {
         }
     }
 
-    public void level2() {
+    public int[][] level2(int[][] matrix) {
         for (int i = MAP_COL; i >= 1; i--) {
             List<Integer> temp = new ArrayList<>();
             for (int j = MAP_ROW; j >= 1; j--) {
@@ -429,15 +417,16 @@ public class Matrix {
             int len = temp.size(), index = 0;
             for (int j = MAP_ROW; j >= 1; j--) {
                 if (index >= len) {
-                    this.matrix[j][i] = 0;
+                    matrix[j][i] = 0;
                 } else {
-                    this.matrix[j][i] = temp.get(index);
+                    matrix[j][i] = temp.get(index);
                     index++;
                 }
             }
         }
+        return matrix;
     }
-    public void level3 () {
+    public int[][] level3 (int[][] matrix) {
         for (int i = MAP_ROW; i >= 1; i--) {
             List<Integer> temp = new ArrayList<>();
             for (int j = MAP_COL; j >= 1; j--) {
@@ -448,13 +437,13 @@ public class Matrix {
             int len = temp.size(), index = 0;
             for (int j = MAP_COL; j >= 1; j--) {
                 if (index >= len) {
-                    this.matrix[i][j] = 0;
+                    matrix[i][j] = 0;
                 } else {
-                    this.matrix[i][j] = temp.get(index);
+                    matrix[i][j] = temp.get(index);
                     index++;
                 }
             }
         }
-    }
-    // End
+        return matrix;
+    }// End
 }

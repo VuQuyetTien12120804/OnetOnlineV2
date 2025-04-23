@@ -28,4 +28,14 @@ public class Constants {
         Date now = new Date();
         return sdf.format(now) + "000+00:00";
     }
+    public static int position (int x, int y){
+        return (x - 1) * MAP_COL + y - 1;
+    }
+    public static int X (int position){
+        return position / (MAP_COL) + 1;
+    }
+    public static int Y (int position){
+        return position % (MAP_COL) + 1;
+    }
+
 }

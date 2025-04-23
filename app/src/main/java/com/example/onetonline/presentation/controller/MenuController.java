@@ -57,17 +57,13 @@ public class MenuController {
     }
 
     public void handleClassicClick(){
-        //menuGameView.onClassicClicked();
-        if(context instanceof MenuGameForm) {
-            ((MenuGameForm) context).showPauseGameDialog();
-        }
+        menuGameView.onClassicClicked();
+
     }
 
     public void handleContinueClick(){
-        //menuGameView.onContinueClicked();
-        if(context instanceof MenuGameForm) {
-            ((MenuGameForm) context).showLoseGameDialog();
-        }
+        menuGameView.onContinueClicked();
+
     }
 
     public void handleOnlineClick(String a){

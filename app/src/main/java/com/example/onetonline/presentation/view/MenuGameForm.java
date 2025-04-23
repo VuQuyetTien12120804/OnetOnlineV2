@@ -143,10 +143,18 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
 
     @Override
     public void onClassicClicked() {
+        Intent intent = new Intent(this, GamePlay.class);
+        intent.putExtra("isClassic", true);
+        startActivity(intent);
+        finish();
     }
 
     @Override
     public void onContinueClicked() {
+        Intent intent = new Intent(this, GamePlay.class);
+        intent.putExtra("isContinue", true);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -210,6 +218,7 @@ public class MenuGameForm extends BaseActivity implements MenuGameView {
     @Override
     public void onBackPressed() {
         // Điều hướng về màn hình WellComeScreen
+        super.onBackPressed();
         Intent intent = new Intent(this, WellComeScreen.class);
         startActivity(intent);
         finish(); // Kết thúc Activity hiện tại
