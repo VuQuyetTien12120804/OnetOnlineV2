@@ -1,6 +1,7 @@
 package com.example.onetonline.presentation.view;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -177,6 +178,14 @@ public class GamePlay extends BaseActivity implements GamePlayListener {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        // Điều hướng về màn hình WellComeScreen
+        super.onBackPressed();
+        Intent intent = new Intent(this, WellComeScreen.class);
+        startActivity(intent);
+        finish(); // Kết thúc Activity hiện tại
+    }
 
     public PikachuAdapter getAdapter() {
         return adapter;
