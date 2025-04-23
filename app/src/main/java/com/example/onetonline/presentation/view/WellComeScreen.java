@@ -56,5 +56,4 @@ public class WellComeScreen extends BaseActivity implements WellComeScreenView {
                 .setNegativeButton("No", null)
                 .show();
     }
-
 }

@@ -53,10 +53,9 @@ public class GamePlayController {
             ((GamePlay) view).getAdapter().notifyItemChanged(Constants.position(x1,y1));
             ((GamePlay) view).getAdapter().notifyItemChanged(Constants.position(x2,y2));
             nextLevel();
-            if (!gameManager.getMatrix().canPlay(gameManager.getGameBoardState().getMatrix())){
+            if (!gameManager.getMatrix().canPlay(gameManager.getGameBoardState().getMatrix()) && !gameManager.getGameBoardState().isClearMap()){
                 shuffleMap();
             }
-
         }
     }
     @SuppressLint("NotifyDataSetChanged")
@@ -90,19 +89,13 @@ public class GamePlayController {
             int level = gameManager.getGameBoardState().getLevel();
             gameManager.getGameBoardState().setLevel(level + 1);
             int[][] map = gameManager.getMatrix().randomMatrix(gameManager.getGameBoardState().getMatrix());
-            if (level % 3 == 1){
-                gameManager.getGameBoardState().setMatrix(map);
-            } else if (level % 3 == 2){
-                gameManager.getGameBoardState().setMatrix(gameManager.getMatrix().level2(map));
-            }
-            else if (level % 3 == 0){
-                gameManager.getGameBoardState().setMatrix(gameManager.getMatrix().level3(map));
-            }
+            gameManager.getGameBoardState().setMatrix(map);
             gameManager.updatePikachuMap(gameManager.getGameBoardState().getMatrix(), gameManager.getGameBoardState().getPikachuList());
-            ((GamePlay) view).getAdapter().notifyDataSetChanged();
             gameManager.getGameBoardState().setSwitchCount(gameManager.getGameBoardState().getSwitchCount() + 1);
-            System.out.println("Controller: " + gameManager.getGameBoardState().getSwitchCount());
             view.onButtonSwitchClick(gameManager.getGameBoardState());
+            ((GamePlay) view).setLevel(gameManager.getGameBoardState().getLevel());
+            ((GamePlay) view).getAdapter().notifyDataSetChanged();
+            System.out.println("Next level : " + gameManager.getGameBoardState().getLevel());
         }
     }
     public void handleXClick(){
@@ -118,6 +111,6 @@ public class GamePlayController {
     }
 
     public void handleTxtLevel(){
-
+        view.txtLevelListener(gameManager.getGameBoardState());
     }
 }

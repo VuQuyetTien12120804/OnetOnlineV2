@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -132,9 +133,18 @@ public class GamePlay extends BaseActivity implements GamePlayListener {
     public void setScore(int score){
         txtPoint.setText(String.valueOf(score));
     }
+    @SuppressLint("DefaultLocale")
     public void setLevel(int level){
         txtLevel.setText(String.format("%02d", level));
     }
+    @SuppressLint("DefaultLocale")
+    @Override
+    public void txtLevelListener(GameBoardState state) {
+        if (Integer.parseInt(String.valueOf(txtLevel.getText())) == Constants.MAX_LEVEL + 1){
+            Toast.makeText(getApplicationContext(),"You win", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     public void onButtonXClick() {
 

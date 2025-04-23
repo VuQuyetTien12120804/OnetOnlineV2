@@ -5,7 +5,7 @@ import com.example.onetonline.presentation.model.GameBoardState;
 public interface GamePlayListener {
     void setUpBoard(GameBoardState state);
     void setScore(int score);
-    void setLevel(int level);
+    void txtLevelListener(GameBoardState state);
     void onButtonXClick();
     void onButtonSearchClick(GameBoardState state);
     void txtSearchListener(GameBoardState state);
