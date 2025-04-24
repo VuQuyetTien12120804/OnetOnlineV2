@@ -79,7 +79,6 @@ public class RoomChat extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void connectWebSocket(String roomId, String actionType) {
@@ -131,7 +130,11 @@ public class RoomChat extends AppCompatActivity {
 
                             case "poke":
                                 String pokingName = data.getString("name");
-                                EventBus.getDefault().post(new PokeEvent(pokingName));
+                                if (pokingName.equals(name)) {
+                                    EventBus.getDefault().post(new PokeEvent("Bạn"));
+                                } else {
+                                    EventBus.getDefault().post(new PokeEvent(pokingName));
+                                }
                                 break;
 
                             case "status":
@@ -179,7 +182,7 @@ public class RoomChat extends AppCompatActivity {
     @org.greenrobot.eventbus.Subscribe
     public void onPokeReceived(PokeEvent event) {
         runOnUiThread(() -> {
-            textViewChat.append(event.name + " đã chọc ghẹo bạn\n");
+            textViewChat.append(event.name + " đã chọc ghẹo đối phương\n");
             scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
         });
     }
