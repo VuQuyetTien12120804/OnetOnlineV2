@@ -49,4 +49,5 @@ dependencies {
     implementation("com.github.Dimezis:BlurView:version-1.6.6")
 
     implementation ("org.java-websocket:Java-WebSocket:1.5.2")
+    implementation ("org.greenrobot:eventbus:3.3.1")
 }

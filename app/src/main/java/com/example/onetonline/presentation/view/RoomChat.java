@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.onetonlinev2.R;
 
+import org.greenrobot.eventbus.EventBus;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
 import org.json.JSONException;
@@ -68,9 +69,17 @@ public class RoomChat extends AppCompatActivity {
 
         buttonHide.setOnClickListener(view -> {
             if (webSocketClient != null) {
-                webSocketClient.send("{\"type\":\"hide_button\"}");
+                try {
+                    JSONObject json = new JSONObject();
+                    json.put("type", "poke");
+                    json.put("name", name);
+                    webSocketClient.send(json.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
+
     }
 
     private void connectWebSocket(String roomId, String actionType) {
@@ -120,8 +129,9 @@ public class RoomChat extends AppCompatActivity {
                                 }
                                 break;
 
-                            case "hide_button":
-                                buttonHide.setVisibility(View.GONE);
+                            case "poke":
+                                String pokingName = data.getString("name");
+                                EventBus.getDefault().post(new PokeEvent(pokingName));
                                 break;
 
                             case "status":
@@ -154,4 +164,23 @@ public class RoomChat extends AppCompatActivity {
         webSocketClient.connect();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    @org.greenrobot.eventbus.Subscribe
+    public void onPokeReceived(PokeEvent event) {
+        runOnUiThread(() -> {
+            textViewChat.append(event.name + " đã chọc ghẹo bạn\n");
+            scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
+        });
+    }
 }
